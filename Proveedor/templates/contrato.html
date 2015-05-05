@@ -1,71 +1,7 @@
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-  <meta charset="utf-8">
-  <title>{{ contrato.descripcion  }} | Veedor - Proveedores del estado peruano</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" />
-  <link href="{{ url_for('static', filename='css/bootstrap-responsive.min.css') }}" rel="stylesheet" />
-  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/font-awesome.css') }}" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
-  <link href="{{ url_for('static', filename='css/pages/dashboard.css') }}" rel="stylesheet">
-  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-  <!--[if lt IE 9]>
-        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-      <![endif]-->
-  </head>
-  <body>
-  <div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-      <div class="container">
-       <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-       <span class="icon-bar"></span>
-       <span class="icon-bar"></span><span class="icon-bar"></span></a>
-       <a class="brand" href="/">Veedor - Proveedores del estado peruano</a>
-        <div class="nav-collapse">
-          <ul class="nav pull-right">
-            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                              class="icon-cog"></i> Reportar <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="javascript:;">Reportar error</a></li>
-                <li><a href="javascript:;">Contactar al administrador</a></li>
-              </ul>
-            </li>
-          </ul>        
-        </div>
-        <!--/.nav-collapse --> 
-      </div>
-      <!-- /container --> 
-    </div>
-    <!-- /navbar-inner --> 
-  </div>
-  <!-- /navbar -->
-  <div class="subnavbar">
-    <div class="subnavbar-inner">
-      <div class="container">
-        <ul class="mainnav">
-          <li><a href="/"><i class="icon-dashboard"></i><span>Inicio</span> </a> </li>
-          <li><a href="/empresas"><i class="icon-list-alt"></i><span>Empresas</span> </a> </li>
-          <li class="active"><a href="/entidades"><i class="icon-list"></i><span>Entidades</span></a></li>
-          <li><a href="/buscar"><i class="icon-search"></i><span>Buscar</span> </a> </li>
-          <li><a href="/reportes"><i class="icon-bar-chart"></i><span>Reportes</span> </a> </li>
-          <li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-long-arrow-down"></i><span>Veedor</span> <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="/veedor">¿Qué es veedor?</a></li>
-              <li><a href="/como">¿Como se construyo Veedor?</a></li>
-              <li><a href="/contacto">Contactarnos</a></li>
-              <li><a href="/reportar">Reportar</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <!-- /container --> 
-    </div>
-    <!-- /subnavbar-inner --> 
-  </div>
-  <!-- /subnavbar -->
+    {% include "head.html" %}
+    <body>
+    {% include "header.html" %}
+   {% include "menu.html" %}
   <div class="main">
     <div class="main-inner">
       <div class="container">
@@ -85,7 +21,7 @@
               </p>
               <p>
                 <span>Detalles de la convocatoria: </span>
-                {% if contrato.detalle_seace != 'no hay referencia' %}
+                {% if contrato.detalle_seace != 'No hay referencia' %}
                   <a href="{{ contrato.detalle_seace }}" target="_blank" class="btn"><img src="http://www.peru.gob.pe/transparencia/imagenes/b_seace.gif" alt="" border="0"></a>
                 {% else %}
                   <span class="btn">No se encontro referencia</a>
@@ -126,46 +62,28 @@
     </div>
     <!-- /main-inner --> 
   </div>
-  <!-- /main -->
-  <div class="extra">
-    <div class="extra-inner">
-      <div class="container">
-        <div class="row">
-            <div class="span3">
-              <!-- logos proética  -->
-            </div>
-            <!-- /span3 -->
-        </div>
-        <!-- /row --> 
-      </div>
-      <!-- /container --> 
-    </div>
-    <!-- /extra-inner --> 
-  </div>
-  <!-- /extra -->
-  <div class="footer">
-    <div class="footer-inner">
-      <div class="container">
-        <div class="row">
-          <div class="span12"> &copy; 2015 Veedor - Proveedores del estado peruano | Desarrollado por <a href="http://www.odpe.org">ODPE</a>. </div>
-          <!-- /span12 --> 
-        </div>
-        <!-- /row --> 
-      </div>
-      <!-- /container --> 
-    </div>
-    <!-- /footer-inner --> 
-  </div>
-  <!-- /footer --> 
-  <!-- Le javascript
+<!-- /main -->
+{% include "footer.html" %}
+<!-- Le javascript
   ================================================== --> 
   <!-- Placed at the end of the document so the pages load faster --> 
-  <script src="{{ url_for('static', filename='js/jquery-1.7.2.min.js') }}"></script> 
+  <script src="{{ url_for('static', filename='js/jquery-1.7.2.min.js') }}"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <script src="{{ url_for('static', filename='js/excanvas.min.js') }}"></script> 
-  <script src="{{ url_for('static', filename='js/chart.min.js') }}"></script> 
   <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script> 
-  <script src="{{ url_for('static', filename='js/full-calendar/fullcalendar.min.js') }}"></script> 
   <script src="{{ url_for('static', filename='js/base.js') }}"></script> 
-
-  </body>
-  </html>
+  <script src="{{ url_for('static', filename='js/faq.js') }}"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $.ajax({
+          url: '/api/get/search/contratos'
+        }).done(function (data) {
+          $('#buscar').autocomplete({
+            source: data,
+            minLength: 2
+          });
+        });
+    });
+  </script>
+</body>
+</html>
