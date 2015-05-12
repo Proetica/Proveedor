@@ -85,7 +85,7 @@
               <li class="faq-{{ loop.index }}">
                 <div class="faq-icon"><div class="faq-number">{{ loop.index }}</div></div>
                 <div class="faq-text">
-                  <h4><a href="{{ url_for('proveedor', id=e.id) }}">{{ e.nombre }}</a> <span class="badge">{{ e.cant }}</span></h4>
+                  <h4><a href="{{ url_for('entidad', id=e.id) }}">{{ e.nombre }}</a> <span class="badge">{{ e.cant }}</span></h4>
                 </div>
               </li>
               {% endfor %}
