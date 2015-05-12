@@ -1286,7 +1286,6 @@ color: #333;
 
 .image-front{
 	background: #e0e0e0;
-	height: 300px;
 }
 
 .image-front .content-initial{
@@ -1344,4 +1343,7 @@ color: #333;
 	text-align: center;
 	background: #19bc9c;
   	color: #fff;
+}
+.form-interno{
+	width: 96%;
 }

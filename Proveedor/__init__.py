@@ -3,7 +3,8 @@ from sqlalchemy import create_engine, or_, func
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 import models, forms, settings
-import import_proveedor_detail, import_representante, proveedores_transparencia, search
+import search
+import json
 
 app = Flask(
     __name__,
@@ -45,9 +46,54 @@ def index():
                     models.Empresa.id
             ).limit(15)
 
+    topentidades = g.db.query(
+                models.EntidadGobierno.id,
+                models.EntidadGobierno.nombre,
+                func.count(models.Contrataciones.entidad_id).label("cant")
+            ).outerjoin(
+                models.Contrataciones
+            ).order_by(
+                func.count(models.Contrataciones.entidad_id).desc()
+            ).group_by(
+                    models.EntidadGobierno.id
+            ).limit(15)
+
+    contratos = g.db.query(
+                models.Contrataciones
+            ).count()
+
+    empresas = g.db.query(
+                models.Empresa
+            ).count()
+
+    entidades = g.db.query(
+                models.EntidadGobierno
+            ).count()
+
+    cont_irre = g.db.query(
+                models.Contrataciones
+            ).filter(
+                or_(models.Contrataciones.etiqueta_fecha == 'Fechas cercanas',
+                    models.Contrataciones.etiqueta_fecha == 'Fechas coinciden')
+            ).count()
+
+    total = g.db.query(
+                func.sum(models.Contrataciones.monto).label("total")
+            ).filter(
+                models.Contrataciones.tipo_moneda == 'S/. '
+            ).first()
+
+    irregulares = 0 #(cont_irre * 100 ) / contratos
+
     return render_template(
         'index.html',
-        top=top
+        top=top,
+        contratos=contratos,
+        empresas=empresas,
+        entidades=entidades,
+        irregulares=irregulares,
+        total=total,
+        topentidades=topentidades
     )
 
 @app.route('/buscar/<string:type>', defaults={'termino':'', 'page':1}, methods=['GET', 'POST'])
@@ -133,7 +179,7 @@ def entidades():
     )
 
 
-@app.route('/entidad/<int:id>')
+@app.route('/entidad/<int:id>', methods=['GET', 'POST'])
 def entidad(id):
 
     entidad = g.db.query(
@@ -184,7 +230,7 @@ def entidad(id):
     )
 
 
-@app.route('/contrato/<int:id>')
+@app.route('/contrato/<int:id>', methods=['GET', 'POST'])
 def contrato(id):
 
     contrato = g.db.query(
@@ -192,10 +238,12 @@ def contrato(id):
         models.Contrataciones.objeto_pro,
         models.Contrataciones.fecha_pub,
         models.Contrataciones.fecha_bue_pro,
+        models.Contrataciones.etiqueta_fecha,
         models.Contrataciones.modalidad_sel,
         models.Contrataciones.tipo_moneda,
         models.Contrataciones.monto,
         models.Contrataciones.valor_ref,
+        models.Contrataciones.etiqueta_monto,
         models.Contrataciones.descripcion,        
         models.Contrataciones.empresa_id,
         models.Empresa.razon_social,
@@ -221,8 +269,14 @@ def contrato(id):
     )
 
 
-@app.route('/proveedor/<int:id>')
+@app.route('/proveedor/<int:id>', methods=['GET', 'POST'])
 def proveedor(id):
+
+
+    if request.form:
+        form = request.form
+        print form
+        
 
     proveedor = g.db.query(
         models.Empresa
@@ -281,7 +335,7 @@ def proveedor(id):
             models.Contrataciones.empresa_id == id
         ).order_by(
              models.Contrataciones.fecha_bue_pro.desc()
-        ).all()
+        ).limit(10)
 
         proveedor.representantes = representantes
         proveedor.contrataciones = contrataciones
@@ -292,7 +346,7 @@ def proveedor(id):
         )
 
 
-@app.route('/api/get/proveedor/<int:id>')
+@app.route('/api/get/proveedor/<int:id>', methods=['GET', 'POST'])
 def get_proveedor(id):
 
     proveedor = g.db.query(
@@ -322,7 +376,7 @@ def get_proveedor(id):
     return '{0}-{1}'.format('ok', 'ok')
 
 
-@app.route('/representante/<int:id>')
+@app.route('/representante/<int:id>', methods=['GET', 'POST'])
 def representante(id):
 
     representante = g.db.query(
@@ -357,10 +411,18 @@ def representante(id):
     )
 
 
-@app.route('/api/get/search/<string:type>')
+@app.route('/api/get/search/<string:type>', methods=['GET'])
 def get_search(type):
+    termino = request.args.get('term')
+    searchObj = search.Search()
+    entidades, pagination = searchObj.get_results_contrataciones(termino, 1, 5)
 
-    return type
+    list = []
+
+    for e in entidades:
+        list.append(e.descripcion)
+
+    return json.dumps(list)
 
 
 if __name__ == '__main__':

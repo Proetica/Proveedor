@@ -1,7 +1,7 @@
 {% include "head.html" %}
-    <body>
-    {% include "header.html" %}
-    {% include "menu.html" %}
+<body>
+  {% include "header.html" %}
+  {% include "menu.html" %}
   <div class="main">
     <div class="main-inner">
       <div class="container">
@@ -9,69 +9,93 @@
           <div class="span4">
             <div class="widget">
               <div class="widget-header"> <i class="icon-th-list"></i>
-                  <h3>Información general</h3>
+                <h3>Información general</h3>
               </div>
               <div class="widget-content">
-              <h4>{{ proveedor.ruc }}</h4>
-              {% if proveedor.nombre_comercial == "-" %}
+                <h4>{{ proveedor.ruc }}</h4>
+                {% if proveedor.nombre_comercial == "-" %}
                 <h1>{{ proveedor.razon_social }}</h1>
-              {% else %}
+                {% else %}
                 <h1>{{ proveedor.nombre_comercial }}</h1>
-              {% endif %}
-              <h4>({{ proveedor.razon_social }})</h4>            
+                {% endif %}
+                <h4>({{ proveedor.razon_social }})</h4>            
               </div>
             </div>
             <div class="widget">
              <div class="widget-header"> <i class="icon-th-list"></i>
-                  <h3>Información de representantes</h3>
-              </div>
-              <div class="widget-content">
-              <div class="list-group">               
-                {% for representante in proveedor.representantes %}
-                  <div class="list-group-item">                    
-                    <h4 class="list-group-item-heading">
-                      <a href="{{ url_for('representante', id=representante.id) }}">{{ representante.nombre }} ({{ representante.dni }})</a><br /><br />
-                      <span class="badge">{{ representante.fecha_cargo.strftime('%d/%m/%Y') }}</span> <span class="badge">{{ representante.cargo }}</span>
-                    </h4>
-                  </div>
-                {% endfor %}
-               </div>    
-              </div>
+              <h3>Filtrar contratos</h3>
             </div>
-          </div>
-
-          <div class="span8">
-            <div class="row">
-              {% for c in proveedor.contrataciones %}
-                  <div class="span4">
-                     <div class="widget">              
-                        <div class="widget-content">                    
-                          <button type="button" class="btn btn-info">
-                            <h2>{{ c.monto }}</h2>
-                          </button>
-                          <p>{{ c.descripcion }}</p>
-                          <p><a href="{{ url_for('entidad', id=c.entidad_id) }}" class="btn btn-small btn-warning">{{ c.nombre }}</a></p>
-                          <a href="{{ url_for('contrato', id=c.id) }}" class="btn btn-small btn-success">Ver detalles</a>
-                        </div>              
-                      </div>
-                  </div>
-              {% endfor %}
+            <div class="widget-content">        
+            <form action="{{ request.url }}" method="post">
+              <b>Filtrar por descripción</b>
+                <input type="text" name="termino" id="search" class="form-interno" placeholder="Buscar por descripción. Ejem: Pañales, Golosinas, Limpieza, etc">
+                <div class="controls">
+                  <b>Filtrar por etiquetas</b>
+                  <label class="checkbox">
+                    <input value="irregulares" type="checkbox" name="etiquetas"> Fechas irregulares (Coincidencia de fechas)
+                  </label>                  
+                  <label class="checkbox">
+                    <input value="cercanas" type="checkbox" name="etiquetas"> Fechas cercanas
+                  </label>
+                  <label class="checkbox">
+                    <input value="monto" type="checkbox" name="etiquetas"> Montos irregulares (Monto contratado mayor al referencial)
+                  </label>
+                </div>
+                <div class="controls">
+                  <b>Filtrar por tipo de moneda</b>
+                  <label class="checkbox">
+                    <input value="S/. " name="tipo_moneda" type="checkbox"> Soles
+                  </label>                  
+                  <label class="checkbox">
+                    <input name="$" name="tipo_moneda" type="checkbox"> Dólares
+                  </label>
+                  <label class="checkbox">
+                    <input value="EUR$ " name="tipo_moneda" type="checkbox"> Euros
+                  </label>
+                </div>
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary">Buscar</button> 
+                </div>
+              </form>
             </div>
-          </div>
-
-          <!-- /span6 --> 
-          <div class="span4">
-           
           </div>
         </div>
-        <!-- /row --> 
+
+        <div class="span8">
+          <div class="row">
+            {% for c in proveedor.contrataciones %}
+            <div class="span4">
+             <div class="widget">              
+              <div class="widget-content">                    
+                <button type="button" class="btn btn-info">
+                  <h3>{{ c.tipo_moneda }} {{ c.valor_ref }}</h3>
+                </button>
+                <button type="button" class="btn btn">
+                  <h3>{{ c.tipo_moneda }} {{ c.monto }}</h3>
+                </button>
+                <p><span class="label">{{ c.fecha_bue_pro.strftime('%d/%m/%Y') }}</span> {{ c.descripcion }}</p>
+                <p><a href="{{ url_for('entidad', id=c.entidad_id) }}" class="btn btn-small btn-warning">{{ c.nombre }}</a></p>
+                <a href="{{ url_for('contrato', id=c.id) }}" class="btn btn-small btn-success">Ver detalles</a>
+              </div>              
+            </div>
+          </div>
+          {% endfor %}
+        </div>
       </div>
-      <!-- /container --> 
+
+      <!-- /span6 --> 
+      <div class="span4">
+
+      </div>
     </div>
-    <!-- /main-inner --> 
+    <!-- /row --> 
   </div>
-  <!-- /main -->
-  {% include "footer.html" %}
+  <!-- /container --> 
+</div>
+<!-- /main-inner --> 
+</div>
+<!-- /main -->
+{% include "footer.html" %}
 <!-- Le javascript
   ================================================== --> 
   <!-- Placed at the end of the document so the pages load faster --> 
@@ -83,14 +107,14 @@
   <script src="{{ url_for('static', filename='js/faq.js') }}"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-        $.ajax({
-          url: '/api/get/search/contratos'
-        }).done(function (data) {
-          $('#buscar').autocomplete({
-            source: data,
-            minLength: 2
-          });
+      $.ajax({
+        url: '/api/get/search/contratos'
+      }).done(function (data) {
+        $('#buscar').autocomplete({
+          source: data,
+          minLength: 2
         });
+      });
     });
   </script>
 </body>

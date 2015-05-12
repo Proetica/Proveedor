@@ -34,9 +34,10 @@ class EntidadGobierno(Entity):
     nombre = Column(UnicodeText, nullable=False)
     tipo_gobierno_id = Column(Integer, ForeignKey('tipogobierno.id'))
     tipo_entidad_id = Column(Integer, ForeignKey('tipoentidadgobierno.id'))
+    cargado = Column(Integer, default=0)
     contrato = relationship(
         'Contrataciones',
-    )
+    )    
 
 
 class Persona(Entity):
@@ -75,6 +76,7 @@ class Empresa(Entity):
         'Contrataciones',
     )
 
+
 class Load_empresa(Entity):
     __tablename__ = 'load_empresa'
 
@@ -109,30 +111,23 @@ class Contrataciones(Entity):
     id = Column(Integer, primary_key=True)
     fecha_pub = Column(DateTime)
     fecha_bue_pro = Column(DateTime)
+    etiqueta_fecha = Column(UnicodeText, nullable=True)
     proceso = Column(UnicodeText, nullable=True)
     objeto_pro = Column(UnicodeText, nullable=True)
     descripcion = Column(UnicodeText, nullable=True)
-    valor_ref = Column(VARCHAR, nullable=True)
-    monto = Column(VARCHAR, nullable=True)
+    valor_ref = Column(Numeric(15, 2), nullable=True, default=0)
+    valor_ref_text = Column(UnicodeText, nullable=True)
+    monto = Column(Numeric(15, 2), nullable=True, default=0)
+    monto_text = Column(UnicodeText, nullable=True)
     tipo_moneda = Column(VARCHAR, default='S/.')
+    etiqueta_monto = Column(UnicodeText, nullable=True)
     modalidad_sel = Column(UnicodeText, nullable=True)
     detalle_contrato = Column(VARCHAR, nullable=True)
     detalle_seace = Column(VARCHAR, nullable=True, default='no hay referencia')
     empresa_id = Column(Integer, ForeignKey('empresas.id'))
     entidad_id = Column(Integer, ForeignKey('entidadgobierno.id'))
-    
-    
 
-class Registros(Entity):
-    __tablename__ = 'registros'
-
-    id = Column(Integer, primary_key=True)
-    monto = Column(Numeric(15, 2), nullable=True)
-    anio = Column(Integer)
-    gobierno = Column(UnicodeText, nullable=True)
-    sector = Column(UnicodeText, nullable=True)
-    municipio = Column(UnicodeText, nullable=True)
-    pliego = Column(UnicodeText, nullable=True)
+    
 
 if __name__ == '__main__':
 

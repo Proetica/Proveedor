@@ -1,77 +1,136 @@
 {% include "head.html" %}
-    <body>
-    {% include "header.html" %}
-      <div class="image-front">
-        <div class="container">
-          <div class="row">
-            <div class="span12">
-              <div class="content-initial">
-                <h1 class="title">Veedor</h1><br />
-                <h4>Proveedores del estado peruano</h4>
-                <form action="/buscar/contratos" method="post" class="navbar-search span12">
-                  <input type="text" name="termino" placeholder="Buscar contrataciones por terminos. Ejem: Pañales, Golosinas, Limpieza, etc">
-                </form>
-              </div>
+<body>
+  {% include "header.html" %}
+  <div class="image-front">
+    <div class="container">
+      <div class="row">
+        <div class="span12">
+          <div class="content-initial">
+            <h1 class="title"><img src="{{ url_for('static', filename='images/logoproveedor.png') }}" /></h1><br />
+            <h4>Proveedores del estado peruano</h4>
+            <div class="ui-widget">
+              <form action="/buscar/contratos" method="post" class="navbar-search span12">
+                <input type="text" name="termino" id="search" placeholder="Buscar contrataciones por terminos. Ejem: Pañales, Golosinas, Limpieza, etc">
+              </form>
             </div>
           </div>
         </div>
       </div>
-   {% include "menu.html" %}
-      <div class="main">
-        <div class="main-inner">
-          <div class="container">
-            <div class="row">
-              <div class="span6">
-                <div class="widget ">              
-                  <div class="widget-content">
-                    <div class="faq-container">
-                      <ol class="faq-list">               
-                        {% for e in top %}
-                        <li class="faq-{{ loop.index }}">
-                          <div class="faq-icon"><div class="faq-number">{{ loop.index }}</div></div>
-                          <div class="faq-text">
-                            <h4><a href="{{ url_for('proveedor', id=e.id) }}">{{ e.razon_social }}</a><span class="badge">{{ e.cant }}</span></h4>
-                          </div>
-                        </li>
-                        {% endfor %}
-                      </ol>
-                    </div>
-                  </div>
+    </div>
+  </div>
+  {% include "menu.html" %}
+  <div class="main">
+    <div class="main-inner">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+           <div class="widget widget-nopad">
+            <div class="widget-content">
+
+              <div class="widget big-stats-container">
+                <div class="widget-content">
+                 <div id="big_stats" class="cf">
+                  <div class="stat"><i class="icon-money"></i><span class="value">S/. {{ total.total }}</span><br><br> Suma total de contratos realizados en soles<br></div>
                 </div>
-              </div>
-              <!-- /span6 -->
-              <div class="span6">
-                6
-              </div>
-              <!-- /span6 --> 
+              </div>             
             </div>
-            <!-- /row --> 
           </div>
-          <!-- /container --> 
         </div>
-        <!-- /main-inner --> 
       </div>
-      <!-- /main -->
-    {% include "footer.html" %}
+      <div class="span6">
+       <div class="widget widget-nopad">
+        <div class="widget-content">
+          <div class="widget big-stats-container">
+            <div class="widget-content">              
+              <div id="big_stats" class="cf">
+                <div class="stat"> <i class="icon-th-list"></i> <span class="value">{{ entidades }}</span><br> Entidades <br>públicas </div>
+                <div class="stat"> <i class="icon-list-alt"></i> <span class="value">{{ empresas }}</span><br> Empresas <br>contratadas </div>
+                <div class="stat"> <i class="icon-briefcase"></i> <span class="value">{{ contratos }}</span><br> Contrataciones públicas </div>                   
+                <div class="stat"> <i class="icon-calendar"></i> <span class="value">{{ irregulares }}%</span><br> Contrataciones con fechas irregulares</div>
+              </div>
+            </div>             
+          </div>               
+        </div>
+      </div>
+    </div>    
+  </div>
+
+  <div class="row">
+    <div class="span6">
+      <div class="widget">              
+        <div class="widget-content">
+          <h1>Top 15 de empresas contratadas</h1>
+          <div class="faq-container">
+            <ol class="faq-list">               
+              {% for e in top %}
+              <li class="faq-{{ loop.index }}">
+                <div class="faq-icon"><div class="faq-number">{{ loop.index }}</div></div>
+                <div class="faq-text">
+                  <h4><a href="{{ url_for('proveedor', id=e.id) }}">{{ e.razon_social }}</a> <span class="badge">{{ e.cant }}</span></h4>
+                </div>
+              </li>
+              {% endfor %}
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="span6">
+      <div class="widget">              
+        <div class="widget-content">
+          <h1>Top 15 de Entidades públicas</h1>
+          <div class="faq-container">
+            <ol class="faq-list">               
+              {% for e in topentidades %}
+              <li class="faq-{{ loop.index }}">
+                <div class="faq-icon"><div class="faq-number">{{ loop.index }}</div></div>
+                <div class="faq-text">
+                  <h4><a href="{{ url_for('proveedor', id=e.id) }}">{{ e.nombre }}</a> <span class="badge">{{ e.cant }}</span></h4>
+                </div>
+              </li>
+              {% endfor %}
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /span6 -->
+  </div>
+  <!-- /span6 --> 
+</div>
+<!-- /row --> 
+</div>
+<!-- /container --> 
+</div>
+<!-- /main-inner --> 
+</div>
+<!-- /main -->
+{% include "footer.html" %}
 <!-- Le javascript
   ================================================== --> 
   <!-- Placed at the end of the document so the pages load faster --> 
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="{{ url_for('static', filename='js/jquery-1.7.2.min.js') }}"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  <script src="{{ url_for('static', filename='js/excanvas.min.js') }}"></script> 
   <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script> 
-  <script src="{{ url_for('static', filename='js/base.js') }}"></script> 
   <script src="{{ url_for('static', filename='js/faq.js') }}"></script>
   <script type="text/javascript">
     $(document).ready(function() {
+      $( "#search" ).autocomplete({
+        source: function( request, response ) {
         $.ajax({
-          url: '/api/get/search/contratos'
-        }).done(function (data) {
-          $('#buscar').autocomplete({
-            source: data,
-            minLength: 2
-          });
+          url: "/api/get/search/contratos",
+          dataType: "json",
+          data: {
+            term: request.term
+          },
+          success: function(data) { 
+             response(data);
+            }
         });
+      },
+        minLength: 3,
+      });
     });
   </script>
 </body>

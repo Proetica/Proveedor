@@ -49,5 +49,5 @@ def scrapper(eid):
 
 if __name__ == '__main__':
 
-    for i in [1,3]:
+    for i in [1,2,3,4,5,7]:
         scrapper(i)
