@@ -83,7 +83,7 @@ def index():
                 models.Contrataciones.tipo_moneda == 'S/. '
             ).first()
 
-    irregulares = 0 #(cont_irre * 100 ) / contratos
+    irregulares = (cont_irre * 100 ) / contratos
 
     return render_template(
         'index.html',
