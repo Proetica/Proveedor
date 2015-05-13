@@ -192,11 +192,6 @@ def entidad(id):
         models.EntidadGobierno.id == id
     ).first()
 
-    p = proveedores_transparencia.ProveedoresTransparencia()
-
-    #p.get(entidad.id, 2012)
-
-
     contrataciones = g.db.query(
         models.Contrataciones.id,
         models.Contrataciones.proceso,
@@ -219,9 +214,7 @@ def entidad(id):
         models.Contrataciones.entidad_id == id
     ).order_by(
          models.Empresa.ruc.desc()
-    ).all()
-
-
+    ).limit(25)
 
     return render_template(
         'entidad.html',
