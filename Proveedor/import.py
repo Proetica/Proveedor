@@ -23,6 +23,9 @@ db = sessionmaker(bind=db_engine)()
 socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, "127.0.0.1", 9050)
 socket.socket = socks.socksocket
 
+cj = CookieJar()
+opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+
 class ProveedoresTransparencia():
 
     def scrapper(self, id_entidad, anno, mes):
@@ -37,7 +40,7 @@ class ProveedoresTransparencia():
         try:
             domain = "http://www.peru.gob.pe/transparencia/pep_transparencia_osce_frame.asp"
             data = urllib.urlencode(values)
-            response = urllib2.urlopen(domain, data)
+            response = opener.open(domain, data)
             
             content = Soup(response.read(), 'html.parser').findAll("table")
 
