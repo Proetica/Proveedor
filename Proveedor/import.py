@@ -8,7 +8,9 @@ from sqlalchemy.orm import sessionmaker
 import settings, parse_numbers
 import models
 import datetime
-import re, time, socket
+import re, time
+import socks
+import socket
 
 
 db_engine = create_engine(
@@ -17,6 +19,9 @@ db_engine = create_engine(
 )
 
 db = sessionmaker(bind=db_engine)()
+
+socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, "127.0.0.1", 9050)
+socket.socket = socks.socksocket
 
 class ProveedoresTransparencia():
 
