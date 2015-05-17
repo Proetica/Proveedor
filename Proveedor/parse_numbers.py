@@ -12,15 +12,13 @@ class parseNumbers():
         number = ammount.replace(symbol,"")
         symbol = symbol.replace(" ","")
         number = self.get_number(number)
-        return float(number)
+        return number
 
 
     def get_number(self, number):
-        number = number.replace(" ","")
-        number = number.replace(",",".")
-        number = (number)
-        return number
-
+        def clean(number):
+            return number.replace(' ','').replace('.','').replace(',','')
+        return float(clean(number[:-3])+'.'+number[-2:])
 
     def get_symbol(self, ammount):
         pattern =  r'(\D*)\d*\.?\d*(\D*)'
@@ -29,5 +27,6 @@ class parseNumbers():
 
 
 if __name__ == '__main__':
-    parseNumbers().parse('EUR $ 507 226,03')
-    parseNumbers().parse('US$ 24 640,00')
+    print parseNumbers().parse('EUR $ 507 226,03')
+    print parseNumbers().parse('US$ 24 640,00')
+    print parseNumbers().parse('S/. 1,000,000 00')

@@ -39,39 +39,42 @@ class ProveedoresTransparencia():
 
 
         try:
-            domain = "http://www.peru.gob.pe/transparencia/pep_transparencia_osce_frame.asp"
+            domain = "http://www.peru.gob.pe/transparencia/pep_transparencia_osce.asp"
             data = urllib.urlencode(values)
             response = opener.open(domain, data)
             
             content = Soup(response.read(), 'html.parser').findAll("table")
 
-            if len(content) == 10:
-                content = content[9]
+            if len(content) == 3:
+                content = content[2]
                 rows = content.findAll('tr')
                 del rows[0]
                 for row in rows:
                     cell = row.findAll("td")
+
+                    print cell[8]
+
                     _empresa = db.query(
                             models.Empresa.id
                         ).filter(                
-                            models.Empresa.ruc == cell[8].get_text()
+                            models.Empresa.ruc == cell[9].get_text()
                         ).first()
 
                     if db.query(
                             models.Empresa.id
                         ).filter(
-                            models.Empresa.ruc == cell[8].get_text()
+                            models.Empresa.ruc == cell[9].get_text()
                         ).count() == 0:
                         _empresa = models.Empresa()
                         _empresa.ruc = cell[8].get_text()
-                        _empresa.razon_social = cell[7].find("a").get_text()
-                        _empresa.nombre_comercial = cell[7].find("a").get_text()
+                        _empresa.razon_social = cell[8].find("a").get_text()
+                        _empresa.nombre_comercial = cell[8].find("a").get_text()
                         db.add(_empresa)
                         db.commit()
 
                     _contratacion = models.Contrataciones()
                     _contratacion.fecha_pub = cell[0].get_text().strip()
-                    _contratacion.fecha_bue_pro = cell[5].get_text().strip()
+                    _contratacion.fecha_bue_pro = cell[6].get_text().strip()
 
                     if(_contratacion.fecha_pub == _contratacion.fecha_bue_pro):
                         _contratacion.etiqueta_fecha = "Fechas coinciden"
@@ -89,22 +92,22 @@ class ProveedoresTransparencia():
                     _contratacion.objeto_pro = cell[2].get_text().strip()
                     _contratacion.descripcion = cell[3].get_text().strip()                        
                     _contratacion.valor_ref = parseNumbers.parse(cell[4].get_text().strip())
-                    _contratacion.monto = parseNumbers.parse(cell[6].get_text().strip())
+                    _contratacion.monto = parseNumbers.parse(cell[7].get_text().strip())
                     _contratacion.valor_ref_text = cell[4].get_text().strip()
-                    _contratacion.monto_text = cell[6].get_text().strip()
-                    _contratacion.tipo_moneda = parseNumbers.get_symbol(cell[6].get_text().strip())
+                    _contratacion.monto_text = cell[7].get_text().strip()
+                    _contratacion.tipo_moneda = parseNumbers.get_symbol(cell[7].get_text().strip())
 
                     if(_contratacion.valor_ref  <= _contratacion.monto ):
                         _contratacion.etiqueta_monto = "Monto de contrato mayor"
 
                     _contratacion.modalidad_sel = cell[5].get_text().strip()
-                    _dcontrato = cell[7].find("a")['href'].replace("pep_js_abrir_sub_ventanas('","http://www.peru.gob.pe/transparencia/")
+                    _dcontrato = cell[8].find("a")['href'].replace("pep_js_abrir_sub_ventanas('","http://www.peru.gob.pe/transparencia/")
                     _dcontrato = _dcontrato.replace("Javascript: ","")
                     _dcontrato = _dcontrato.replace("','700','900')","")
                     _contratacion.detalle_contrato = _dcontrato
                     
                     try:
-                        _contratacion.detalle_seace = cell[9].find("a")['href']
+                        _contratacion.detalle_seace = cell[10].find("a")['href']
                     except:
                         _contratacion.detalle_seace = 'No hay referencia'
 
@@ -143,8 +146,8 @@ if __name__ == '__main__':
             for mes in range(1, 13):
                 ProveedoresTransparencia().scrapper(_entidad.id, anno, mes)
                 time.sleep(0.5)
-        
-        _entidad.cargado = 1                
+
+        _entidad.cargado = 1
         db.add(_entidad)
         try:
             db.commit()
