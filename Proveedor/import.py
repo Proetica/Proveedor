@@ -43,16 +43,13 @@ class ProveedoresTransparencia():
             data = urllib.urlencode(values)
             response = opener.open(domain, data)
             
-            content = Soup(response.read(), 'html.parser').findAll("table")
+            content = Soup(response.read(), 'html.parser').find("table", attrs={'bgcolor': '#135588'})
 
-            if len(content) == 3:
-                content = content[2]
+            if content is not None:
                 rows = content.findAll('tr')
                 del rows[0]
                 for row in rows:
                     cell = row.findAll("td")
-
-                    print cell[8]
 
                     _empresa = db.query(
                             models.Empresa.id
@@ -114,20 +111,18 @@ class ProveedoresTransparencia():
                     _contratacion.empresa_id = _empresa.id
                     _contratacion.entidad_id = id_entidad
 
-                    db.add(_contratacion)
-
-                    
+                    db.add(_contratacion)                  
 
                     try:
                         db.commit()
                     except:
-                        raise
+                        pass
 
             else:
                 pass
         except socket.timeout, e:
             # For Python 2.7
-            raise MyException("There was an error: %r" % e)
+            pass
 
 
     def get(self, eid, anno):
@@ -145,11 +140,9 @@ if __name__ == '__main__':
         for anno in range(2009, 2016):
             for mes in range(1, 13):
                 ProveedoresTransparencia().scrapper(_entidad.id, anno, mes)
-                time.sleep(0.5)
-
         _entidad.cargado = 1
         db.add(_entidad)
         try:
             db.commit()
         except:
-            raise
+            pass
