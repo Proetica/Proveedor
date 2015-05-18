@@ -73,14 +73,13 @@ class ProveedoresTransparencia():
                     _contratacion.fecha_pub = cell[0].get_text().strip()
                     _contratacion.fecha_bue_pro = cell[6].get_text().strip()
 
-                    if(_contratacion.fecha_pub == _contratacion.fecha_bue_pro):
-                        _contratacion.etiqueta_fecha = "Fechas coinciden"
-
                     a = datetime.datetime.strptime(_contratacion.fecha_pub,'%d/%m/%Y')
                     b = datetime.datetime.strptime(_contratacion.fecha_bue_pro,'%d/%m/%Y')
                     delta = b - a
-                    
-                    if(delta.days <= 5):
+
+                    if(_contratacion.fecha_pub == _contratacion.fecha_bue_pro):
+                        _contratacion.etiqueta_fecha = "Fechas coinciden"
+                    elif(delta.days <= 5):
                         _contratacion.etiqueta_fecha = "Fechas cercanas"
 
 
@@ -137,8 +136,9 @@ if __name__ == '__main__':
         models.EntidadGobierno.cargado==0
         ).all()
     for _entidad in _entidades:
+        print _entidad.id
         for anno in range(2009, 2016):
-            for mes in range(1, 13):
+            for mes in range(1, 13):                
                 ProveedoresTransparencia().scrapper(_entidad.id, anno, mes)
         _entidad.cargado = 1
         db.add(_entidad)
