@@ -1,5 +1,5 @@
 from flask import Flask, g, render_template, url_for, request, redirect
-from sqlalchemy import create_engine, or_, func
+from sqlalchemy import create_engine, or_, and_, func, extract, desc, asc
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 import models, forms, settings
@@ -40,6 +40,8 @@ def index():
                 func.count(models.Contrataciones.empresa_id).label("cant")
             ).outerjoin(
                 models.Contrataciones
+            ).filter(
+                extract('year', models.Contrataciones.fecha_bue_pro).label("anio") == 2015
             ).order_by(
                 func.count(models.Contrataciones.empresa_id).desc()
             ).group_by(
@@ -54,6 +56,8 @@ def index():
                 models.Contrataciones
             ).order_by(
                 func.count(models.Contrataciones.entidad_id).desc()
+            ).filter(
+                extract('year', models.Contrataciones.fecha_bue_pro).label("anio") == 2015
             ).group_by(
                     models.EntidadGobierno.id
             ).limit(15)
@@ -78,10 +82,25 @@ def index():
             ).count()
 
     total = g.db.query(
+                extract('year', models.Contrataciones.fecha_bue_pro).label("anio"),
                 func.sum(models.Contrataciones.monto).label("total")
             ).filter(
-                models.Contrataciones.tipo_moneda == 'S/. '
-            ).first()
+                    models.Contrataciones.tipo_moneda == 'S/. '
+            ).group_by('anio').order_by('anio').all()
+
+
+    total = g.db.query(
+                extract('year', models.Contrataciones.fecha_bue_pro).label("anio"),
+                func.sum(models.Contrataciones.monto).label("total")
+            ).filter(
+                    models.Contrataciones.tipo_moneda == 'S/. '
+            ).group_by('anio').order_by('anio').all()
+
+    proveedores = g.db.query(
+                extract('year', models.Contrataciones.fecha_bue_pro).label("anio"),
+                func.count(models.Contrataciones.id).label("cantidad")
+            ).order_by(asc('anio')).group_by('anio').all()
+
 
     irregulares = (cont_irre * 100 ) / contratos
 
@@ -91,6 +110,7 @@ def index():
         contratos=contratos,
         empresas=empresas,
         entidades=entidades,
+        proveedores=proveedores,
         irregulares=irregulares,
         total=total,
         topentidades=topentidades
@@ -196,10 +216,12 @@ def entidad(id):
         models.Contrataciones.id,
         models.Contrataciones.proceso,
         models.Contrataciones.objeto_pro,
+        models.Contrataciones.etiqueta_fecha,
         models.Contrataciones.fecha_pub,
         models.Contrataciones.fecha_bue_pro,
         models.Contrataciones.modalidad_sel,
         models.Contrataciones.tipo_moneda,
+        models.Contrataciones.etiqueta_monto,
         models.Contrataciones.monto,
         models.Contrataciones.valor_ref,
         models.Contrataciones.descripcion,        
@@ -214,7 +236,7 @@ def entidad(id):
         models.Contrataciones.entidad_id == id
     ).order_by(
          models.Empresa.ruc.desc()
-    ).limit(25)
+    ).limit(15)
 
     return render_template(
         'entidad.html',
@@ -268,75 +290,65 @@ def proveedor(id):
 
     if request.form:
         form = request.form
-        print form
+        etiquetas = request.args.get("etiquetas")
+        tipo_moneda = request.args.get("tipo_moneda")
+        termino = request.args.get("termino")
+        moneda = request.args.get("moneda")
         
 
     proveedor = g.db.query(
         models.Empresa
         ).filter(models.Empresa.id == id).first()
-
-
-    if g.db.query(
-            models.Load_empresa
+      
+    representantes = g.db.query(
+        models.Empresa_persona
         ).filter(
-            models.Load_empresa.empresa_id == id
-        ).count() == 0 and proveedor.ruc[:1] == 2:
-
-            return render_template(
-                'loadproveedor.html',
-                proveedor=proveedor,
-            )
-            
-    else:
-        
-        representantes = g.db.query(
-            models.Empresa_persona
-            ).filter(
-            models.Empresa_persona.empresa_id == id
-            ).order_by(
-            models.Empresa_persona.fecha_cargo.desc()
-            ).join(
-            models.Persona
-            ).values(
-            models.Persona.id,
-            models.Persona.dni,
-            models.Persona.nombre,
-            models.Empresa_persona.cargo,
-            models.Empresa_persona.fecha_cargo)
-
-        contrataciones = g.db.query(
-            models.Contrataciones.id,
-            models.Contrataciones.proceso,
-            models.Contrataciones.objeto_pro,
-            models.Contrataciones.fecha_pub,
-            models.Contrataciones.fecha_bue_pro,
-            models.Contrataciones.modalidad_sel,
-            models.Contrataciones.tipo_moneda,
-            models.Contrataciones.monto,
-            models.Contrataciones.valor_ref,
-            models.Contrataciones.descripcion,
-            models.Contrataciones.entidad_id,
-            models.EntidadGobierno.nombre,
-            models.Contrataciones.detalle_contrato,
-            models.Contrataciones.detalle_seace,
-            models.Contrataciones.empresa_id,
-            models.Empresa.razon_social
-        ).join(
-            models.EntidadGobierno,
-            models.Empresa
-        ).filter(
-            models.Contrataciones.empresa_id == id
+        models.Empresa_persona.empresa_id == id
         ).order_by(
-             models.Contrataciones.fecha_bue_pro.desc()
-        ).limit(10)
+        models.Empresa_persona.fecha_cargo.desc()
+        ).join(
+        models.Persona
+        ).values(
+        models.Persona.id,
+        models.Persona.dni,
+        models.Persona.nombre,
+        models.Empresa_persona.cargo,
+        models.Empresa_persona.fecha_cargo)
 
-        proveedor.representantes = representantes
-        proveedor.contrataciones = contrataciones
+    contrataciones = g.db.query(
+        models.Contrataciones.id,
+        models.Contrataciones.proceso,
+        models.Contrataciones.objeto_pro,
+        models.Contrataciones.fecha_pub,
+        models.Contrataciones.fecha_bue_pro,
+        models.Contrataciones.etiqueta_fecha,
+        models.Contrataciones.modalidad_sel,
+        models.Contrataciones.tipo_moneda,
+        models.Contrataciones.monto,
+        models.Contrataciones.valor_ref,
+        models.Contrataciones.descripcion,
+        models.Contrataciones.entidad_id,
+        models.EntidadGobierno.nombre,
+        models.Contrataciones.detalle_contrato,
+        models.Contrataciones.detalle_seace,
+        models.Contrataciones.empresa_id,
+        models.Empresa.razon_social
+    ).join(
+        models.EntidadGobierno,
+        models.Empresa
+    ).filter(
+        models.Contrataciones.empresa_id == id
+    ).order_by(
+         models.Contrataciones.fecha_bue_pro.desc()
+    ).limit(10)
 
-        return render_template(
-        'proveedor.html',
-         proveedor=proveedor,
-        )
+    proveedor.representantes = representantes
+    proveedor.contrataciones = contrataciones
+
+    return render_template(
+    'proveedor.html',
+     proveedor=proveedor,
+    )
 
 
 @app.route('/api/get/proveedor/<int:id>', methods=['GET', 'POST'])

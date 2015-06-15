@@ -26,32 +26,37 @@
               <h3>Filtrar contratos</h3>
             </div>
             <div class="widget-content">        
-            <form action="{{ request.url }}" method="post">
-              <b>Filtrar por descripción</b>
-                <input type="text" name="termino" id="search" class="form-interno" placeholder="Buscar por descripción. Ejem: Pañales, Golosinas, Limpieza, etc">
+              <form action="{{ request.url }}" method="get">
+                <b>Filtrar por descripción</b>
+                <input type="text" name="termino" id="search" class="form-interno" placeholder="Ejem: Pañales, Golosinas, Limpieza, etc">
                 <div class="controls">
                   <b>Filtrar por etiquetas</b>
                   <label class="checkbox">
-                    <input value="irregulares" type="checkbox" name="etiquetas"> Fechas irregulares (Coincidencia de fechas)
+                    <input value="irregulares" checked type="checkbox" name="etiquetas"> Fechas irregulares (Coincidencia de fechas)
                   </label>                  
                   <label class="checkbox">
-                    <input value="cercanas" type="checkbox" name="etiquetas"> Fechas cercanas
+                    <input value="cercanas" checked type="checkbox" name="etiquetas"> Fechas cercanas
                   </label>
                   <label class="checkbox">
-                    <input value="monto" type="checkbox" name="etiquetas"> Montos irregulares (Monto contratado mayor al referencial)
+                    <input value="monto" checked type="checkbox" name="etiquetas"> Montos irregulares (Monto contratado mayor al referencial)
                   </label>
                 </div>
                 <div class="controls">
                   <b>Filtrar por tipo de moneda</b>
                   <label class="checkbox">
-                    <input value="S/. " name="tipo_moneda" type="checkbox"> Soles
+                    <input value="S/. " checked name="tipo_moneda" type="checkbox"> Soles
                   </label>                  
                   <label class="checkbox">
-                    <input name="$" name="tipo_moneda" type="checkbox"> Dólares
+                    <input value="$" checked name="tipo_moneda" type="checkbox"> Dólares
                   </label>
                   <label class="checkbox">
-                    <input value="EUR$ " name="tipo_moneda" type="checkbox"> Euros
+                    <input value="EUR$ " checked name="tipo_moneda" type="checkbox"> Euros
                   </label>
+                </div>
+                <div class="controls">
+                    <b>Filtrar por monto contratado:</b>
+                    <input type="text" name="monto" id="amount" readonly style="border:0; background-color:#FFF; color:#f6931f; font-weight:bold;">
+                    <div id="slider-range"></div>
                 </div>
                 <div class="form-actions">
                   <button type="submit" class="btn btn-primary">Buscar</button> 
@@ -64,17 +69,28 @@
         <div class="span8">
           <div class="row">
             {% for c in proveedor.contrataciones %}
-            <div class="span4">
+            <div class="span4 card-contrato">
              <div class="widget">              
-              <div class="widget-content">                    
+              <div class="widget-content">
+              {% if c.etiqueta_fecha is not none %}
+                <span class="label flag-date">
+                  <span>{{ c.etiqueta_fecha }}</span>
+                </span>
+              {% endif %}
                 <button type="button" class="btn btn-info">
                   <h3>{{ c.tipo_moneda }} {{ c.valor_ref }}</h3>
+                  <span>Monto de referencial</span>
                 </button>
                 <button type="button" class="btn btn">
                   <h3>{{ c.tipo_moneda }} {{ c.monto }}</h3>
+                  <span>Monto del contrato</span>
                 </button>
-                <p><span class="label">{{ c.fecha_bue_pro.strftime('%d/%m/%Y') }}</span> {{ c.descripcion }}</p>
-                <p><a href="{{ url_for('entidad', id=c.entidad_id) }}" class="btn btn-small btn-warning">{{ c.nombre }}</a></p>
+                <p>
+                <span class="label">Publicación: {{ c.fecha_pub.strftime('%d/%m/%Y') }}</span>
+                <span class="label">Buena pro: {{ c.fecha_bue_pro.strftime('%d/%m/%Y') }}</span>
+                </p>
+                <p class="desc-contrato">{{ c.descripcion|truncate(100) }}</p>
+                <p><a href="{{ url_for('entidad', id=c.entidad_id) }}" class="btn-entidad">{{ c.nombre }}</a></p>
                 <a href="{{ url_for('contrato', id=c.id) }}" class="btn btn-small btn-success">Ver detalles</a>
               </div>              
             </div>
@@ -105,16 +121,20 @@
   <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script> 
   <script src="{{ url_for('static', filename='js/base.js') }}"></script> 
   <script src="{{ url_for('static', filename='js/faq.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery-ui.js') }}"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-      $.ajax({
-        url: '/api/get/search/contratos'
-      }).done(function (data) {
-        $('#buscar').autocomplete({
-          source: data,
-          minLength: 2
-        });
+      $( "#slider-range" ).slider({
+        range: true,
+        min: 0,
+        max: 500,
+        values: [ 75, 300 ],
+        slide: function( event, ui ) {
+          $( "#amount" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+        }
       });
+      $( "#amount" ).val($( "#slider-range" ).slider( "values", 0 ) +
+        " - " + $( "#slider-range" ).slider( "values", 1 ) );
     });
   </script>
 </body>

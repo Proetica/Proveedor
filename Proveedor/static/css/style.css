@@ -1347,3 +1347,31 @@ color: #333;
 .form-interno{
 	width: 96%;
 }
+.flag-date{
+	display: block;
+	margin-bottom: 5px;
+	text-align: center;
+	background: #d11f1f;
+}
+.desc-contrato{
+	line-height: 1.5em;
+}
+.card-contrato{
+	float: left;
+	min-height: 300px;
+}
+.btn-entidad{
+	background: #19bc9c;
+	color: #FFF;
+	padding: 0px;
+	display: block;
+	text-align: center;
+	font-size: 10px;
+	text-decoration: none;
+}
+
+.btn-entidad:hover{
+	background: #0B5143;
+	color: #FFF;
+	text-decoration: none;	
+}

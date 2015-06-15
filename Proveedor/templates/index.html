@@ -26,17 +26,31 @@
           <div class="span6">
            <div class="widget widget-nopad">
             <div class="widget-content">
-
+              <div class="widget big-stats-container">
+                <div class="widget-content">              
+                  <div id="big_stats" class="cf">
+                    <div class="stat"> <i class="icon-th-list"></i> <span class="value">{{ entidades }}</span><br> Entidades <br>públicas </div>
+                    <div class="stat"> <i class="icon-list-alt"></i> <span class="value">{{ empresas }}</span><br> Empresas <br>contratadas </div>
+                    <div class="stat"> <i class="icon-briefcase"></i> <span class="value">{{ contratos }}</span><br> Contrataciones públicas </div>                   
+                    <div class="stat"> <i class="icon-calendar"></i> <span class="value">{{ irregulares }}%</span><br> Contrataciones con fechas irregulares</div>
+                  </div>
+                </div>             
+              </div>               
+            </div>
+          </div>
+          <div class="widget widget-nopad">
+            <div class="widget-content">
               <div class="widget big-stats-container">
                 <div class="widget-content">
-                 <div id="big_stats" class="cf">
-                  <div class="stat"><i class="icon-money"></i><span class="value">S/. {{ total.total }}</span><br><br> Suma total de contratos realizados en soles<br></div>
+                 <div id="big_stats2" class="cf">              
+                  <div id="rank_prov" style="min-width: 90% height: 380px;"></div>
                 </div>
               </div>             
             </div>
           </div>
         </div>
       </div>
+
       <div class="span6">
        <div class="widget widget-nopad">
         <div class="widget-content">
@@ -52,7 +66,18 @@
           </div>               
         </div>
       </div>
-    </div>    
+      <div class="widget widget-nopad">
+        <div class="widget-content">
+          <div class="widget big-stats-container">
+            <div class="widget-content">              
+              <div id="big_stats" class="cf">                  
+                <div id="container" style="min-width: 90%; height: 380px;"></div>
+              </div>
+            </div>             
+          </div>               
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="row">
@@ -114,24 +139,112 @@
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script> 
   <script src="{{ url_for('static', filename='js/faq.js') }}"></script>
+  <script src="http://code.highcharts.com/highcharts.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-      $( "#search" ).autocomplete({
+      $("#search" ).autocomplete({
         source: function( request, response ) {
-        $.ajax({
-          url: "/api/get/search/contratos",
-          dataType: "json",
-          data: {
-            term: request.term
-          },
-          success: function(data) { 
+          $.ajax({
+            url: "/api/get/search/contratos",
+            dataType: "json",
+            data: {
+              term: request.term
+            },
+            success: function(data) { 
              response(data);
-            }
-        });
-      },
+           }
+         });
+        },
         minLength: 3,
+      });     
+
+      anios = [];
+      totales = [];
+
+      {% for t in total %}
+      anios.push({{ t.anio }});
+      totales.push({{ t.total }});
+      {% endfor %}
+
+      $('#container').highcharts({
+        title: {
+          text: 'Gasto de contrataciones por años',
+            x: -20 //center
+          },
+          subtitle: {
+            text: 'Fuente: Portal de transparencia estandar',
+            x: -20
+          },
+          xAxis: {
+            categories: anios
+          },
+          yAxis: {
+            title: {
+              text: 'Soles'
+            }
+          },
+          tooltip: {
+            valuePrefix: 'S/. '
+          },
+          credits: {
+            enabled: false
+          },
+          series: [{
+            name: 'Total por años',
+            data: totales
+          }]
+        });
+
+      rank_prov = [];
+
+      {% for p in proveedores %}
+      rank_prov.push({{ p.cantidad }})
+      {% endfor %}
+
+      $('#rank_prov').highcharts({
+        chart: {
+          type: 'bar'
+        },
+        title: {
+          text: 'Cantidad de proveedores contratados por año'
+        },
+        subtitle: {
+          text: 'Fuente: Portal de transparencia estandar'
+        },
+        xAxis: {
+          categories: ['2009', '2010', '2011', '2012', '2013', '2014', '2015'],
+          title: {
+            text: null
+          }
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: 'Contrataciones',
+            align: 'high'
+          },
+          labels: {
+            overflow: 'justify'
+          }
+        },
+        plotOptions: {
+          bar: {
+            dataLabels: {
+              enabled: true
+            }
+          }
+        },
+        credits: {
+          enabled: false
+        },
+        series: [{
+          name: 'Cantidad de proveedores',
+          data: rank_prov
+        }]
       });
+
     });
-  </script>
+
+</script>
 </body>
 </html>
