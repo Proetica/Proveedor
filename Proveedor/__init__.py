@@ -101,6 +101,15 @@ def index():
                 func.count(models.Contrataciones.id).label("cantidad")
             ).order_by(asc('anio')).group_by('anio').all()
 
+    total_soles = g.db.query(
+                func.sum(models.Contrataciones.monto).label("total")
+            ).filter(
+                and_(
+                    extract('year', models.Contrataciones.fecha_bue_pro) == 2015,
+                    models.Contrataciones.tipo_moneda == 'S/. '
+                    )
+            ).first()
+
 
     irregulares = (cont_irre * 100 ) / contratos
 
@@ -113,7 +122,8 @@ def index():
         proveedores=proveedores,
         irregulares=irregulares,
         total=total,
-        topentidades=topentidades
+        topentidades=topentidades,
+        totalsoles=total_soles
     )
 
 @app.route('/buscar/<string:type>', defaults={'termino':'', 'page':1}, methods=['GET', 'POST'])
