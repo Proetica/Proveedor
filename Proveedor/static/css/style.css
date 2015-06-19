@@ -1352,7 +1352,19 @@ color: #333;
 	margin-bottom: 5px;
 	text-align: center;
 	background: #d11f1f;
+	float: left;
+	margin-right: 3px;
 }
+
+.flag-monto{
+	display: block;
+	margin-bottom: 5px;
+	text-align: center;
+	background: #ED9815;
+	float: left;
+	margin-right: 3px;
+}
+
 .desc-contrato{
 	line-height: 1.5em;
 }
@@ -1374,4 +1386,17 @@ color: #333;
 	background: #0B5143;
 	color: #FFF;
 	text-decoration: none;	
+}
+
+.monto-field{
+	border:0; background-color:#FFF; color:#f6931f; font-weight:bold;
+}
+
+.block-search ul{
+	margin: 0px;
+	padding: 0px;
+}
+
+.block-search ul li{
+	list-style: none;
 }

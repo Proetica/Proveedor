@@ -52,7 +52,7 @@
                     <th class="col-number-top"> N°</th>
                     <th> Fecha</th>
                     <th> Descripción</th>
-                    <th> Tipo de gobierno</th>
+                    <th> Entidad de gobierno</th>
                     <th> Monto</th>
                     <th> RUC</th>
                     <th> Razón social</th>
@@ -72,10 +72,10 @@
                        </a>
                      </td>
                      <td>
-                        {{ e.nombre }}
+                     <a href="{{ url_for('entidad', id=e.eid) }}" class="">{{ e.nombre }}</a>
                      </td>
                      <td>
-                        {{ e.monto }}
+                        {{ e.tipo_moneda }}{{ e.monto }}
                      </td>
                      <td>
                         {{ e.ruc }}

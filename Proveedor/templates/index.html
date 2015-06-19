@@ -31,7 +31,7 @@
                   <div id="big_stats" class="cf">
                     <div class="stat">
                     <i class="icon-money"></i>
-                    <span class="value">{{ "S/.%.2f"|format(totalsoles.total) }}</span>
+                    <span class="value">{{ '{0:,}'.format(totalsoles.total|float) }}</span>
                     <br> Gastado contrataciones en lo que va el 2015
                     </div>
                   </div>
@@ -85,7 +85,7 @@
     <div class="span6">
       <div class="widget">              
         <div class="widget-content">
-          <h1>Top 15 de empresas contratadas</h1>
+          <h1>Top 15 de empresas contratadas en el 2015</h1>
           <div class="faq-container">
             <ol class="faq-list">               
               {% for e in top %}
@@ -104,7 +104,7 @@
     <div class="span6">
       <div class="widget">              
         <div class="widget-content">
-          <h1>Top 15 de Entidades públicas</h1>
+          <h1>Top 15 contrataciones de Entidades públicas en el 2015</h1>
           <div class="faq-container">
             <ol class="faq-list">               
               {% for e in topentidades %}

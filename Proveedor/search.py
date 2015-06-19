@@ -33,6 +33,7 @@ class Search():
                             models.Contrataciones.monto,
                             models.Contrataciones.valor_ref,
                             models.Contrataciones.descripcion,
+                            models.EntidadGobierno.id.label("eid"),
                             models.EntidadGobierno.nombre,
                             models.Contrataciones.empresa_id,
                             models.Empresa.razon_social,

@@ -1,9 +1,14 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from flask import Flask, g, render_template, url_for, request, redirect
 from sqlalchemy import create_engine, or_, and_, func, extract, desc, asc
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
-import models, forms, settings
-import search
+from search_form import SearchFormProveedor
+from search_form import SearchTerm
+import models, settings
+import search, advance_search
 import json
 
 app = Flask(
@@ -11,6 +16,8 @@ app = Flask(
     static_folder=settings.STATIC_PATH,
     static_url_path=settings.STATIC_URL_PATH
 )
+app.config.from_object('settings')
+
 db_engine = create_engine(
     settings.DATABASE_DSN,
     echo=settings.DEBUG
@@ -93,7 +100,7 @@ def index():
                 extract('year', models.Contrataciones.fecha_bue_pro).label("anio"),
                 func.sum(models.Contrataciones.monto).label("total")
             ).filter(
-                    models.Contrataciones.tipo_moneda == 'S/. '
+                    models.Contrataciones.tipo_moneda == '{S/.}'
             ).group_by('anio').order_by('anio').all()
 
     proveedores = g.db.query(
@@ -130,11 +137,13 @@ def index():
 @app.route('/buscar/<string:type>/<string:termino>/<int:page>', methods=['GET', 'POST'])
 def buscar(type, termino, page):
     
-    form = forms.Search(request.form)
+    form = SearchTerm(request.form)
+    
     searchObj = search.Search()
+    
     limit = 25
 
-    if request.method == 'POST' and form.validate():
+    if request.method == 'POST':
             
         termino = form.termino.data
     
@@ -287,7 +296,6 @@ def contrato(id):
         models.Contrataciones.id == id
     ).first()
 
-
     return render_template(
         'contrato.html',
         contrato=contrato,
@@ -297,132 +305,22 @@ def contrato(id):
 @app.route('/proveedor/<int:id>', methods=['GET', 'POST'])
 def proveedor(id):
 
+    form = SearchFormProveedor()
 
-    if request.form:
-        form = request.form
-        etiquetas = request.args.get("etiquetas")
-        tipo_moneda = request.args.get("tipo_moneda")
-        termino = request.args.get("termino")
-        moneda = request.args.get("moneda")
+    searchObj = advance_search.AdvanceSearch()
         
-
     proveedor = g.db.query(
         models.Empresa
         ).filter(models.Empresa.id == id).first()
-      
-    representantes = g.db.query(
-        models.Empresa_persona
-        ).filter(
-        models.Empresa_persona.empresa_id == id
-        ).order_by(
-        models.Empresa_persona.fecha_cargo.desc()
-        ).join(
-        models.Persona
-        ).values(
-        models.Persona.id,
-        models.Persona.dni,
-        models.Persona.nombre,
-        models.Empresa_persona.cargo,
-        models.Empresa_persona.fecha_cargo)
-
-    contrataciones = g.db.query(
-        models.Contrataciones.id,
-        models.Contrataciones.proceso,
-        models.Contrataciones.objeto_pro,
-        models.Contrataciones.fecha_pub,
-        models.Contrataciones.fecha_bue_pro,
-        models.Contrataciones.etiqueta_fecha,
-        models.Contrataciones.modalidad_sel,
-        models.Contrataciones.tipo_moneda,
-        models.Contrataciones.monto,
-        models.Contrataciones.valor_ref,
-        models.Contrataciones.descripcion,
-        models.Contrataciones.entidad_id,
-        models.EntidadGobierno.nombre,
-        models.Contrataciones.detalle_contrato,
-        models.Contrataciones.detalle_seace,
-        models.Contrataciones.empresa_id,
-        models.Empresa.razon_social
-    ).join(
-        models.EntidadGobierno,
-        models.Empresa
-    ).filter(
-        models.Contrataciones.empresa_id == id
-    ).order_by(
-         models.Contrataciones.fecha_bue_pro.desc()
-    ).limit(10)
-
-    proveedor.representantes = representantes
-    proveedor.contrataciones = contrataciones
+            
+    proveedor.contrataciones, proveedor.pagination = searchObj.get_results_contrataciones(id, form, 1, 25)
+    proveedor.max = searchObj.get_max_ammount(id, form)
+    proveedor.min = searchObj.get_min_ammount(id, form)
 
     return render_template(
     'proveedor.html',
      proveedor=proveedor,
-    )
-
-
-@app.route('/api/get/proveedor/<int:id>', methods=['GET', 'POST'])
-def get_proveedor(id):
-
-    proveedor = g.db.query(
-        models.Empresa
-    ).filter(
-        models.Empresa.id == id
-    ).first()
-
-    if (proveedor.ruc[:1] == 2):
-        representanteClass = import_representante.importRepresentante()
-        representantes = representanteClass.save(proveedor.ruc, id)
-
-        proveedorDetail = import_proveedor_detail.importDetail()
-        detail = proveedorDetail.scrapper(proveedor.ruc)
-
-        load = models.Load_empresa()
-        load.empresa_id = id
-
-        g.db.add(load)
-
-        try:
-            g.db.commit()
-        except:
-            g.db.rollback()
-    
-        return '{0}-{1}'.format(representantes, detail)
-    return '{0}-{1}'.format('ok', 'ok')
-
-
-@app.route('/representante/<int:id>', methods=['GET', 'POST'])
-def representante(id):
-
-    representante = g.db.query(
-        models.Persona
-    ).filter(
-        models.Persona.id == id
-    ).first()
-
-    empresas = g.db.query(
-        models.Empresa_persona
-    ).order_by(
-            models.Empresa_persona.fecha_cargo.desc()
-    ).filter(
-        models.Empresa_persona.persona_id == id
-    ).join(
-        models.Persona,
-        models.Empresa
-    ).values(
-        models.Empresa.id,
-        models.Empresa.razon_social,
-        models.Empresa.ruc,
-        models.Empresa.total_ganado,
-        models.Empresa_persona.cargo,
-        models.Empresa_persona.fecha_cargo
-    )
-
-    representante.empresas = empresas
-
-    return render_template(
-        'representante.html',
-        representante=representante,
+     form=form
     )
 
 
