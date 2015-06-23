@@ -41,51 +41,39 @@ def teardown_request(exception):
 @app.route('/', methods=['GET', 'POST'])
 def index():
 
-    top = g.db.query(
-                models.Empresa.id,
-                models.Empresa.razon_social,
-                func.count(models.Contrataciones.empresa_id).label("cant")
-            ).outerjoin(
-                models.Contrataciones
-            ).filter(
-                extract('year', models.Contrataciones.fecha_bue_pro).label("anio") == 2015
-            ).order_by(
-                func.count(models.Contrataciones.empresa_id).desc()
-            ).group_by(
-                    models.Empresa.id
-            ).limit(15)
 
-    topentidades = g.db.query(
-                models.EntidadGobierno.id,
-                models.EntidadGobierno.nombre,
-                func.count(models.Contrataciones.entidad_id).label("cant")
-            ).outerjoin(
-                models.Contrataciones
-            ).order_by(
-                func.count(models.Contrataciones.entidad_id).desc()
-            ).filter(
-                extract('year', models.Contrataciones.fecha_bue_pro).label("anio") == 2015
-            ).group_by(
-                    models.EntidadGobierno.id
-            ).limit(15)
+    top = {'2015':'','2014':'','2013':'',
+            '2012':'','2011':'','2010':'','2009':''}
+    top[2015] = topEmpresas(2015)
+    top[2014] = topEmpresas(2014)
+    top[2013] = topEmpresas(2013)
+    top[2012] = topEmpresas(2012)
+    top[2011] = topEmpresas(2011)
+    top[2010] = topEmpresas(2010)
+    top[2009] = topEmpresas(2009)
 
-    contratos = g.db.query(
-                models.Contrataciones
-            ).count()
+    topentidades = {'2015':'','2014':'','2013':'',
+            '2012':'','2011':'','2010':'','2009':''}
 
-    empresas = g.db.query(
-                models.Empresa
-            ).count()
+    topentidades[2015] = topEntidades(2015)
+    topentidades[2014] = topEntidades(2014)
+    topentidades[2013] = topEntidades(2013)
+    topentidades[2012] = topEntidades(2012)
+    topentidades[2011] = topEntidades(2011)
+    topentidades[2010] = topEntidades(2010)
+    topentidades[2009] = topEntidades(2009)
 
-    entidades = g.db.query(
-                models.EntidadGobierno
-            ).count()
+    contratos = g.db.query(models.Contrataciones).count()
+
+    empresas = g.db.query(models.Empresa).count()
+
+    entidades = g.db.query(models.EntidadGobierno).count()
 
     cont_irre = g.db.query(
                 models.Contrataciones
             ).filter(
-                or_(models.Contrataciones.etiqueta_fecha == 'Fechas cercanas',
-                    models.Contrataciones.etiqueta_fecha == 'Fechas coinciden')
+                or_(models.Contrataciones.etiqueta_fecha == 'irregulares',
+                    models.Contrataciones.etiqueta_fecha == 'cercanas')
             ).count()
 
     total = g.db.query(
@@ -113,7 +101,7 @@ def index():
             ).filter(
                 and_(
                     extract('year', models.Contrataciones.fecha_bue_pro) == 2015,
-                    models.Contrataciones.tipo_moneda == 'S/. '
+                    models.Contrataciones.tipo_moneda == '{S/.}'
                     )
             ).first()
 
@@ -132,6 +120,43 @@ def index():
         topentidades=topentidades,
         totalsoles=total_soles
     )
+
+def topEmpresas(anio):
+
+    empresas = g.db.query(
+                    models.Empresa.id,
+                    models.Empresa.razon_social,
+                    func.count(models.Contrataciones.empresa_id).label("cant")
+                ).outerjoin(
+                    models.Contrataciones
+                ).filter(
+                    extract('year', models.Contrataciones.fecha_bue_pro).label("anio") == anio
+                ).order_by(
+                    func.count(models.Contrataciones.empresa_id).desc()
+                ).group_by(
+                        models.Empresa.id
+                ).limit(15)
+
+    return empresas
+
+
+def topEntidades(anio):
+
+    entidades = g.db.query(
+                    models.EntidadGobierno.id,
+                    models.EntidadGobierno.nombre,
+                    func.count(models.Contrataciones.entidad_id).label("cant")
+                ).outerjoin(
+                    models.Contrataciones
+                ).order_by(
+                    func.count(models.Contrataciones.entidad_id).desc()
+                ).filter(
+                    extract('year', models.Contrataciones.fecha_bue_pro).label("anio") == anio
+                ).group_by(
+                        models.EntidadGobierno.id
+                ).limit(15)
+
+    return entidades
 
 @app.route('/buscar/<string:type>', defaults={'termino':'', 'page':1}, methods=['GET', 'POST'])
 @app.route('/buscar/<string:type>/<string:termino>/<int:page>', methods=['GET', 'POST'])

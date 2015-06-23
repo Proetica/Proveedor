@@ -72,9 +72,13 @@
               <div class="widget-content">
               <div style="overflow:hidden;">
                 {% if c.etiqueta_fecha is not none %}
-                <span class="label flag-date">
-                  <span><i class="icon-calendar"></i> {{ c.etiqueta_fecha }}</span>
-                </span>
+                  <span class="label flag-date">
+                    {% if c.etiqueta_fecha == 'irregulares' %}
+                      <span><i class="icon-calendar"></i> Fechas irregulares</span>
+                    {% elif c.etiqueta_fecha == 'cercanas' %}
+                      <span><i class="icon-calendar"></i> Fechas cercanas</span>
+                    {% endif %}
+                  </span>
                 {% endif %}
                 {% if c.etiqueta_monto is not none %}
                 <span class="label flag-monto">
@@ -83,11 +87,11 @@
                 {% endif %}
                 </div>
                 <button type="button" class="btn btn-info">
-                  <h3>{{ c.tipo_moneda|replace("{", "")|replace("}", "") }} {{ c.valor_ref }}</h3>
+                  <h3>{{ c.tipo_moneda|replace("{", "")|replace("}", "") }} {{ '{0:,}'.format(c.valor_ref|float) }}</h3>
                   <span>Monto de referencia</span>
                 </button>
                 <button type="button" class="btn btn">
-                  <h3>{{ c.tipo_moneda|replace("{", "")|replace("}", "") }} {{ c.monto }}</h3>
+                  <h3>{{ c.tipo_moneda|replace("{", "")|replace("}", "") }} {{ '{0:,}'.format(c.monto|float) }}</h3>
                   <span>Monto del contrato</span>
                 </button>
                 <p>
@@ -108,7 +112,7 @@
         {% if proveedor.pagination.count > proveedor.pagination.limit %}
         <div class="pagination">
           {% for p in range(1, (proveedor.pagination.pager+2)) %}
-          <a {% if p==proveedor.pagination.page %} class="active" {% endif %} href="/buscar/contratos/{{ termino}}/{{ p }}">{{ p }}</a>
+          <a {% if p==proveedor.pagination.page %} class="active" {% endif %} href="/proveedor/{{proveedor.id}}/{{ termino}}/{{ p }}">{{ p }}</a>
           {% endfor %}
         </div>
         {% endif %}

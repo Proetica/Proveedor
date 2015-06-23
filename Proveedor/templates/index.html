@@ -30,9 +30,9 @@
                 <div class="widget-content">              
                   <div id="big_stats" class="cf">
                     <div class="stat">
-                    <i class="icon-money"></i>
-                    <span class="value">{{ '{0:,}'.format(totalsoles.total|float) }}</span>
-                    <br> Gastado contrataciones en lo que va el 2015
+                      <i class="icon-money"></i>
+                      <span class="value">S/. {{ '{0:,}'.format(totalsoles.total|float) }}</span>
+                      <br> Gastado contrataciones en lo que va el 2015
                     </div>
                   </div>
                 </div>             
@@ -85,18 +85,49 @@
     <div class="span6">
       <div class="widget">              
         <div class="widget-content">
-          <h1>Top 15 de empresas contratadas en el 2015</h1>
-          <div class="faq-container">
-            <ol class="faq-list">               
-              {% for e in top %}
-              <li class="faq-{{ loop.index }}">
-                <div class="faq-icon"><div class="faq-number">{{ loop.index }}</div></div>
-                <div class="faq-text">
-                  <h4><a href="{{ url_for('proveedor', id=e.id) }}">{{ e.razon_social }}</a> <span class="badge">{{ e.cant }}</span></h4>
-                </div>
+          <h1>Top 15 de empresas contratadas</h1><br />
+          <div class="tabbable">
+            <ul class="nav nav-tabs">
+              <li class="active">
+                <a href="#2015-empresas" data-toggle="tab">2015</a>
               </li>
-              {% endfor %}
-            </ol>
+              <li>
+                <a href="#2014-empresas" data-toggle="tab">2014</a>
+              </li>
+              <li>
+                <a href="#2013-empresas" data-toggle="tab">2013</a>
+              </li>
+              <li>
+                <a href="#2012-empresas" data-toggle="tab">2012</a>
+              </li>
+              <li>
+                <a href="#2011-empresas" data-toggle="tab">2011</a>
+              </li>
+              <li>
+                <a href="#2010-empresas" data-toggle="tab">2010</a>
+              </li>
+              <li>
+                <a href="#2009-empresas" data-toggle="tab">2009</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              {% for t in top %}
+                <div class="tab-pane  {% if t == 2015 %} active {% endif %}" id="{{ t }}-empresas">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    {% for e in top[t] %}
+                    <li class="faq-{{ loop.index }}">
+                      <div class="faq-icon"><div class="faq-number">{{ loop.index }}</div></div>
+                      <div class="faq-text">
+                        <h4><a href="{{ url_for('proveedor', id=e.id) }}">{{ e.razon_social }}</a> <span class="badge">{{ e.cant }}</span></h4>
+                      </div>
+                    </li>
+                    {% endfor %}
+                  </ol>
+                </div>
+                </div>
+              {% endfor %}              
+            </div>
           </div>
         </div>
       </div>
@@ -104,18 +135,50 @@
     <div class="span6">
       <div class="widget">              
         <div class="widget-content">
-          <h1>Top 15 contrataciones de Entidades públicas en el 2015</h1>
-          <div class="faq-container">
-            <ol class="faq-list">               
-              {% for e in topentidades %}
-              <li class="faq-{{ loop.index }}">
-                <div class="faq-icon"><div class="faq-number">{{ loop.index }}</div></div>
-                <div class="faq-text">
-                  <h4><a href="{{ url_for('entidad', id=e.id) }}">{{ e.nombre }}</a> <span class="badge">{{ e.cant }}</span></h4>
-                </div>
+          <h1>Top 15 de entidades contratantes</h1><br />
+          <div class="tabbable">
+            <ul class="nav nav-tabs">
+              <li class="active">
+                <a href="#2015-entidades" data-toggle="tab">2015</a>
               </li>
-              {% endfor %}
-            </ol>
+              <li>
+                <a href="#2014-entidades" data-toggle="tab">2014</a>
+              </li>
+              <li>
+                <a href="#2013-entidades" data-toggle="tab">2013</a>
+              </li>
+              <li>
+                <a href="#2012-entidades" data-toggle="tab">2012</a>
+              </li>
+              <li>
+                <a href="#2011-entidades" data-toggle="tab">2011</a>
+              </li>
+              <li>
+                <a href="#2010-entidades" data-toggle="tab">2010</a>
+              </li>
+              <li>
+                <a href="#2009-entidades" data-toggle="tab">2009</a>
+              </li>
+            </ul>
+            <br>
+            <div class="tab-content">              
+              {% for t in topentidades %}
+              <div class="tab-pane {% if t == 2015 %} active {% endif %}" id="{{ t }}-entidades">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    {% for e in topentidades[t] %}
+                    <li class="faq-{{ loop.index }}">
+                      <div class="faq-icon"><div class="faq-number">{{ loop.index }}</div></div>
+                      <div class="faq-text">
+                        <h4><a href="{{ url_for('entidad', id=e.id) }}">{{ e.nombre }}</a> <span class="badge">{{ e.cant }}</span></h4>
+                      </div>
+                    </li>
+                    {% endfor %}
+                  </ol>
+                </div>
+                </div>
+              {% endfor %}              
+            </div>
           </div>
         </div>
       </div>
@@ -207,7 +270,7 @@
           type: 'bar'
         },
         title: {
-          text: 'Cantidad de proveedores contratados por año'
+          text: 'Cantidad de contrataciones por año'
         },
         subtitle: {
           text: 'Fuente: Portal de transparencia estandar'

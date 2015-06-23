@@ -6,7 +6,7 @@
   <div class="main-inner">
     <div class="container">
       <div class="row">
-        <div class="span10">
+        <div class="span12">
         <div class="widget">
           <div class="widget-content">
           <div class="tabbable">
@@ -18,12 +18,12 @@
               <li><a href="#entidades" data-toggle="tab">Buscar por entidades</a></li>
             </ul>
               <div class="tab-content">
-                <div class="tab-pane active" id="contratos">
+                <div class="tab-pane" id="contratos">
                   <form action="{{ url_for('buscar', type='contratos') }}" method="post">
                     <input class="buscar-input" value="{{ termino }}" type="text" name="termino" placeholder="Buscar contrataciones por terminos. Ejem: Pañales, Golosinas, Limpieza, etc">
                   </form>
                 </div>                
-                <div class="tab-pane" id="empresas">
+                <div class="tab-pane active" id="empresas">
                   <form action="{{ url_for('buscar', type='empresas') }}" method="post">
                     <input class="buscar-input"  value="{{ termino }}" type="text" name="termino" placeholder="Buscar por razón social o ruc">
                   </form>
@@ -75,9 +75,9 @@
             </div>
             {% if pagination.count > pagination.limit %}
               <div class="pagination">
-                {% for p in range(1, (pagination.pager+2)) %}
-                      <a {% if p==pagination.page %} class="active" {% endif %} href="/buscar/empresas/{{ termino}}/{{ p }}">{{ p }}</a>
-                {% endfor %}
+                  {% for p in range(1, (pagination.pager+2)) %}                      
+                    <a {% if p==pagination.page %} class="active" {% endif %} href="{{ url_for('buscar', type='empresas', termino=termino, page=p ) }}">{{ p }}</a>
+                  {% endfor %}
               </div>
               {% endif %}
             <!-- /widget-content --> 

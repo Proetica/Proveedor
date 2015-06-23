@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+from flask import request
 from sqlalchemy import create_engine, and_, or_, func, between
 from sqlalchemy.orm import sessionmaker
 from math import ceil
@@ -19,18 +19,62 @@ db = sessionmaker(bind=db_engine)()
 
 class AdvanceSearch():
 
+    def generateFilters(self, filters, id):
+
+        listfilters = []
+
+        listfilters.append(models.Contrataciones.empresa_id == id)
+
+        if filters.monto.data:
+            min = float(filters['monto'].data.split(" - ")[0])
+            max = float(filters['monto'].data.split(" - ")[1])
+            listfilters.append(
+                and_(
+                    between(models.Contrataciones.monto, min, max)
+                )
+            )
+
+        if filters.etiquetas.data:
+            listfilters.append(
+                and_(
+                    or_(
+                        models.Contrataciones.etiqueta_fecha.in_(filters.etiquetas.data),
+                        models.Contrataciones.etiqueta_monto.in_(filters.etiquetas.data)
+                    )
+                )
+            )
+     
+        if filters.term.data:
+            listfilters.append(
+                and_(
+                    models.Contrataciones.descripcion.ilike('%'+filters.term.data+'%')
+                )
+            )
+
+        if filters.tipo_moneda.data:
+            listfilters.append(
+                and_(
+                    models.Contrataciones.tipo_moneda.in_(filters.tipo_moneda.data)
+                )
+            )
+
+        if filters.fecha_inicial.data:
+            inicio = filters.fecha_inicial.data
+            final = filters.fecha_final.data
+            listfilters.append(
+                and_(
+                    between(models.Contrataciones.fecha_bue_pro, inicio, final)
+                )
+            )
+
+        return listfilters
+
+
     def get_results_contrataciones(self, id, filters, page, limit):
 
         offset = int((page-1) * limit)
 
-        listfilters = [models.Contrataciones.empresa_id == id]
-
-        if filters.monto.data is not None:
-            min = float(filters.monto.data.split(" - ")[0])
-            max = float(filters.monto.data.split(" - ")[1])
-            listfilters.append(
-                between(models.Contrataciones.monto, min, max)
-            )
+        listfilters = self.generateFilters(filters, id)
 
         results = db.query(
             models.Contrataciones.id,
@@ -73,34 +117,7 @@ class AdvanceSearch():
 
     def get_max_ammount(self,id, filters):
 
-
-        listfilters = [models.Contrataciones.empresa_id == id]
-       
-        if filters.term.data is not None:
-            listfilters.append(
-                models.Contrataciones.descripcion.ilike('%'+filters.term.data+'%')
-            )
-
-        if filters.tipo_moneda.data is not None:
-            listfilters.append(
-                models.Contrataciones.tipo_moneda.in_(filters.tipo_moneda.data)
-            )
-
-        if filters.etiquetas.data is not None:
-            listfilters.append(
-                or_(
-                    models.Contrataciones.etiqueta_fecha.in_(filters.etiquetas.data),
-                    models.Contrataciones.etiqueta_monto.in_(filters.etiquetas.data),
-                )
-            )
-
-        if filters.monto.data is not None:
-            min = filters.monto.data.split(" - ")[0]
-            max = filters.monto.data.split(" - ")[1]
-            listfilters.append(
-                between(models.Contrataciones.monto, min, max)
-            )
-
+        listfilters = self.generateFilters(filters, id)
 
         result = db.query(
             func.max(models.Contrataciones.monto).label("monto")
@@ -112,34 +129,7 @@ class AdvanceSearch():
 
     def get_min_ammount(self,id, filters):
 
-
-        listfilters = [models.Contrataciones.empresa_id == id]
-       
-        if filters.term.data is not None:
-            listfilters.append(
-                models.Contrataciones.descripcion.ilike('%'+filters.term.data+'%')
-            )
-
-        if filters.tipo_moneda.data is not None:
-            listfilters.append(
-                models.Contrataciones.tipo_moneda.in_(filters.tipo_moneda.data)
-            )
-
-        if filters.etiquetas.data is not None:
-            listfilters.append(
-                or_(
-                    models.Contrataciones.etiqueta_fecha.in_(filters.etiquetas.data),
-                    models.Contrataciones.etiqueta_monto.in_(filters.etiquetas.data),
-                )
-            )
-
-        if filters.monto.data is not None:
-            min = filters.monto.data.split(" - ")[0]
-            max = filters.monto.data.split(" - ")[1]
-            listfilters.append(
-                between(models.Contrataciones.monto, min, max)
-            )
-
+        listfilters = self.generateFilters(filters, id)
 
         result = db.query(
             func.min(models.Contrataciones.monto).label("monto")

@@ -11,9 +11,9 @@ etiquetas_data = [('irregulares','Fechas irregulares (Coincidencia de fechas)'),
 ('cercanas','Fechas cercanas (Fechas menores a 5 dias)'),
 ('mayor','Montos irregulares (Monto contratado mayor al referencial')]
 
-moneda_data = [('S/.','Soles'),
-('$','Dolares'),
-(u'€','Euros')]
+moneda_data = [('{S/.}','Soles'),
+('{US$}','Dolares'),
+('{EUR,$}','Euros')]
 
 
 class SearchFormProveedor(Form):
