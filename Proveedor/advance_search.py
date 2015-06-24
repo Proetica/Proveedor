@@ -104,10 +104,7 @@ class AdvanceSearch():
              models.Contrataciones.monto.desc()
         ).limit(limit).offset(offset)
        
-        count = db.query(models.Contrataciones
-                        ).filter(
-                             and_(*listfilters)
-                        ).count()
+        count = results.count()
 
         pagination = self.get_pager(offset, count, page, limit)
 
