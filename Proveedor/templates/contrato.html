@@ -1,71 +1,85 @@
     {% include "head.html" %}
     <body>
-    {% include "header.html" %}
-   {% include "menu.html" %}
-  <div class="main">
-    <div class="main-inner">
-      <div class="container">
-        <div class="row">
-          <div class="span6">
-            <div class="widget">
-              <div class="widget-content">              
-              <h3><span class="btn btn-danger">{{ contrato.etiqueta_fecha }}</span></h3><br />
-              <h1>{{ contrato.descripcion }}</h1>
-              <p><i class="icon-book"></i> Objeto de proceso: <span class="label label-info">{{ contrato.objeto_pro }}</span></p>
-              <p><i class="icon-folder-open"></i> Proceso: <span class="label">{{ contrato.proceso }}</span></p>
-<!--              <p><i class="icon-book"></i> Modalidad de selección: <span class="label label-info">{{ contrato.modalidad_sel }}</span></p> !-->
-              <p>
-              <i class="icon-calendar"></i> Fecha de publicación:  <span class="label label-success">{{ contrato.fecha_pub.strftime('%d/%m/%Y') }}</span>
-              </p>
-              <p>
-              <i class="icon-calendar"></i> Fecha de buena pro:  <span class="label label-warning">{{ contrato.fecha_bue_pro.strftime('%d/%m/%Y') }}</span>
-              </p>
-              <p>
-                <span>Detalles de la convocatoria: </span>
-                {% if contrato.detalle_seace != 'No hay referencia' %}
-                  <a href="{{ contrato.detalle_seace }}" target="_blank" class="btn"><img src="http://www.peru.gob.pe/transparencia/imagenes/b_seace.gif" alt="" border="0"></a>
-                {% else %}
-                  <span class="btn">No se encontro referencia</a>
-                {% endif %}
-              </p>              
-             </div>
-            </div>
-          </div>
+      {% include "header.html" %}
+      {% include "menu.html" %}
+      <div class="main">
+        <div class="main-inner">
+          <div class="container">
+            <div class="row">
+              <div class="span6">
+                <div class="widget">
+                  <div class="widget-content">  
+                    <div style="overflow:hidden;">            
+                      <h3>
+                        {% if contrato.etiqueta_fecha is not none %}
+                        <span class="btn btn-danger flag-date">
+                          {% if contrato.etiqueta_fecha == 'irregulares' %}
+                          <span><i class="icon-calendar"></i> Fechas irregulares</span>
+                          {% elif contrato.etiqueta_fecha == 'cercanas' %}
+                          <span><i class="icon-calendar"></i> Fechas cercanas</span>
+                          {% endif %}
+                        </span>
+                        {% endif %}
+                      </h3>
+                    </div>
+                    <h1>{{ contrato.descripcion }}</h1>
+                    <p><i class="icon-book"></i> Objeto de proceso: <span class="label label-danger">{{ contrato.objeto_pro }}</span></p>
+                    <p><i class="icon-folder-open"></i> Proceso: <span class="label">{{ contrato.proceso }}</span></p>
+                    <!--              <p><i class="icon-book"></i> Modalidad de selección: <span class="label label-info">{{ contrato.modalidad_sel }}</span></p> !-->
+                    <p>
+                      <i class="icon-calendar"></i> Fecha de publicación:  <span class="label label-success">{{ contrato.fecha_pub.strftime('%d/%m/%Y') }}</span>
+                    </p>
+                    <p>
+                      <i class="icon-calendar"></i> Fecha de buena pro:  <span class="label label-warning">{{ contrato.fecha_bue_pro.strftime('%d/%m/%Y') }}</span>
+                    </p>
+                    <p>
+                      <span>Detalles de la convocatoria: </span>
+                      {% if contrato.detalle_seace != 'ninguna' %}
+                      <a href="{{ contrato.detalle_seace }}" target="_blank" class="btn"><img src="http://www.peru.gob.pe/transparencia/imagenes/b_seace.gif" alt="" border="0"></a>
+                      {% else %}
+                      <span class="btn">No se encontro referencia</a>
+                        {% endif %}
+                      </p>              
+                    </div>
+                  </div>
+                </div>
 
-          <div class="span6">
-            <div class="widget">
-              <div class="widget-content">
-              <h3><span class="btn btn-danger">{{ contrato.etiqueta_monto }}</span></h3><br />
-              <span class="btn btn-large">
-                <span>Valor referencial</span><br />
-                <h1>{{ contrato.tipo_moneda }} {{ contrato.valor_ref }}</h1>
-              </span>
-              <span class="btn btn-large">
-                <span>Monto del contrato</span><br />
-                <h1>{{ contrato.tipo_moneda }} {{ contrato.monto }}</h1>
-              </span>
+                <div class="span6">
+                  <div class="widget">
+                    <div class="widget-content">
+                      {% if contrato.etiqueta_monto is not none %}
+                      <h3><span class="btn btn-danger">Monto de contratación mayor</span></h3><br />
+                      {% endif %}
+                      <span class="btn btn-large">
+                        <span>Valor referencial</span><br />
+                        <h1>{{ contrato.tipo_moneda }} {{ contrato.valor_ref }}</h1>
+                      </span>
+                      <span class="btn btn-large">
+                        <span>Monto del contrato</span><br />
+                        <h1>{{ contrato.tipo_moneda }} {{ contrato.monto }}</h1>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="widget">
+                    <div class="widget-content">
+                      <span><b>Empresa</b></span>
+                      <h3><a href="{{ url_for('proveedor', id=contrato.empresa_id) }}" class="btn btn-small btn-warning">{{ contrato.razon_social }} (<span>{{ contrato.ruc }}</span>)</a></h3>
+                      <span><b>Entidad contratante</b></span>
+                      <h3><a href="{{ url_for('entidad', id=contrato.entidad_id) }}" class="btn btn-small btn-success">{{ contrato.nombre }}</a></h3>
+                    </div>
+                  </div>
+
+                </div>
               </div>
+              <!-- /row --> 
             </div>
-
-            <div class="widget">
-              <div class="widget-content">
-                <span><b>Empresa</b></span>
-                <h3><a href="{{ url_for('proveedor', id=contrato.empresa_id) }}" class="btn btn-small btn-warning">{{ contrato.razon_social }} (<span>{{ contrato.ruc }}</span>)</a></h3>
-                 <span><b>Entidad contratante</b></span>
-                <h3><a href="{{ url_for('entidad', id=contrato.entidad_id) }}" class="btn btn-small btn-success">{{ contrato.nombre }}</a></h3>
-              </div>
-            </div>
-
+            <!-- /container --> 
           </div>
+          <!-- /main-inner --> 
         </div>
-        <!-- /row --> 
-      </div>
-      <!-- /container --> 
-    </div>
-    <!-- /main-inner --> 
-  </div>
-<!-- /main -->
-{% include "footer.html" %}
+        <!-- /main -->
+        {% include "footer.html" %}
 <!-- Le javascript
   ================================================== --> 
   <!-- Placed at the end of the document so the pages load faster --> 
@@ -77,14 +91,14 @@
   <script src="{{ url_for('static', filename='js/faq.js') }}"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-        $.ajax({
-          url: '/api/get/search/contratos'
-        }).done(function (data) {
-          $('#buscar').autocomplete({
-            source: data,
-            minLength: 2
-          });
+      $.ajax({
+        url: '/api/get/search/contratos'
+      }).done(function (data) {
+        $('#buscar').autocomplete({
+          source: data,
+          minLength: 2
         });
+      });
     });
   </script>
 </body>

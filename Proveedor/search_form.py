@@ -17,6 +17,7 @@ moneda_data = [('{S/.}','Soles'),
 
 
 class SearchFormProveedor(Form):
+    page = HiddenField('page')
     proveedor = HiddenField('proveedor')
     term = TextField('term')
     monto = TextField('monto')

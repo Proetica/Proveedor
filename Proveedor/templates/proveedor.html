@@ -26,9 +26,10 @@
               <h3>Filtrar contratos</h3>
             </div>
             <div class="widget-content">        
-              <form action="{{ request.url }}" method="post">
+              <form action="{{ request.url }}" method="post" id="search-contratos">
                 <b>Filtrar por descripción</b>
                 {{ form.proveedor(value=proveedor.id) }}
+                {{ form.page(value=1) }}
                 {{ form.term(class="form-interno",placeholder="Ejem: Pañales, Golosinas, Limpieza, etc") }}                
                 <div class="controls">
                   <b>Filtrar por etiquetas</b>
@@ -82,16 +83,16 @@
                 {% endif %}
                 {% if c.etiqueta_monto is not none %}
                 <span class="label flag-monto">
-                  <span><i class="icon-plus"></i> {{ c.etiqueta_monto }}</span>
+                  <span><i class="icon-plus"></i> Monto de contratación mayor</span>
                 </span>
                 {% endif %}
                 </div>
                 <button type="button" class="btn btn-info">
-                  <h3>{{ c.tipo_moneda|replace("{", "")|replace("}", "") }} {{ '{0:,}'.format(c.valor_ref|float) }}</h3>
+                  <h3>{{ c.tipo_moneda }} {{ '{0:,}'.format(c.valor_ref|float) }}</h3>
                   <span>Monto de referencia</span>
                 </button>
                 <button type="button" class="btn btn">
-                  <h3>{{ c.tipo_moneda|replace("{", "")|replace("}", "") }} {{ '{0:,}'.format(c.monto|float) }}</h3>
+                  <h3>{{ c.tipo_moneda }} {{ '{0:,}'.format(c.monto|float) }}</h3>
                   <span>Monto del contrato</span>
                 </button>
                 <p>
@@ -112,7 +113,7 @@
         {% if proveedor.pagination.count > proveedor.pagination.limit %}
         <div class="pagination">
           {% for p in range(1, (proveedor.pagination.pager+2)) %}
-          <a {% if p==proveedor.pagination.page %} class="active" {% endif %} href="/proveedor/{{proveedor.id}}/{{ termino}}/{{ p }}">{{ p }}</a>
+          <a {% if p==proveedor.pagination.page %} class="active" {% endif %} href="/proveedor/{{proveedor.id}}" page="{{ p }}">{{ p }}</a>
           {% endfor %}
         </div>
         {% endif %}
@@ -143,6 +144,15 @@
   <script src="{{ url_for('static', filename='js/jquery-ui.js') }}"></script>
   <script type="text/javascript">
     $(document).ready(function() {
+
+      $('.pagination a').click(function(){
+        var page = $(this).attr('page');
+        $("#page").val(page);
+        console.log($("#page").val());
+        $("#search-contratos").submit();
+        event.preventDefault();
+      }); 
+
       $( "#slider-range" ).slider({
         range: true,
         min: {{ proveedor.min.monto }},

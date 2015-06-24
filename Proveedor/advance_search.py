@@ -62,9 +62,7 @@ class AdvanceSearch():
             inicio = filters.fecha_inicial.data
             final = filters.fecha_final.data
             listfilters.append(
-                and_(
-                    between(models.Contrataciones.fecha_bue_pro, inicio, final)
-                )
+                and_(inicio >  models.Contrataciones.fecha_bue_pro < final)
             )
 
         return listfilters

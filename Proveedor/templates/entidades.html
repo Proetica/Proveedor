@@ -9,9 +9,6 @@
       <div class="row">
         <div class="span12">
         <div class="widget">
-          <div class="widget-header"> <i class="icon-th-list"></i>
-              <h3>Buscar por empresas</h3>
-          </div>
           <div class="widget-content">
             <div class="tabbable">
             <ul class="nav nav-tabs">
@@ -22,7 +19,7 @@
               <li class="active"><a href="#entidades" data-toggle="tab">Buscar por entidades</a></li>
             </ul>
               <div class="tab-content">
-                <div class="tab-pane active" id="contratos">
+                <div class="tab-pane" id="contratos">
                   <form action="{{ url_for('buscar', type='contratos') }}" method="post">
                     <input class="buscar-input" value="{{ termino }}" type="text" name="termino" placeholder="Buscar contrataciones por terminos. Ejem: Pañales, Golosinas, Limpieza, etc">
                   </form>
@@ -32,9 +29,9 @@
                     <input class="buscar-input"  value="{{ termino }}" type="text" name="termino" placeholder="Buscar por razón social o ruc">
                   </form>
                 </div>
-                <div class="tab-pane" id="entidades">
+                <div class="tab-pane active" id="entidades">
                   <form action="{{ url_for('buscar', type='entidades') }}" method="post">
-                    <input class="buscar-input"  value="{{ termino }}" type="text" name="termino" placeholder="Buscar por razón social o ruc">
+                    <input class="buscar-input"  value="{{ termino }}" type="text" name="termino" placeholder="Buscar nombre de entidad">
                   </form>
                 </div>               
               </div>             

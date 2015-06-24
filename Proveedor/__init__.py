@@ -80,7 +80,7 @@ def index():
                 extract('year', models.Contrataciones.fecha_bue_pro).label("anio"),
                 func.sum(models.Contrataciones.monto).label("total")
             ).filter(
-                    models.Contrataciones.tipo_moneda == 'S/. '
+                    models.Contrataciones.tipo_moneda == 'S/.'
             ).group_by('anio').order_by('anio').all()
 
 
@@ -88,7 +88,7 @@ def index():
                 extract('year', models.Contrataciones.fecha_bue_pro).label("anio"),
                 func.sum(models.Contrataciones.monto).label("total")
             ).filter(
-                    models.Contrataciones.tipo_moneda == '{S/.}'
+                    models.Contrataciones.tipo_moneda == 'S/.'
             ).group_by('anio').order_by('anio').all()
 
     proveedores = g.db.query(
@@ -101,7 +101,7 @@ def index():
             ).filter(
                 and_(
                     extract('year', models.Contrataciones.fecha_bue_pro) == 2015,
-                    models.Contrataciones.tipo_moneda == '{S/.}'
+                    models.Contrataciones.tipo_moneda == 'S/.'
                     )
             ).first()
 
@@ -158,7 +158,7 @@ def topEntidades(anio):
 
     return entidades
 
-@app.route('/buscar/<string:type>', defaults={'termino':'', 'page':1}, methods=['GET', 'POST'])
+@app.route('/buscar/<string:type>', defaults={'termino':' ', 'page':1}, methods=['GET', 'POST'])
 @app.route('/buscar/<string:type>/<string:termino>/<int:page>', methods=['GET', 'POST'])
 def buscar(type, termino, page):
     
@@ -216,7 +216,7 @@ def empresas():
         models.Empresa.total_ganado
     ).order_by(
         models.Empresa.total_ganado.desc()
-    ).limit(200)
+    ).limit(25)
 
     return render_template(
         'empresas.html',
@@ -235,7 +235,7 @@ def entidades():
             models.TipoGobierno
     ).order_by(
         models.EntidadGobierno.nombre.asc()
-    )
+    ).limit(25)
 
     return render_template(
         'entidades.html',
@@ -337,8 +337,13 @@ def proveedor(id):
     proveedor = g.db.query(
         models.Empresa
         ).filter(models.Empresa.id == id).first()
+
+    page = 1
+
+    if form.page.data:
+        page = int(form.page.data)
             
-    proveedor.contrataciones, proveedor.pagination = searchObj.get_results_contrataciones(id, form, 1, 25)
+    proveedor.contrataciones, proveedor.pagination = searchObj.get_results_contrataciones(id, form, page, 25)
     proveedor.max = searchObj.get_max_ammount(id, form)
     proveedor.min = searchObj.get_min_ammount(id, form)
 
