@@ -128,7 +128,7 @@ def topEmpresas(anio):
                     models.Empresa.id,
                     models.Empresa.razon_social,
                     func.count(models.Contrataciones.empresa_id).label("cant")
-                ).outerjoin(
+                ).join(
                     models.Contrataciones
                 ).filter(
                     extract('year', models.Contrataciones.fecha_bue_pro).label("anio") == anio
@@ -147,7 +147,7 @@ def topEntidades(anio):
                     models.EntidadGobierno.id,
                     models.EntidadGobierno.nombre,
                     func.count(models.Contrataciones.entidad_id).label("cant")
-                ).outerjoin(
+                ).join(
                     models.Contrataciones
                 ).order_by(
                     func.count(models.Contrataciones.entidad_id).desc()
@@ -202,6 +202,21 @@ def buscar(type, page):
             pagination=pagination,
             entidades=entidades
         )
+
+    elif type == "irregulares":
+
+        irregulares, pagination = searchObj.get_results_irregulares(termino, page, limit)
+
+        if termino == 'none':
+            termino = ''
+
+        return render_template(
+            'buscar_irregulares.html',
+            pagination=pagination,
+            irregulares=irregulares,
+            termino=termino
+        )
+
 
     else:
 

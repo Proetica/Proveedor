@@ -66,6 +66,57 @@ class Search():
         pagination.count = count
 
         return [results, pagination]
+
+
+    def get_results_irregulares(self, term, page, limit):
+
+        filters = [or_(models.Contrataciones.etiqueta_fecha == 'irregulares',
+                    models.Contrataciones.etiqueta_fecha == 'cercanas')]
+
+        if term != 'none':
+            filters.append(
+                and_(models.Contrataciones.descripcion.ilike('%'+term+'%'))
+                )
+
+        offset = int((page-1) * limit)
+
+        results = db.query( models.Contrataciones.id,
+                            models.Contrataciones.proceso,
+                            models.Contrataciones.objeto_pro,
+                            models.Contrataciones.fecha_pub,
+                            models.Contrataciones.fecha_bue_pro,
+                            models.Contrataciones.modalidad_sel,
+                            models.Contrataciones.tipo_moneda,
+                            models.Contrataciones.monto,
+                            models.Contrataciones.valor_ref,
+                            models.Contrataciones.descripcion,
+                            models.EntidadGobierno.id.label("eid"),
+                            models.EntidadGobierno.nombre,
+                            models.Contrataciones.empresa_id,
+                            models.Empresa.razon_social,
+                            models.Empresa.ruc,
+                            models.Contrataciones.detalle_contrato,
+                            models.Contrataciones.detalle_seace,
+                            models.Contrataciones.etiqueta_fecha,
+                            models.Contrataciones.etiqueta_monto
+                        ).join(
+                            models.Empresa,
+                            models.EntidadGobierno
+                        ).filter(
+                            and_(*filters)
+                        ).order_by(
+                            models.Contrataciones.fecha_bue_pro.desc()
+                        ).limit(limit).offset(offset)
+
+        count = db.query(func.count(models.Contrataciones.id)
+                        ).filter(and_(*filters)
+                        ).scalar()
+
+        pagination = Pagination(page=page, total=count, per_page=limit)
+        pagination.index = offset
+        pagination.count = count
+
+        return [results, pagination]
             
 
     def get_results_empresas(self, term, page, limit):

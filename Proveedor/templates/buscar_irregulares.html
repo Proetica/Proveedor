@@ -1,0 +1,93 @@
+{% include "head.html" %}
+<body>
+  {% include "header.html" %}
+  {% include "menu.html" %}
+  <div class="main">
+    <div class="main-inner">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <div class="widget">
+              <div class="widget-content">
+                <div class="tabbable">
+                  <ul class="nav nav-tabs">
+                    <li><a href="#entidades" data-toggle="tab">Filtrar contratos irregulares</a></li>
+                  </ul>
+                  <div class="tab-content">
+                     <div class="tab-pane active" id="entidades">
+                      <form action="{{ url_for('buscar', type='irregulares') }}" method="get">
+                        <input class="buscar-input"  value="{{ termino }}" type="text" id="buscar-entidades" name="termino" placeholder="Buscar por razón social o ruc">
+                      </form>
+                    </div>               
+                  </div>             
+                </div>            
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="span12">
+            <div class="row">
+              {% for c in irregulares %}
+              <div class="span4 card-contrato">
+               <div class="widget">              
+                <div class="widget-content">
+                  <div style="overflow:hidden;">
+                    {% if c.etiqueta_fecha is not none %}
+                    <span class="label flag-date">
+                      {% if c.etiqueta_fecha == 'irregulares' %}
+                      <span><i class="icon-calendar"></i> Fechas irregulares</span>
+                      {% elif c.etiqueta_fecha == 'cercanas' %}
+                      <span><i class="icon-calendar"></i> Fechas cercanas</span>
+                      {% endif %}
+                    </span>
+                    {% endif %}
+                    {% if c.etiqueta_monto is not none %}
+                    <span class="label flag-monto">
+                      <span><i class="icon-plus"></i> Monto de contratación mayor</span>
+                    </span>
+                    {% endif %}
+                  </div>
+                  <button type="button" class="btn btn-info">
+                    <h3>{{ c.tipo_moneda }} {{ '{0:,}'.format(c.valor_ref|float) }}</h3>
+                    <span>Monto de referencial</span>
+                  </button>
+                  <button type="button" class="btn btn">
+                    <h3>{{ c.tipo_moneda }} {{ '{0:,}'.format(c.monto|float) }}</h3>
+                    <span>Monto del contrato</span>
+                  </button>
+                  <p>
+                    <span class="label">Publicación: {{ c.fecha_pub.strftime('%d/%m/%Y') }}</span>
+                    <span class="label">Buena pro: {{ c.fecha_bue_pro.strftime('%d/%m/%Y') }}</span>
+                  </p>
+                  <p class="desc-contrato">{{ c.descripcion|truncate(100) }}</p>
+                  <p><a href="{{ url_for('proveedor', id=c.empresa_id) }}" class="btn-entidad">{{ c.razon_social }} ({{ c.ruc }})</a></p>
+                  <a href="{{ url_for('contrato', id=c.id) }}" class="btn btn-small btn-success">Ver detalles</a>
+                </div>              
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {{ pagination.links }}
+        </div>           
+      </div>
+      <!-- /row --> 
+    </div>
+    <!-- /container --> 
+  </div>
+  <!-- /main-inner --> 
+</div>
+<!-- /main -->
+{% include "footer.html" %}
+<!-- Le javascript
+  ================================================== --> 
+  <!-- Placed at the end of the document so the pages load faster --> 
+  <script src="{{ url_for('static', filename='js/jquery-1.7.2.min.js') }}"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="{{ url_for('static', filename='js/excanvas.min.js') }}"></script> 
+  <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script> 
+  <script src="{{ url_for('static', filename='js/base.js') }}"></script> 
+  <script src="{{ url_for('static', filename='js/faq.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/jquery-ui.js') }}"></script>
+</body>
+</html>
