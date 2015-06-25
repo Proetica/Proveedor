@@ -126,7 +126,7 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $('.pagination a').click(function(){
-        var page = $(this).attr('page');
+        var page = $(this).text();
         $("#page").val(page);
         console.log($("#page").val());
         $("#search-contratos").submit();
