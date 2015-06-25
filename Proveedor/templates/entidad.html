@@ -6,7 +6,7 @@
     <div class="main-inner">
       <div class="container">
         <div class="row">
-          <div class="span4">
+          <div class="span4 block-search">
             <div class="widget">
               <div class="widget-header"> <i class="icon-th-list"></i>
                 <h3>Información general</h3>
@@ -21,37 +21,36 @@
               <h3>Filtrar contratos</h3>
             </div>
             <div class="widget-content">        
-              <form action="{{ request.url }}" method="get">
+              <form action="{{ request.url }}" method="post" id="search-contratos">
                 <b>Filtrar por descripción</b>
-                <input type="text" name="termino" id="search" class="form-interno" placeholder="Ejem: Pañales, Golosinas, Limpieza, etc">
+                {{ form.entidad(value=entidad.id) }}
+                {{ form.page(value=1) }}
+                {{ form.term(class="form-interno",placeholder="Ejem: Pañales, Golosinas, Limpieza, etc") }}                
                 <div class="controls">
                   <b>Filtrar por etiquetas</b>
                   <label class="checkbox">
-                    <input value="irregulares" checked type="checkbox" name="etiquetas"> Fechas irregulares (Coincidencia de fechas)
+                    {{ form.etiquetas }}
                   </label>                  
-                  <label class="checkbox">
-                    <input value="cercanas" checked type="checkbox" name="etiquetas"> Fechas cercanas
-                  </label>
-                  <label class="checkbox">
-                    <input value="monto" checked type="checkbox" name="etiquetas"> Montos irregulares (Monto contratado mayor al referencial)
-                  </label>
                 </div>
                 <div class="controls">
                   <b>Filtrar por tipo de moneda</b>
                   <label class="checkbox">
-                    <input value="S/. " checked name="tipo_moneda" type="checkbox"> Soles
+                    {{ form.tipo_moneda }}
                   </label>                  
-                  <label class="checkbox">
-                    <input value="$" checked name="tipo_moneda" type="checkbox"> Dólares
+                </div>
+                <div class="controls">
+                  <b>Filtrar por fechas:</b>
+                  <label class="dates">
+                    {{ form.fecha_inicial(type="date", min="2009-01-01", max="2015-12-31") }}
                   </label>
-                  <label class="checkbox">
-                    <input value="EUR$ " checked name="tipo_moneda" type="checkbox"> Euros
+                  <label class="dates">
+                    {{ form.fecha_final(type="date", min="2009-01-01", max="2015-12-31") }}
                   </label>
                 </div>
                 <div class="controls">
-                    <b>Filtrar por monto contratado:</b>
-                    <input type="text" name="monto" id="amount" readonly style="border:0; background-color:#FFF; color:#f6931f; font-weight:bold;">
-                    <div id="slider-range"></div>
+                  <b>Filtrar por monto del contrato:</b>
+                  {{ form.monto(class="monto-field", readonly="true", id="monto") }} 
+                  <div id="slider-range"></div>
                 </div>
                 <div class="form-actions">
                   <button type="submit" class="btn btn-primary">Buscar</button> 
@@ -63,21 +62,32 @@
 
         <div class="span8">
           <div class="row">
-            {% for c in contrataciones %}
+            {% for c in entidad.contrataciones %}
             <div class="span4 card-contrato">
              <div class="widget">              
               <div class="widget-content">
-              {% if c.etiqueta_fecha is not none %}
-                <span class="label flag-date">
-                  <span>{{ c.etiqueta_fecha }}</span>
+              <div style="overflow:hidden;">
+                {% if c.etiqueta_fecha is not none %}
+                  <span class="label flag-date">
+                    {% if c.etiqueta_fecha == 'irregulares' %}
+                      <span><i class="icon-calendar"></i> Fechas irregulares</span>
+                    {% elif c.etiqueta_fecha == 'cercanas' %}
+                      <span><i class="icon-calendar"></i> Fechas cercanas</span>
+                    {% endif %}
+                  </span>
+                {% endif %}
+                {% if c.etiqueta_monto is not none %}
+                <span class="label flag-monto">
+                  <span><i class="icon-plus"></i> Monto de contratación mayor</span>
                 </span>
-              {% endif %}
+                {% endif %}
+                </div>
                 <button type="button" class="btn btn-info">
-                  <h3>{{ c.tipo_moneda }} {{ c.valor_ref }}</h3>
+                  <h3>{{ c.tipo_moneda }} {{ '{0:,}'.format(c.valor_ref|float) }}</h3>
                   <span>Monto de referencial</span>
                 </button>
                 <button type="button" class="btn btn">
-                  <h3>{{ c.tipo_moneda }} {{ c.monto }}</h3>
+                  <h3>{{ c.tipo_moneda }} {{ '{0:,}'.format(c.monto|float) }}</h3>
                   <span>Monto del contrato</span>
                 </button>
                 <p>
@@ -85,19 +95,15 @@
                 <span class="label">Buena pro: {{ c.fecha_bue_pro.strftime('%d/%m/%Y') }}</span>
                 </p>
                 <p class="desc-contrato">{{ c.descripcion|truncate(100) }}</p>
-                <p><a href="{{ url_for('proveedor', id=c.empresa_id) }}" class="btn-entidad">{{ c.razon_social }}</a></p>
+                <p><a href="{{ url_for('proveedor', id=c.empresa_id) }}" class="btn-entidad">{{ c.razon_social }} ({{ c.ruc }})</a></p>
                 <a href="{{ url_for('contrato', id=c.id) }}" class="btn btn-small btn-success">Ver detalles</a>
               </div>              
             </div>
           </div>
           {% endfor %}
         </div>
-      </div>
-
-      <!-- /span6 --> 
-      <div class="span4">
-
-      </div>
+        {{ pagination.links }}
+      </div>           
     </div>
     <!-- /row --> 
   </div>
@@ -119,16 +125,24 @@
   <script src="{{ url_for('static', filename='js/jquery-ui.js') }}"></script>
   <script type="text/javascript">
     $(document).ready(function() {
+      $('.pagination a').click(function(){
+        var page = $(this).attr('page');
+        $("#page").val(page);
+        console.log($("#page").val());
+        $("#search-contratos").submit();
+        event.preventDefault();
+      }); 
+
       $( "#slider-range" ).slider({
         range: true,
-        min: 0,
-        max: 500,
-        values: [ 75, 300 ],
+        min: {{ entidad.min.monto }},
+        max: {{ entidad.max.monto }},
+        values: [ {{ entidad.min.monto }}, {{ entidad.max.monto }} ],
         slide: function( event, ui ) {
-          $( "#amount" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+          $( "#monto" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
         }
       });
-      $( "#amount" ).val($( "#slider-range" ).slider( "values", 0 ) +
+      $( "#monto" ).val($( "#slider-range" ).slider( "values", 0 ) +
         " - " + $( "#slider-range" ).slider( "values", 1 ) );
     });
   </script>

@@ -4,9 +4,9 @@
           <div class="container">
             <ul class="mainnav">
               <li {% if request.endpoint == "/" %} class="active" {% endif %}><a href="/"><i class="icon-dashboard"></i><span>Inicio</span> </a> </li>
-              <li {% if request.endpoint == "empresas" %} class="active" {% endif %}><a href="/empresas"><i class="icon-list-alt"></i><span>Empresas</span> </a> </li>
-              <li {% if request.endpoint == "entidades" %} class="active" {% endif %}><a href="/entidades"><i class="icon-list"></i><span>Entidades</span></a></li>
-              <li {% if request.endpoint == "buscar" %} class="active" {% endif %}><a href="/buscar/contratos"><i class="icon-briefcase"></i><span>Contratos</span> </a> </li>
+              <li {% if request.endpoint == "buscar/empresas/" %} class="active" {% endif %}><a href="/buscar/empresas"><i class="icon-list-alt"></i><span>Empresas</span> </a> </li>
+              <li {% if request.endpoint == "buscar/entidades/" %} class="active" {% endif %}><a href="/buscar/entidades"><i class="icon-list"></i><span>Entidades</span></a></li>
+              <li {% if request.endpoint == "buscar/contratos/" %} class="active" {% endif %}><a href="/buscar/contratos"><i class="icon-briefcase"></i><span>Contratos</span> </a> </li>
              </ul>
           </div>
           <!-- /container --> 

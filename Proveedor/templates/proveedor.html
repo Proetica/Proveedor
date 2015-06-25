@@ -108,21 +108,8 @@
           </div>
           {% endfor %}
         </div>
-      </div>
-      <span class="span8">
-        {% if proveedor.pagination.count > proveedor.pagination.limit %}
-        <div class="pagination">
-          {% for p in range(1, (proveedor.pagination.pager+2)) %}
-          <a {% if p==proveedor.pagination.page %} class="active" {% endif %} href="/proveedor/{{proveedor.id}}" page="{{ p }}">{{ p }}</a>
-          {% endfor %}
-        </div>
-        {% endif %}
-      </span>
-
-      <!-- /span6 --> 
-      <div class="span4">
-
-      </div>
+        {{ pagination.links }}
+      </div>            
     </div>
     <!-- /row --> 
   </div>
@@ -144,7 +131,6 @@
   <script src="{{ url_for('static', filename='js/jquery-ui.js') }}"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-
       $('.pagination a').click(function(){
         var page = $(this).attr('page');
         $("#page").val(page);

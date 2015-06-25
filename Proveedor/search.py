@@ -8,6 +8,7 @@ import settings
 import models
 import re
 import datetime
+from flask.ext.paginate import Pagination
 
 db_engine = create_engine(
     settings.DATABASE_DSN,
@@ -20,6 +21,13 @@ db = sessionmaker(bind=db_engine)()
 class Search():
 
     def get_results_contrataciones(self, term, page, limit):
+
+        filters = []
+
+        if term != 'none':
+            filters.append(
+                and_(models.Contrataciones.descripcion.ilike('%'+term+'%'))
+                )
 
         offset = int((page-1) * limit)
 
@@ -44,17 +52,19 @@ class Search():
                             models.Empresa,
                             models.EntidadGobierno
                         ).filter(
-                            models.Contrataciones.descripcion.ilike('%'+term+'%')
+                            and_(*filters)
                         ).order_by(
-                             models.Empresa.ruc.desc()
+                            models.Contrataciones.fecha_bue_pro.desc()
                         ).limit(limit).offset(offset)
 
         count = db.query(models.Contrataciones
                         ).filter(
-                            models.Contrataciones.descripcion.ilike('%'+term+'%')
+                            and_(*filters)
                         ).count()
 
-        pagination = self.get_pager(offset, count, page, limit)
+        pagination = Pagination(page=page, total=count, per_page=limit)
+        pagination.index = offset
+        pagination.count = count
 
         return [results, pagination]
             
@@ -63,25 +73,29 @@ class Search():
 
         offset = int((page-1) * limit)
 
+        filters = []
+
+        if term != 'none':
+            filters.append(
+                or_(models.Empresa.razon_social.ilike('%' + term + '%'),
+                models.Empresa.ruc.ilike('%' + term + '%'))
+            )
+
         results = db.query(
-                                models.Empresa
+                            models.Empresa
                             ).filter(
-                                or_(
-                                    models.Empresa.razon_social.ilike('%' + term + '%'),
-                                    models.Empresa.ruc.ilike('%' + term + '%')
-                                    )
+                                or_(*filters)
                             ).limit(limit).offset(offset)
 
         count = db.query(
-                            models.Empresa
+                        models.Empresa
                         ).filter(
-                            or_(
-                                models.Empresa.razon_social.ilike('%' + term + '%'),
-                                models.Empresa.ruc.ilike('%' + term + '%')
-                                )
+                             or_(*filters)
                         ).count()
 
-        pagination = self.get_pager(offset, count, page, limit)
+        pagination = Pagination(page=page, total=count, per_page=limit)
+        pagination.index = offset
+        pagination.count = count
 
         return [results, pagination]
 
@@ -90,12 +104,19 @@ class Search():
 
         offset = int((page-1) * limit)
 
+        filters = []
+
+        if term != 'none':
+            filters.append(
+                models.EntidadGobierno.nombre.ilike('%'+term+'%')
+            )
+
         results = db.query(
                         models.EntidadGobierno.id,
                         models.EntidadGobierno.nombre,
                         models.TipoGobierno.tipo
                     ).filter(
-                        models.EntidadGobierno.nombre.ilike('%'+term+'%')
+                        and_(*filters)
                     ).join(
                         models.TipoGobierno
                     ).order_by(
@@ -105,10 +126,12 @@ class Search():
         count = db.query(
                         models.EntidadGobierno
                         ).filter(
-                            models.EntidadGobierno.nombre.ilike('%'+term+'%')
+                            and_(*filters)
                         ).count()
 
-        pagination = self.get_pager(offset, count, page, limit)
+        pagination = Pagination(page=page, total=count, per_page=limit)
+        pagination.index = offset
+        pagination.count = count
 
         return [results, pagination]
 

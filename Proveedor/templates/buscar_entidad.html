@@ -6,7 +6,7 @@
         <div class="main-inner">
           <div class="container">
             <div class="row">
-              <div class="span10">
+              <div class="span12">
                 <div class="widget">
                   <div class="widget-content">
                     <div class="tabbable">
@@ -19,18 +19,18 @@
                       </ul>
                       <div class="tab-content">
                         <div class="tab-pane" id="contratos">
-                          <form action="{{ url_for('buscar', type='contratos') }}" method="post">
+                          <form action="{{ url_for('buscar', type='contratos') }}" method="get">
                             <input class="buscar-input" value="{{ termino }}" type="text" name="termino" placeholder="Buscar contrataciones por terminos. Ejem: Pañales, Golosinas, Limpieza, etc">
                           </form>
                         </div>                
                         <div class="tab-pane" id="empresas">
-                          <form action="{{ url_for('buscar', type='empresas') }}" method="post">
+                          <form action="{{ url_for('buscar', type='empresas') }}" method="get">
                             <input class="buscar-input"  value="{{ termino }}" type="text" name="termino" placeholder="Buscar por razón social o ruc">
                           </form>
                         </div>
                         <div class="tab-pane active" id="entidades">
-                          <form action="{{ url_for('buscar', type='entidades') }}" method="post">
-                            <input class="buscar-input"  value="{{ termino }}" type="text" name="termino" placeholder="Buscar por razón social o ruc">
+                          <form action="{{ url_for('buscar', type='entidades') }}" method="get">
+                            <input class="buscar-input"  value="{{ termino }}" type="text" name="termino" placeholder="Buscar por entidad">
                           </form>
                         </div>               
                       </div>             
@@ -71,14 +71,7 @@
                     </tbody>
                   </table>
                 </div>
-                {% if pagination.count > pagination.limit %}
-                <div class="pagination">
-                  {% for p in range(1, (pagination.pager+2)) %}
-                  <a {% if p==pagination.page %} class="active" {% endif %} href="/buscar/entidades/{{ termino}}/{{ p }}">{{ p }}</a>
-                  {% endfor %}
-                </div>
-                {% endif %}
-                <!-- /widget-content --> 
+                {{ pagination.links }}
               </div>
             </div>
             <!-- /span6 --> 

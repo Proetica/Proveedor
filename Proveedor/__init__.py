@@ -7,6 +7,7 @@ from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 from search_form import SearchFormProveedor
 from search_form import SearchTerm
+from search_form import SearchFormEntidad
 import models, settings
 import search, advance_search
 import json
@@ -16,13 +17,13 @@ app = Flask(
     static_folder=settings.STATIC_PATH,
     static_url_path=settings.STATIC_URL_PATH
 )
+
 app.config.from_object('settings')
 
 db_engine = create_engine(
     settings.DATABASE_DSN,
     echo=settings.DEBUG
 )
-
 
 @app.before_request
 def before_request():
@@ -158,9 +159,9 @@ def topEntidades(anio):
 
     return entidades
 
-@app.route('/buscar/<string:type>', defaults={'termino':' ', 'page':1}, methods=['GET', 'POST'])
-@app.route('/buscar/<string:type>/<string:termino>/<int:page>', methods=['GET', 'POST'])
-def buscar(type, termino, page):
+@app.route('/buscar/<string:type>/', defaults={'page':1}, methods=['GET', 'POST'])
+@app.route('/buscar/<string:type>/<int:page>', methods=['GET', 'POST'])
+def buscar(type, page):
     
     form = SearchTerm(request.form)
     
@@ -168,13 +169,18 @@ def buscar(type, termino, page):
     
     limit = 25
 
-    if request.method == 'POST':
+    termino = 'none'
+
+    if request.args.get('termino'):
             
-        termino = form.termino.data
+        termino = request.args.get('termino')
     
     if type == "contratos":
 
         contrataciones, pagination = searchObj.get_results_contrataciones(termino, page, limit)
+
+        if termino == 'none':
+            termino = ''
         
         return render_template(
             'buscar.html',
@@ -187,6 +193,9 @@ def buscar(type, termino, page):
 
         entidades, pagination = searchObj.get_results_entidades(termino, page, limit)
 
+        if termino == 'none':
+            termino = ''
+
         return render_template(
             'buscar_entidad.html',
             termino=termino,
@@ -198,6 +207,9 @@ def buscar(type, termino, page):
 
         empresas, pagination = searchObj.get_results_empresas(termino, page, limit)
 
+        if termino == 'none':
+            termino = ''
+
         return render_template(
             'buscar_empresa.html',
             termino=termino,
@@ -205,46 +217,12 @@ def buscar(type, termino, page):
             empresas=empresas
         )
 
-
-@app.route('/empresas', methods=['GET', 'POST'])
-def empresas():
-
-    proveedores = g.db.query(
-        models.Empresa.id,
-        models.Empresa.ruc,
-        models.Empresa.razon_social,
-        models.Empresa.total_ganado
-    ).order_by(
-        models.Empresa.total_ganado.desc()
-    ).limit(25)
-
-    return render_template(
-        'empresas.html',
-        proveedores=proveedores,
-    )
-
-
-@app.route('/entidades')
-def entidades():
-
-    entidades = g.db.query(
-        models.EntidadGobierno.id,
-        models.EntidadGobierno.nombre,
-        models.TipoGobierno.tipo,
-    ).join(
-            models.TipoGobierno
-    ).order_by(
-        models.EntidadGobierno.nombre.asc()
-    ).limit(25)
-
-    return render_template(
-        'entidades.html',
-        entidades=entidades,
-    )
-
-
 @app.route('/entidad/<int:id>', methods=['GET', 'POST'])
 def entidad(id):
+
+    form = SearchFormEntidad()
+
+    searchObj = advance_search.AdvanceSearchEntidad()
 
     entidad = g.db.query(
         models.EntidadGobierno.id,
@@ -256,36 +234,20 @@ def entidad(id):
         models.EntidadGobierno.id == id
     ).first()
 
-    contrataciones = g.db.query(
-        models.Contrataciones.id,
-        models.Contrataciones.proceso,
-        models.Contrataciones.objeto_pro,
-        models.Contrataciones.etiqueta_fecha,
-        models.Contrataciones.fecha_pub,
-        models.Contrataciones.fecha_bue_pro,
-        models.Contrataciones.modalidad_sel,
-        models.Contrataciones.tipo_moneda,
-        models.Contrataciones.etiqueta_monto,
-        models.Contrataciones.monto,
-        models.Contrataciones.valor_ref,
-        models.Contrataciones.descripcion,        
-        models.Empresa.razon_social,
-        models.Empresa.ruc,
-        models.Contrataciones.detalle_contrato,
-        models.Contrataciones.detalle_seace,
-        models.Contrataciones.empresa_id
-    ).join(
-        models.Empresa
-    ).filter(
-        models.Contrataciones.entidad_id == id
-    ).order_by(
-         models.Empresa.ruc.desc()
-    ).limit(15)
+    page = 1
+
+    if form.page.data:
+        page = int(form.page.data)
+            
+    entidad.contrataciones, pagination = searchObj.get_results_contrataciones(id, form, page, 25)
+    entidad.max = searchObj.get_max_ammount(id, form)
+    entidad.min = searchObj.get_min_ammount(id, form)
 
     return render_template(
         'entidad.html',
         entidad=entidad,
-        contrataciones=contrataciones
+        pagination=pagination,
+        form=form,
     )
 
 
@@ -343,13 +305,14 @@ def proveedor(id):
     if form.page.data:
         page = int(form.page.data)
             
-    proveedor.contrataciones, proveedor.pagination = searchObj.get_results_contrataciones(id, form, page, 25)
+    proveedor.contrataciones, pagination = searchObj.get_results_contrataciones(id, form, page, 25)
     proveedor.max = searchObj.get_max_ammount(id, form)
     proveedor.min = searchObj.get_min_ammount(id, form)
 
     return render_template(
     'proveedor.html',
      proveedor=proveedor,
+     pagination=pagination,
      form=form
     )
 
@@ -367,6 +330,12 @@ def get_search(type):
 
     return json.dumps(list)
 
+
+def url_for_other_page(page):
+    args = request.view_args.copy()
+    args['page'] = page
+    return url_for(request.endpoint, **args)
+app.jinja_env.globals['url_for_other_page'] = url_for_other_page
 
 if __name__ == '__main__':
     app.run(

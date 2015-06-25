@@ -18,18 +18,18 @@
               <li><a href="#entidades" data-toggle="tab">Buscar por entidades</a></li>
             </ul>
               <div class="tab-pane active" id="empresas">
-                  <form action="{{ url_for('buscar', type='empresas') }}" method="post">
+                  <form action="{{ url_for('buscar', type='empresas') }}" method="get">
                     <input class="buscar-input"  value="{{ termino }}" type="text" name="termino" placeholder="Buscar por razón social o ruc">
                   </form>
               </div>
               <div class="tab-content">
                 <div class="tab-pane" id="contratos">
-                  <form action="{{ url_for('buscar', type='contratos') }}" method="post">
+                  <form action="{{ url_for('buscar', type='contratos') }}" method="get">
                     <input class="buscar-input" value="{{ termino }}" type="text" name="termino" placeholder="Buscar contrataciones por terminos. Ejem: Pañales, Golosinas, Limpieza, etc">
                   </form>
                 </div>
                 <div class="tab-pane" id="entidades">
-                  <form action="{{ url_for('buscar', type='entidades') }}" method="post">
+                  <form action="{{ url_for('buscar', type='entidades') }}" method="get">
                     <input class="buscar-input"  value="{{ termino }}" type="text" name="termino" placeholder="Buscar por razón social o ruc">
                   </form>
                 </div>               
@@ -73,14 +73,7 @@
                 </tbody>
               </table>
             </div>
-            {% if pagination.count > pagination.limit %}
-              <div class="pagination">
-                  {% for p in range(1, (pagination.pager+2)) %}                      
-                    <a {% if p==pagination.page %} class="active" {% endif %} href="{{ url_for('buscar', type='empresas', termino=termino, page=p ) }}">{{ p }}</a>
-                  {% endfor %}
-              </div>
-              {% endif %}
-            <!-- /widget-content --> 
+            {{ pagination.links }}
           </div>
         </div>
         <!-- /span6 --> 

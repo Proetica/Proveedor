@@ -52,11 +52,11 @@
                       {% endif %}
                       <span class="btn btn-large">
                         <span>Valor referencial</span><br />
-                        <h1>{{ contrato.tipo_moneda }} {{ contrato.valor_ref }}</h1>
+                        <h1>{{ contrato.tipo_moneda }} {{ '{0:,}'.format(contrato.valor_ref|float) }}</h1>
                       </span>
                       <span class="btn btn-large">
                         <span>Monto del contrato</span><br />
-                        <h1>{{ contrato.tipo_moneda }} {{ contrato.monto }}</h1>
+                        <h1>{{ contrato.tipo_moneda }} {{ '{0:,}'.format(contrato.monto|float) }}</h1>
                       </span>
                     </div>
                   </div>

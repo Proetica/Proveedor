@@ -11,9 +11,9 @@ etiquetas_data = [('irregulares','Fechas irregulares (Coincidencia de fechas)'),
 ('cercanas','Fechas cercanas (Fechas menores a 5 dias)'),
 ('mayor','Montos irregulares (Monto contratado mayor al referencial')]
 
-moneda_data = [('{S/.}','Soles'),
-('{US$}','Dolares'),
-('{EUR,$}','Euros')]
+moneda_data = [('S/.','Soles'),
+('US$','Dolares'),
+('EUR,$','Euros')]
 
 
 class SearchFormProveedor(Form):
@@ -35,6 +35,25 @@ class SearchFormProveedor(Form):
     fecha_inicial = DateField('DatePicker', format='%d-%m-%Y')
     fecha_final = DateField('DatePicker', format='%d-%m-%Y')
 
+
+class SearchFormEntidad(Form):
+    page = HiddenField('page')
+    entidad = HiddenField('entidad')
+    term = TextField('term')
+    monto = TextField('monto')
+    tipo_moneda = SelectMultipleField(
+        choices=moneda_data,
+        option_widget=widgets.CheckboxInput(),
+        widget=widgets.ListWidget(prefix_label=False)
+        )
+
+    etiquetas = SelectMultipleField(
+        choices=etiquetas_data,
+        option_widget=widgets.CheckboxInput(),
+        widget=widgets.ListWidget(prefix_label=False)
+        )
+    fecha_inicial = DateField('DatePicker', format='%d-%m-%Y')
+    fecha_final = DateField('DatePicker', format='%d-%m-%Y')
 
 class SearchTerm(Form):
     termino = TextField('Termino de busqueda')

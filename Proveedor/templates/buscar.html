@@ -1,113 +1,108 @@
     {% include "head.html" %}
     <body>
-    {% include "header.html" %}
-   {% include "menu.html" %}
-<div class="main">
-  <div class="main-inner">
-    <div class="container">
-      <div class="row">
-        <div class="span12">
-        <div class="widget">
-          <div class="widget-content">
-          <div class="tabbable">
-            <ul class="nav nav-tabs">
-              <li class="active"><a href="#contratos" data-toggle="tab">Buscar por contratos</a></li>
-              <li><a href="#empresas" data-toggle="tab">Buscar por empresas</a></li>
-              <li><a href="#entidades" data-toggle="tab">Buscar por entidades</a></li>
-            </ul>
-              <div class="tab-content">
-                <div class="tab-pane active" id="contratos">
-                  <form action="{{ url_for('buscar', type='contratos') }}" method="post">
-                    <input class="buscar-input" value="{{ termino }}" type="text" name="termino" placeholder="Buscar contrataciones por terminos. Ejem: Pañales, Golosinas, Limpieza, etc">
-                  </form>
-                </div>                
-                <div class="tab-pane" id="empresas">
-                  <form action="{{ url_for('buscar', type='empresas') }}" method="post">
-                    <input class="buscar-input"  value="{{ termino }}" type="text" name="termino" placeholder="Buscar por razón social o ruc">
-                  </form>
+      {% include "header.html" %}
+      {% include "menu.html" %}
+      <div class="main">
+        <div class="main-inner">
+          <div class="container">
+            <div class="row">
+              <div class="span12">
+                <div class="widget">
+                  <div class="widget-content">
+                    <div class="tabbable">
+                      <ul class="nav nav-tabs">
+                        <li class="active"><a href="#contratos" data-toggle="tab">Buscar por contratos</a></li>
+                        <li><a href="#empresas" data-toggle="tab">Buscar por empresas</a></li>
+                        <li><a href="#entidades" data-toggle="tab">Buscar por entidades</a></li>
+                      </ul>
+                      <div class="tab-content">
+                        <div class="tab-pane active" id="contratos">
+                          <form action="{{ url_for('buscar', type='contratos') }}" method="get">
+                            <input class="buscar-input" value="{{ termino }}" type="text" id="buscar-contrato" name="termino" placeholder="Buscar contrataciones por terminos. Ejem: Pañales, Golosinas, Limpieza, etc">
+                          </form>
+                        </div>                
+                        <div class="tab-pane" id="empresas">
+                          <form action="{{ url_for('buscar', type='empresas') }}" method="get">
+                            <input class="buscar-input"  value="{{ termino }}" type="text" id="buscar-empresas" name="termino" placeholder="Buscar por razón social o ruc">
+                          </form>
+                        </div>
+                        <div class="tab-pane" id="entidades">
+                          <form action="{{ url_for('buscar', type='entidades') }}" method="get">
+                            <input class="buscar-input"  value="{{ termino }}" type="text" id="buscar-entidades" name="termino" placeholder="Buscar por razón social o ruc">
+                          </form>
+                        </div>               
+                      </div>             
+                    </div>            
+                  </div>
                 </div>
-                <div class="tab-pane" id="entidades">
-                  <form action="{{ url_for('buscar', type='entidades') }}" method="post">
-                    <input class="buscar-input"  value="{{ termino }}" type="text" name="termino" placeholder="Buscar por razón social o ruc">
-                  </form>
-                </div>               
-              </div>             
-            </div>            
-          </div>
-        </div>
-        </div>
-        </div>
-
-        <div class="row">
-         <div class="span12">
-          <div class="widget widget-table action-table">
-            <div class="widget-header"> <i class="icon-th-list"></i>
-              <h3>Se encontraron {{ pagination.count }} contratos con la descripción <b><i>{{ termino }}</i></b> </h3>
+              </div>
             </div>
-            <!-- /widget-header -->
-            <div class="widget-content">
-              <table class="table table-striped table-bordered">
-                <thead>
-                  <tr>
-                    <th class="col-number-top"> N°</th>
-                    <th> Fecha</th>
-                    <th> Descripción</th>
-                    <th> Entidad de gobierno</th>
-                    <th> Monto</th>
-                    <th> RUC</th>
-                    <th> Razón social</th>
-                    <th class="td-actions"> </th>
-                  </tr>
-                </thead>
-                <tbody>
-                {% for e in contrataciones %}
-                   <tr>
-                     <td>{{ (loop.index + pagination.index) }}</td> 
-                      <td>
+
+            <div class="row">
+             <div class="span12">
+              <div class="widget widget-table action-table">
+                <div class="widget-header"> <i class="icon-th-list"></i>
+                  <h3>Se encontraron {{ pagination.count }} contratos con la descripción <b><i>{{ termino }}</i></b> </h3>
+                </div>
+                <!-- /widget-header -->
+                <div class="widget-content">
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th class="col-number-top"> N°</th>
+                        <th> Fecha</th>
+                        <th> Descripción</th>
+                        <th> Entidad de gobierno</th>
+                        <th> Monto</th>
+                        <th> RUC</th>
+                        <th> Razón social</th>
+                        <th class="td-actions"> </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for e in contrataciones %}
+                      <tr>
+                       <td>{{ (loop.index + pagination.index) }}</td> 
+                       <td>
                         {{ e.fecha_bue_pro.strftime('%d/%m/%Y') }}
-                     </td>
-                     <td>
+                      </td>
+                      <td>
                        <a href="{{ url_for('contrato', id=e.id) }}">
                         {{ e.descripcion }}
-                       </a>
-                     </td>
-                     <td>
+                      </a>
+                    </td>
+                    <td>
                      <a href="{{ url_for('entidad', id=e.eid) }}" class="">{{ e.nombre }}</a>
-                     </td>
-                     <td>
-                        {{ e.tipo_moneda }}{{ e.monto }}
-                     </td>
-                     <td>
-                        {{ e.ruc }}
-                     </td>
-                     <td>
-                        <a href="{{ url_for('proveedor', id=e.empresa_id) }}" >{{ e.razon_social }}</a>
-                     </td>
-                     <td class="td-actions">
-                      <a href="{{ url_for('contrato', id=e.id) }}" class="btn btn-small btn-success">Ver detalles</a>
-                     </td> 
-                   </tr>
-                 {% endfor %}
-                </tbody>
-              </table>
-            </div>
-            {% if pagination.count > pagination.limit %}
-              <div class="pagination">
-                {% for p in range(1, (pagination.pager+2)) %}
-                      <a {% if p==pagination.page %} class="active" {% endif %} href="/buscar/contratos/{{ termino}}/{{ p }}">{{ p }}</a>
+                   </td>
+                   <td>
+                    {{ e.tipo_moneda }}{{ '{0:,}'.format(e.monto|float)}}
+                  </td>
+                  <td>
+                    {{ e.ruc }}
+                  </td>
+                  <td>
+                    <a href="{{ url_for('proveedor', id=e.empresa_id) }}" >{{ e.razon_social }}</a>
+                  </td>
+                  <td class="td-actions">
+                    <a href="{{ url_for('contrato', id=e.id) }}" class="btn btn-small btn-success">Ver detalles</a>
+                  </td> 
+                </tr>
                 {% endfor %}
-              </div>
-              {% endif %}
-            <!-- /widget-content --> 
+              </tbody>
+            </table>
           </div>
+
+        {{ pagination.links }}
+
         </div>
-        <!-- /span6 --> 
       </div>
-      <!-- /row --> 
+      <!-- /span6 --> 
     </div>
-    <!-- /container --> 
+    <!-- /row --> 
   </div>
-  <!-- /main-inner --> 
+  <!-- /container --> 
+</div>
+<!-- /main-inner --> 
 </div>
 <!-- /main -->
 {% include "footer.html" %}
@@ -120,17 +115,5 @@
   <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script> 
   <script src="{{ url_for('static', filename='js/base.js') }}"></script> 
   <script src="{{ url_for('static', filename='js/faq.js') }}"></script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-        $.ajax({
-          url: '/api/get/search/contratos'
-        }).done(function (data) {
-          $('#buscar').autocomplete({
-            source: data,
-            minLength: 2
-          });
-        });
-    });
-  </script>
 </body>
 </html>
