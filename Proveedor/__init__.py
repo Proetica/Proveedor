@@ -18,7 +18,7 @@ app = Flask(
     static_url_path=settings.STATIC_URL_PATH
 )
 
-app.config.from_object('settings')
+#app.config.from_object('settings')
 
 db_engine = create_engine(
     settings.DATABASE_DSN,
@@ -218,7 +218,7 @@ def buscar(type, page):
         )
 
 
-    else:
+    elif type == "empresas":
 
         empresas, pagination = searchObj.get_results_empresas(termino, page, limit)
 
@@ -231,6 +231,10 @@ def buscar(type, page):
             pagination=pagination,
             empresas=empresas
         )
+
+    else: 
+        return redirect('/')
+
 
 @app.route('/entidad/<int:id>', methods=['GET', 'POST'])
 def entidad(id):
