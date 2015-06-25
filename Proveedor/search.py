@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from sqlalchemy import create_engine, and_, or_
+from sqlalchemy import create_engine, and_, or_, func
 from sqlalchemy.orm import sessionmaker
 from math import ceil
 import settings
@@ -57,10 +57,9 @@ class Search():
                             models.Contrataciones.fecha_bue_pro.desc()
                         ).limit(limit).offset(offset)
 
-        count = db.query(models.Contrataciones
-                        ).filter(
-                            and_(*filters)
-                        ).count()
+        count = db.query(func.count(models.Contrataciones.id)
+                        ).filter(and_(*filters)
+                        ).scalar()
 
         pagination = Pagination(page=page, total=count, per_page=limit)
         pagination.index = offset
@@ -87,11 +86,9 @@ class Search():
                                 or_(*filters)
                             ).limit(limit).offset(offset)
 
-        count = db.query(
-                        models.Empresa
-                        ).filter(
-                             or_(*filters)
-                        ).count()
+        count = db.query(func.count(models.Empresa.id)
+                        ).filter(and_(*filters)
+                        ).scalar()
 
         pagination = Pagination(page=page, total=count, per_page=limit)
         pagination.index = offset
@@ -123,11 +120,10 @@ class Search():
                         models.EntidadGobierno.nombre.desc()
                     ).limit(limit).offset(offset)
 
-        count = db.query(
-                        models.EntidadGobierno
+        count = db.query(func.count(models.EntidadGobierno.id)
                         ).filter(
                             and_(*filters)
-                        ).count()
+                        ).scalar()
 
         pagination = Pagination(page=page, total=count, per_page=limit)
         pagination.index = offset

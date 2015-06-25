@@ -93,17 +93,5 @@
   <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script> 
   <script src="{{ url_for('static', filename='js/base.js') }}"></script> 
   <script src="{{ url_for('static', filename='js/faq.js') }}"></script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $.ajax({
-        url: '/api/get/search/contratos'
-      }).done(function (data) {
-        $('#buscar').autocomplete({
-          source: data,
-          minLength: 2
-        });
-      });
-    });
-  </script>
 </body>
 </html>

@@ -205,22 +205,7 @@
   <script src="{{ url_for('static', filename='js/faq.js') }}"></script>
   <script src="http://code.highcharts.com/highcharts.js"></script>
   <script type="text/javascript">
-    $(document).ready(function() {
-      $("#search" ).autocomplete({
-        source: function( request, response ) {
-          $.ajax({
-            url: "/api/get/search/contratos",
-            dataType: "json",
-            data: {
-              term: request.term
-            },
-            success: function(data) { 
-             response(data);
-           }
-         });
-        },
-        minLength: 3,
-      });     
+    $(document).ready(function() { 
 
       anios = [];
       totales = [];
