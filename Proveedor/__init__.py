@@ -12,6 +12,8 @@ import models, settings
 import search, advance_search
 import json
 
+from flask.ext.cache import Cache
+
 app = Flask(
     __name__,
     static_folder=settings.STATIC_PATH,
