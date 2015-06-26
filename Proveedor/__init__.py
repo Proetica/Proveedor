@@ -20,6 +20,11 @@ app = Flask(
 
 #app.config.from_object('settings')
 
+app.config['CACHE_TYPE'] = 'simple'
+
+# register the cache instance and binds it on to your app 
+app.cache = Cache(app) 
+
 db_engine = create_engine(
     settings.DATABASE_DSN,
     echo=settings.DEBUG
@@ -40,6 +45,7 @@ def teardown_request(exception):
 
 
 @app.route('/', methods=['GET', 'POST'])
+@app.cache.cached(timeout=300)  # cache this view for 5 minutes
 def index():
 
 
@@ -353,4 +359,3 @@ if __name__ == '__main__':
     app.run(
         debug=settings.DEBUG,
     )
-
