@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from flask import request
-from sqlalchemy import create_engine, and_, or_, func, between
+from sqlalchemy import create_engine, and_, or_, func, between, cast, Date
 from sqlalchemy.orm import sessionmaker
 from math import ceil
 import settings
 import models
 import re
-import datetime
+import datetime, time
 from flask.ext.paginate import Pagination
 
 db_engine = create_engine(
@@ -64,10 +64,11 @@ class AdvanceSearch():
             final = filters.fecha_final.data
             listfilters.append(
                 and_(
-                    inicio <= models.Contrataciones.fecha_bue_pro,
-                    models.Contrataciones.fecha_bue_pro >= final
+                    inicio <= models.Contrataciones.fecha_pub,
+                    final >= models.Contrataciones.fecha_pub                 
                     )
             )
+
 
         return listfilters
 
@@ -202,7 +203,10 @@ class AdvanceSearchEntidad():
             inicio = filters.fecha_inicial.data
             final = filters.fecha_final.data
             listfilters.append(
-                and_(inicio >  models.Contrataciones.fecha_bue_pro < final)
+                and_(
+                    inicio <= models.Contrataciones.fecha_pub,
+                    final >= models.Contrataciones.fecha_pub                 
+                    )
             )
 
         return listfilters

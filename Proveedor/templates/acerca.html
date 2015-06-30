@@ -1,0 +1,128 @@
+{% include "head.html" %}
+<body>
+  {% include "header.html" %}
+  {% include "menu.html" %}
+  <div class="main">
+    <div class="main-inner">
+      <div class="container">
+        <div class="row">
+        <div class="span12">            
+            <div id="target-1" class="widget">
+              <div class="widget-content">
+                <h1>Acerca de Pro-veedor.pe</h1>                
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> 
+              </div> <!-- /widget-content -->
+            </div> <!-- /widget -->
+          </div>
+        </div>
+      </div>
+      <!-- /row --> 
+    </div>
+    <!-- /container --> 
+  </div>
+  <!-- /main-inner --> 
+</div>
+<!-- /main -->
+{% include "footer.html" %}
+<!-- Le javascript
+  ================================================== --> 
+  <!-- Placed at the end of the document so the pages load faster --> 
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="{{ url_for('static', filename='js/jquery-1.7.2.min.js') }}"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script> 
+  <script src="{{ url_for('static', filename='js/faq.js') }}"></script>
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() { 
+
+      anios = [];
+      totales = [];
+
+      {% for t in total %}
+      anios.push({{ t.anio }});
+      totales.push({{ t.total }});
+      {% endfor %}
+
+      $('#container').highcharts({
+        title: {
+          text: 'Gasto de contrataciones por años',
+            x: -20 //center
+          },
+          subtitle: {
+            text: 'Fuente: Portal de transparencia estandar',
+            x: -20
+          },
+          xAxis: {
+            categories: anios
+          },
+          yAxis: {
+            title: {
+              text: 'Soles'
+            }
+          },
+          tooltip: {
+            valuePrefix: 'S/. '
+          },
+          credits: {
+            enabled: false
+          },
+          series: [{
+            name: 'Total por años',
+            data: totales
+          }]
+        });
+
+      rank_prov = [];
+
+      {% for p in proveedores %}
+      rank_prov.push({{ p.cantidad }})
+      {% endfor %}
+
+      $('#rank_prov').highcharts({
+        chart: {
+          type: 'bar'
+        },
+        title: {
+          text: 'Cantidad de contrataciones por año'
+        },
+        subtitle: {
+          text: 'Fuente: Portal de transparencia estandar'
+        },
+        xAxis: {
+          categories: ['2009', '2010', '2011', '2012', '2013', '2014', '2015'],
+          title: {
+            text: null
+          }
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: 'Contrataciones',
+            align: 'high'
+          },
+          labels: {
+            overflow: 'justify'
+          }
+        },
+        plotOptions: {
+          bar: {
+            dataLabels: {
+              enabled: true
+            }
+          }
+        },
+        credits: {
+          enabled: false
+        },
+        series: [{
+          name: 'Cantidad de proveedores',
+          data: rank_prov
+        }]
+      });
+
+    });
+
+</script>
+</body>
+</html>

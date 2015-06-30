@@ -91,8 +91,8 @@
                   <span>Monto del contrato</span>
                 </button>
                 <p>
-                <span class="label">Publicación: {{ c.fecha_pub.strftime('%d/%m/%Y') }}</span>
-                <span class="label">Buena pro: {{ c.fecha_bue_pro.strftime('%d/%m/%Y') }}</span>
+                <span class="label">Publicación: {{ c.fecha_pub.strftime('%Y-%m-%d') }}</span>
+                <span class="label">Buena pro: {{ c.fecha_bue_pro.strftime('%Y-%m-%d') }}</span>
                 </p>
                 <p class="desc-contrato">{{ c.descripcion|truncate(100) }}</p>
                 <p><a href="{{ url_for('proveedor', id=c.empresa_id) }}" class="btn-entidad">{{ c.razon_social }} ({{ c.ruc }})</a></p>

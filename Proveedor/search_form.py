@@ -32,8 +32,8 @@ class SearchFormProveedor(Form):
         option_widget=widgets.CheckboxInput(),
         widget=widgets.ListWidget(prefix_label=False)
         )
-    fecha_inicial = DateField('DatePicker', format='%d-%m-%Y')
-    fecha_final = DateField('DatePicker', format='%d-%m-%Y')
+    fecha_inicial = DateTimeField('Fecha de inicio', format='%Y-%m-%d')
+    fecha_final = DateTimeField('Fecha de fin', format='%Y-%m-%d')
 
 
 class SearchFormEntidad(Form):
@@ -52,8 +52,8 @@ class SearchFormEntidad(Form):
         option_widget=widgets.CheckboxInput(),
         widget=widgets.ListWidget(prefix_label=False)
         )
-    fecha_inicial = DateField('DatePicker', format='%d-%m-%Y')
-    fecha_final = DateField('DatePicker', format='%d-%m-%Y')
+    fecha_inicial = DateTimeField('Fecha de inicio', format='%Y-%m-%d')
+    fecha_final = DateTimeField('Fecha de fin', format='%Y-%m-%d')
 
 class SearchTerm(Form):
     termino = TextField('Termino de busqueda')

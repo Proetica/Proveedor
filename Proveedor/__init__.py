@@ -46,6 +46,16 @@ def teardown_request(exception):
         db.close()
 
 
+@app.route('/como', methods=['GET', 'POST'])
+#@app.cache.cached(timeout=300)  # cache this view for 5 minutes
+def como():
+    return render_template('como.html')
+
+@app.route('/acerca', methods=['GET', 'POST'])
+#@app.cache.cached(timeout=300)  # cache this view for 5 minutes
+def acerca():
+    return render_template('acerca.html')
+
 @app.route('/', methods=['GET', 'POST'])
 @app.cache.cached(timeout=300)  # cache this view for 5 minutes
 def index():
