@@ -1,12 +1,79 @@
-{% include "head.html" %}
+
+<!DOCTYPE html>
+<html   lang="es" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foaf/0.1/ og: http://ogp.me/ns# rdfs: http://www.w3.org/2000/01/rdf-schema# sioc: http://rdfs.org/sioc/ns# sioct: http://rdfs.org/sioc/types# skos: http://www.w3.org/2004/02/skos/core# xsd: http://www.w3.org/2001/XMLSchema# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article# book: http://ogp.me/ns/book# profile: http://ogp.me/ns/profile# video: http://ogp.me/ns/video#">
+<head>
+  <meta charset="utf-8">
+  <title>Pro-veedor | Contrataciones del estado peruano en la mira</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="description" content="Pro-Veedor es una herramienta digital que identifica a todos los proveedores que tienen algún tipo de contratación con las entidades públicas del Perú." />
+  <meta name="abstract" content="Pro-Veedor es una herramienta digital que identifica a todos los proveedores que tienen algún tipo de contratación con las entidades públicas del Perú." />
+    <link rel="canonical" href="http://pro-veedor.pe" />
+  <link rel="shortlink" href="http://pro-veedor.pe" />
+  <meta property="og:site_name" content="Pro-veedor | Contrataciones del estado peruano en la mira" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="http://pro-veedor.pe/" />
+  <meta property="og:title" content="Pro-veedor | Contrataciones del estado peruano en la mira" />
+  <meta property="og:description" content="Pro-Veedor es una herramienta digital que identifica a todos los proveedores que tienen algún tipo de contratación con las entidades públicas del Perú." />
+    <meta name="MobileOptimized" content="width">
+  <meta name="HandheldFriendly" content="true">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="cleartype" content="on">
+  <link href='http://fonts.googleapis.com/css?family=Merriweather:400,700' rel='stylesheet' type='text/css'>
+  <link rel="icon" type="image/png" href="/sites/all/themes/ojopublico/images/favicon_57x57_iphone.png"><!-- Major Browsers -->
+  <link rel="apple-touch-icon" type="image/png" href="/sites/all/themes/ojopublico/images/favicon_57x57_iphone.png"><!-- iPhone -->
+  <link rel="apple-touch-icon" type="image/png" sizes="72x72" href="/sites/all/themes/ojopublico/images/favicon_144x144_ipad.png"><!-- iPad -->
+  <link rel="apple-touch-icon" type="image/png" sizes="114x114" href="/sites/all/themes/ojopublico/images/favicon_144x144_ipad.png"><!-- iPhone4 -->
+  <link rel="icon" type="image/png" href="/sites/all/themes/ojopublico/images/favicon_144x144_ipad.png"><!-- Opera Speed Dial, at least 144×114 px -->  
+
+
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet" />
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
+  <link href="/static/css/font-awesome.css" rel="stylesheet">
+  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/pages/dashboard.css" rel="stylesheet">
+  <link href="/static/css/pages/faq.css" rel="stylesheet">
+  <link href="/static/css/jquery-ui.css" rel="stylesheet">
+  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+      <![endif]-->
+    </head>
 <body>
-  {% include "header.html" %}
+        <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
+            class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a>
+            <a class="brand" href="/">Pro-veedor: Contrataciones del estado peruano en la mira</a>
+            <div class="nav-collapse">
+              <ul class="nav pull-right">
+              <li>
+                 <a href="/acerca">¿Qué es Pro-veedor?</a>
+               </li>
+               <li><a href="/como">¿Cómo se construyó?</a></li>
+               <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
+                class="icon-cog"></i> Reportar <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a target="_blank" href="https://docs.google.com/forms/d/1w0hMrJBTVPV4YeKkrYRHTlpynYB2snziLEENj8rN1OY/viewform?usp=send_form">Reportar error</a></li>
+                  <li><a target="_blank"  href="https://docs.google.com/forms/d/1gLjqKIzSt0owl7WATQWQiFsvXKX4yt_pqmjUGWlSpmA/viewform?usp=send_form">Contactar al administrador</a></li>
+                </ul>
+              </li>
+            </ul>        
+          </div>
+          <!--/.nav-collapse --> 
+        </div>
+        <!-- /container --> 
+      </div>
+      <!-- /navbar-inner --> 
+    </div>
   <div class="image-front">
     <div class="container">
       <div class="row">
         <div class="span12">
           <div class="content-initial">
-            <h1 class="title"><img src="{{ url_for('static', filename='images/logoproveedor.png') }}" /></h1><br />
+            <h1 class="title"><img src="/static/images/logoproveedor.png" /></h1><br />
             <h4>Pro-veedor: Contrataciones del estado peruano en la mira</h4>
             <div class="ui-widget">
               <form action="/buscar/contratos" method="post" class="navbar-search span12">
@@ -18,7 +85,22 @@
       </div>
     </div>
   </div>
-  {% include "menu.html" %}
+     <!-- /navbar -->
+      <div class="subnavbar">
+        <div class="subnavbar-inner">
+          <div class="container">
+            <ul class="mainnav">
+              <li ><a href="/"><i class="icon-dashboard"></i><span>Inicio</span> </a> </li>
+              <li ><a href="/buscar/empresas"><i class="icon-list-alt"></i><span>Empresas</span> </a> </li>
+              <li ><a href="/buscar/entidades"><i class="icon-list"></i><span>Entidades</span></a></li>
+              <li ><a href="/buscar/contratos"><i class="icon-briefcase"></i><span>Contratos</span> </a> </li>
+             </ul>
+          </div>
+          <!-- /container --> 
+        </div>
+        <!-- /subnavbar-inner --> 
+      </div>
+      <!-- /subnavbar -->
   <div class="main">
     <div class="main-inner">
       <div class="container">
@@ -31,7 +113,7 @@
                   <div id="big_stats" class="cf">
                     <div class="stat">
                       <i class="icon-money"></i>
-                      <span class="value">S/. {{ '{0:,}'.format(totalsoles.total|float) }}</span>
+                      <span class="value">S/. 3,810,149,711.89</span>
                       <br> Gastado contrataciones en lo que va el 2015
                     </div>
                   </div>
@@ -58,10 +140,10 @@
           <div class="widget big-stats-container">
             <div class="widget-content">              
               <div id="big_stats" class="cf">
-                <div class="stat"> <i class="icon-th-list"></i> <span class="value">{{ entidades }}</span><br> Entidades <br>públicas </div>
-                <div class="stat"> <i class="icon-list-alt"></i> <span class="value">{{ empresas }}</span><br> Empresas <br>contratadas </div>
-                <div class="stat"> <i class="icon-briefcase"></i> <span class="value">{{ contratos }}</span><br> Contrataciones <br>públicas </div>                   
-                <div class="stat"><div class=""><a class="button-irre" href="/buscar/irregulares"><i class="icon-calendar"></i> <span class="value">{{ irregulares }}%</span><br><span class="btn-text">Contrataciones con fechas irregulares</span></a></div></div>
+                <div class="stat"> <i class="icon-th-list"></i> <span class="value">2637</span><br> Entidades <br>públicas </div>
+                <div class="stat"> <i class="icon-list-alt"></i> <span class="value">147921</span><br> Empresas <br>contratadas </div>
+                <div class="stat"> <i class="icon-briefcase"></i> <span class="value">828443</span><br> Contrataciones <br>públicas </div>                   
+                <div class="stat"><div class=""><a class="button-irre" href="/buscar/irregulares"><i class="icon-calendar"></i> <span class="value">28%</span><br><span class="btn-text">Contrataciones con fechas irregulares</span></a></div></div>
               </div>
             </div>             
           </div>               
@@ -111,22 +193,854 @@
               </li>
             </ul>
             <div class="tab-content">
-              {% for t in top %}
-                <div class="tab-pane  {% if t == 2015 %} active {% endif %}" id="{{ t }}-empresas">
+              
+                <div class="tab-pane  " id="2011-empresas">
                 <div class="faq-container">
                   <ol class="faq-list">               
-                    {% for e in top[t] %}
-                    <li class="faq-{{ loop.index }}">
-                      <div class="faq-icon"><div class="faq-number">{{ loop.index }}</div></div>
+                    
+                    <li class="faq-1">
+                      <div class="faq-icon"><div class="faq-number">1</div></div>
                       <div class="faq-text">
-                        <h4><a href="{{ url_for('proveedor', id=e.id) }}">{{ e.razon_social }}</a> <span class="badge">{{ e.cant }}</span></h4>
+                        <h4><a href="/proveedor/145240">SERVICIOS INTEGRADOS DE LIMPIEZA S.A.</a> <span class="badge">418</span></h4>
                       </div>
                     </li>
-                    {% endfor %}
+                    
+                    <li class="faq-2">
+                      <div class="faq-icon"><div class="faq-number">2</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108935">SUCA MAMANI FERNAN TEODORO</a> <span class="badge">301</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-3">
+                      <div class="faq-icon"><div class="faq-number">3</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108883">GRUPO SANTA FE SOCIEDAD ANONIMA CERRADA - GRUPO SANTA FE S.A.C.</a> <span class="badge">295</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-4">
+                      <div class="faq-icon"><div class="faq-number">4</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108480">QUIMICA SUIZA S A</a> <span class="badge">279</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-5">
+                      <div class="faq-icon"><div class="faq-number">5</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/110725">INKA INVERSIONES GENERALES S.A.C.</a> <span class="badge">257</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-6">
+                      <div class="faq-icon"><div class="faq-number">6</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108913">COMERCIAL SANTA FE S.A.C.</a> <span class="badge">249</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-7">
+                      <div class="faq-icon"><div class="faq-number">7</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/145309">LABORATORIOS BAXTER DEL PERU S.A.</a> <span class="badge">193</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-8">
+                      <div class="faq-icon"><div class="faq-number">8</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108024">FERREYROS S.A.A.</a> <span class="badge">190</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-9">
+                      <div class="faq-icon"><div class="faq-number">9</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/109119">ABBOTT LABORATORIOS SA</a> <span class="badge">188</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-10">
+                      <div class="faq-icon"><div class="faq-number">10</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108449">LABORATORIOS AC FARMA S.A.</a> <span class="badge">169</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-11">
+                      <div class="faq-icon"><div class="faq-number">11</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/176939">CENTRO DE DIALISIS PIURA  EMPRESA INDIVIDUAL DE RESPONSABILIDAD LIMITADA</a> <span class="badge">167</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-12">
+                      <div class="faq-icon"><div class="faq-number">12</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/114389">EQUIPOS Y MEDICINAS S.A.C.</a> <span class="badge">165</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-13">
+                      <div class="faq-icon"><div class="faq-number">13</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/111686">SERVICENTRO JAKELINE S.C.R.LTDA.</a> <span class="badge">158</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-14">
+                      <div class="faq-icon"><div class="faq-number">14</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/112999">PREMIUM MEDICAL EIRL</a> <span class="badge">157</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-15">
+                      <div class="faq-icon"><div class="faq-number">15</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/110167">ORVISA SOCIEDAD ANONIMA</a> <span class="badge">155</span></h4>
+                      </div>
+                    </li>
+                    
                   </ol>
                 </div>
                 </div>
-              {% endfor %}              
+              
+                <div class="tab-pane   active " id="2015-empresas">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                    <li class="faq-1">
+                      <div class="faq-icon"><div class="faq-number">1</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/119562">VALVULAS, ACCESORIOS Y MAQUINARIAS S.A.C</a> <span class="badge">121</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-2">
+                      <div class="faq-icon"><div class="faq-number">2</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108449">LABORATORIOS AC FARMA S.A.</a> <span class="badge">97</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-3">
+                      <div class="faq-icon"><div class="faq-number">3</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/112498">MEDIFARMA S A</a> <span class="badge">81</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-4">
+                      <div class="faq-icon"><div class="faq-number">4</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/107842">TELEFONICA DEL PERU SAA</a> <span class="badge">73</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-5">
+                      <div class="faq-icon"><div class="faq-number">5</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/202020">HERSIL S.A. LABORATORIOS INDUSTRIALES FARMACEUTICOS</a> <span class="badge">45</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-6">
+                      <div class="faq-icon"><div class="faq-number">6</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/112999">PREMIUM MEDICAL EIRL</a> <span class="badge">43</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-7">
+                      <div class="faq-icon"><div class="faq-number">7</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108963">LA POSITIVA SEGUROS Y REASEGUROS</a> <span class="badge">40</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-8">
+                      <div class="faq-icon"><div class="faq-number">8</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108883">GRUPO SANTA FE SOCIEDAD ANONIMA CERRADA - GRUPO SANTA FE S.A.C.</a> <span class="badge">40</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-9">
+                      <div class="faq-icon"><div class="faq-number">9</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/116795">SURGICORP SOCIEDAD COMERCIAL DE RESPONSABILIDAD LIMITADA - SURGICORP S.R.L.</a> <span class="badge">40</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-10">
+                      <div class="faq-icon"><div class="faq-number">10</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108935">SUCA MAMANI FERNAN TEODORO</a> <span class="badge">39</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-11">
+                      <div class="faq-icon"><div class="faq-number">11</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/239004">DISTRIBUIDORA EXCLUSIVA DE PRODUCTOS DE CALIDAD SOCIEDAD ANONIMA CERRADA</a> <span class="badge">38</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-12">
+                      <div class="faq-icon"><div class="faq-number">12</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/109116">B.BRAUN MEDICAL PERU S.A.</a> <span class="badge">38</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-13">
+                      <div class="faq-icon"><div class="faq-number">13</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/154765">MELLCESCCA DISTRIBUIDORA DE ALIMENTOS E.I.R.L.</a> <span class="badge">38</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-14">
+                      <div class="faq-icon"><div class="faq-number">14</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/146169">INVERSIONES VAPA S.A.C.</a> <span class="badge">36</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-15">
+                      <div class="faq-icon"><div class="faq-number">15</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/109671">NIISA CORPORATION S.A.</a> <span class="badge">35</span></h4>
+                      </div>
+                    </li>
+                    
+                  </ol>
+                </div>
+                </div>
+              
+                <div class="tab-pane  " id="2012-empresas">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                    <li class="faq-1">
+                      <div class="faq-icon"><div class="faq-number">1</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/146804">COMERCIALIZADORA GRUPO SANTA FE SOCIEDAD ANONIMA CERRADA - COMERCIALIZADORA GRUPO SANTA FE S.A.C.</a> <span class="badge">336</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-2">
+                      <div class="faq-icon"><div class="faq-number">2</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108935">SUCA MAMANI FERNAN TEODORO</a> <span class="badge">314</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-3">
+                      <div class="faq-icon"><div class="faq-number">3</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/109116">B.BRAUN MEDICAL PERU S.A.</a> <span class="badge">259</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-4">
+                      <div class="faq-icon"><div class="faq-number">4</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/111686">SERVICENTRO JAKELINE S.C.R.LTDA.</a> <span class="badge">254</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-5">
+                      <div class="faq-icon"><div class="faq-number">5</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/109117">AMERICAN HOSP SCIEF EQUIP CO DEL PERU SA</a> <span class="badge">246</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-6">
+                      <div class="faq-icon"><div class="faq-number">6</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108479">H.W.KESSEL S.A.C.</a> <span class="badge">239</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-7">
+                      <div class="faq-icon"><div class="faq-number">7</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/110725">INKA INVERSIONES GENERALES S.A.C.</a> <span class="badge">224</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-8">
+                      <div class="faq-icon"><div class="faq-number">8</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/114389">EQUIPOS Y MEDICINAS S.A.C.</a> <span class="badge">214</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-9">
+                      <div class="faq-icon"><div class="faq-number">9</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/107842">TELEFONICA DEL PERU SAA</a> <span class="badge">212</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-10">
+                      <div class="faq-icon"><div class="faq-number">10</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/109119">ABBOTT LABORATORIOS SA</a> <span class="badge">198</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-11">
+                      <div class="faq-icon"><div class="faq-number">11</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108530">AMERICA MOVIL PERU S.A.C.</a> <span class="badge">194</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-12">
+                      <div class="faq-icon"><div class="faq-number">12</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108480">QUIMICA SUIZA S A</a> <span class="badge">171</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-13">
+                      <div class="faq-icon"><div class="faq-number">13</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/109140">PRODUCTOS ROCHE Q F S A</a> <span class="badge">163</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-14">
+                      <div class="faq-icon"><div class="faq-number">14</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/113459">CARDIO PERFUSION E.I.R.LTDA</a> <span class="badge">161</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-15">
+                      <div class="faq-icon"><div class="faq-number">15</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/145478">CONCRETOS SUPERMIX SOCIEDAD ANONIMA - CONCRETOS SUPERMIX S.A.</a> <span class="badge">160</span></h4>
+                      </div>
+                    </li>
+                    
+                  </ol>
+                </div>
+                </div>
+              
+                <div class="tab-pane  " id="2013-empresas">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                    <li class="faq-1">
+                      <div class="faq-icon"><div class="faq-number">1</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108883">GRUPO SANTA FE SOCIEDAD ANONIMA CERRADA - GRUPO SANTA FE S.A.C.</a> <span class="badge">390</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-2">
+                      <div class="faq-icon"><div class="faq-number">2</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/110167">ORVISA SOCIEDAD ANONIMA</a> <span class="badge">306</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-3">
+                      <div class="faq-icon"><div class="faq-number">3</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108935">SUCA MAMANI FERNAN TEODORO</a> <span class="badge">269</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-4">
+                      <div class="faq-icon"><div class="faq-number">4</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/107842">TELEFONICA DEL PERU SAA</a> <span class="badge">246</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-5">
+                      <div class="faq-icon"><div class="faq-number">5</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108449">LABORATORIOS AC FARMA S.A.</a> <span class="badge">219</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-6">
+                      <div class="faq-icon"><div class="faq-number">6</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/113459">CARDIO PERFUSION E.I.R.LTDA</a> <span class="badge">205</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-7">
+                      <div class="faq-icon"><div class="faq-number">7</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/147461">SAS IMPORT S.A.C</a> <span class="badge">203</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-8">
+                      <div class="faq-icon"><div class="faq-number">8</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/109116">B.BRAUN MEDICAL PERU S.A.</a> <span class="badge">189</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-9">
+                      <div class="faq-icon"><div class="faq-number">9</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/145240">SERVICIOS INTEGRADOS DE LIMPIEZA S.A.</a> <span class="badge">186</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-10">
+                      <div class="faq-icon"><div class="faq-number">10</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/109117">AMERICAN HOSP SCIEF EQUIP CO DEL PERU SA</a> <span class="badge">186</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-11">
+                      <div class="faq-icon"><div class="faq-number">11</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/111686">SERVICENTRO JAKELINE S.C.R.LTDA.</a> <span class="badge">182</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-12">
+                      <div class="faq-icon"><div class="faq-number">12</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/111636">ATILIO PALMIERI S.R.L.</a> <span class="badge">176</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-13">
+                      <div class="faq-icon"><div class="faq-number">13</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108938">FRANCISCO CARBAJAL BERNAL S.A.</a> <span class="badge">170</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-14">
+                      <div class="faq-icon"><div class="faq-number">14</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108117">TELEFONICA MOVILES S.A</a> <span class="badge">168</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-15">
+                      <div class="faq-icon"><div class="faq-number">15</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/112498">MEDIFARMA S A</a> <span class="badge">162</span></h4>
+                      </div>
+                    </li>
+                    
+                  </ol>
+                </div>
+                </div>
+              
+                <div class="tab-pane  " id="2014-empresas">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                    <li class="faq-1">
+                      <div class="faq-icon"><div class="faq-number">1</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/107842">TELEFONICA DEL PERU SAA</a> <span class="badge">358</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-2">
+                      <div class="faq-icon"><div class="faq-number">2</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/238833">COMERCIALIZADORA SANTA FE SOCIEDAD ANONIMA CERRADA - COMERCIALIZADORA SANTA FE S.A.C.</a> <span class="badge">291</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-3">
+                      <div class="faq-icon"><div class="faq-number">3</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/109116">B.BRAUN MEDICAL PERU S.A.</a> <span class="badge">264</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-4">
+                      <div class="faq-icon"><div class="faq-number">4</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/107930">KOSSODO S.A.C.</a> <span class="badge">258</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-5">
+                      <div class="faq-icon"><div class="faq-number">5</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108530">AMERICA MOVIL PERU S.A.C.</a> <span class="badge">249</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-6">
+                      <div class="faq-icon"><div class="faq-number">6</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/114389">EQUIPOS Y MEDICINAS S.A.C.</a> <span class="badge">241</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-7">
+                      <div class="faq-icon"><div class="faq-number">7</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108963">LA POSITIVA SEGUROS Y REASEGUROS</a> <span class="badge">236</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-8">
+                      <div class="faq-icon"><div class="faq-number">8</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/111686">SERVICENTRO JAKELINE S.C.R.LTDA.</a> <span class="badge">215</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-9">
+                      <div class="faq-icon"><div class="faq-number">9</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108449">LABORATORIOS AC FARMA S.A.</a> <span class="badge">215</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-10">
+                      <div class="faq-icon"><div class="faq-number">10</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/123170">DISTRIBUIDORA DROGUERIA ALFARO S.A.C.</a> <span class="badge">183</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-11">
+                      <div class="faq-icon"><div class="faq-number">11</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/109991">SYNTHES PERU S.A.C.</a> <span class="badge">174</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-12">
+                      <div class="faq-icon"><div class="faq-number">12</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/112989">PRAXAIR PERU SRL</a> <span class="badge">173</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-13">
+                      <div class="faq-icon"><div class="faq-number">13</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108480">QUIMICA SUIZA S A</a> <span class="badge">173</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-14">
+                      <div class="faq-icon"><div class="faq-number">14</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/145240">SERVICIOS INTEGRADOS DE LIMPIEZA S.A.</a> <span class="badge">172</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-15">
+                      <div class="faq-icon"><div class="faq-number">15</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/111636">ATILIO PALMIERI S.R.L.</a> <span class="badge">171</span></h4>
+                      </div>
+                    </li>
+                    
+                  </ol>
+                </div>
+                </div>
+              
+                <div class="tab-pane  " id="2009-empresas">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                    <li class="faq-1">
+                      <div class="faq-icon"><div class="faq-number">1</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/109277">LIBRERIA SAN CRISTOBAL S.A.C.</a> <span class="badge">1727</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-2">
+                      <div class="faq-icon"><div class="faq-number">2</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108908">CASTROMONTE CAVIEDES ROBERTO</a> <span class="badge">622</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-3">
+                      <div class="faq-icon"><div class="faq-number">3</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/110322">FUNDACION DEL LIBRO UNIVERSITARIO-LIBUN</a> <span class="badge">560</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-4">
+                      <div class="faq-icon"><div class="faq-number">4</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108480">QUIMICA SUIZA S A</a> <span class="badge">464</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-5">
+                      <div class="faq-icon"><div class="faq-number">5</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/116633">PROVEEDORES Y SERVICIOS V &amp; V S.A.</a> <span class="badge">443</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-6">
+                      <div class="faq-icon"><div class="faq-number">6</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/112725">WARTSILA PERU S.A.C.</a> <span class="badge">442</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-7">
+                      <div class="faq-icon"><div class="faq-number">7</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/112992">REPRESENTACIONES MEDICAS MARY SRL</a> <span class="badge">386</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-8">
+                      <div class="faq-icon"><div class="faq-number">8</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108638">SERVICIOS INTEGRADOS DE LIMPIEZA SA (SIL SA)</a> <span class="badge">370</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-9">
+                      <div class="faq-icon"><div class="faq-number">9</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/112499">UNILENE S.A.C.</a> <span class="badge">365</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-10">
+                      <div class="faq-icon"><div class="faq-number">10</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/107977">MERCK PERUANA S A</a> <span class="badge">353</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-11">
+                      <div class="faq-icon"><div class="faq-number">11</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/114807">SUCA PEREZ FERNAND RONALD</a> <span class="badge">351</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-12">
+                      <div class="faq-icon"><div class="faq-number">12</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/109135">ANDINA MEDICA S.A SUCURSAL DEL PERU</a> <span class="badge">331</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-13">
+                      <div class="faq-icon"><div class="faq-number">13</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108887">HELIO INVERSIONES S.A.C</a> <span class="badge">313</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-14">
+                      <div class="faq-icon"><div class="faq-number">14</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/113859">LIBRERIA CIENTIF.Y TECNOL.UNIV. S.A.C.</a> <span class="badge">300</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-15">
+                      <div class="faq-icon"><div class="faq-number">15</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/109119">ABBOTT LABORATORIOS SA</a> <span class="badge">289</span></h4>
+                      </div>
+                    </li>
+                    
+                  </ol>
+                </div>
+                </div>
+              
+                <div class="tab-pane  " id="2015-empresas">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                  </ol>
+                </div>
+                </div>
+              
+                <div class="tab-pane  " id="2014-empresas">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                  </ol>
+                </div>
+                </div>
+              
+                <div class="tab-pane  " id="2010-empresas">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                    <li class="faq-1">
+                      <div class="faq-icon"><div class="faq-number">1</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108480">QUIMICA SUIZA S A</a> <span class="badge">347</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-2">
+                      <div class="faq-icon"><div class="faq-number">2</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/109119">ABBOTT LABORATORIOS SA</a> <span class="badge">341</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-3">
+                      <div class="faq-icon"><div class="faq-number">3</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/114807">SUCA PEREZ FERNAND RONALD</a> <span class="badge">309</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-4">
+                      <div class="faq-icon"><div class="faq-number">4</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108883">GRUPO SANTA FE SOCIEDAD ANONIMA CERRADA - GRUPO SANTA FE S.A.C.</a> <span class="badge">251</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-5">
+                      <div class="faq-icon"><div class="faq-number">5</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/110167">ORVISA SOCIEDAD ANONIMA</a> <span class="badge">245</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-6">
+                      <div class="faq-icon"><div class="faq-number">6</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/109112">ALBIS S.A.</a> <span class="badge">236</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-7">
+                      <div class="faq-icon"><div class="faq-number">7</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108638">SERVICIOS INTEGRADOS DE LIMPIEZA SA (SIL SA)</a> <span class="badge">234</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-8">
+                      <div class="faq-icon"><div class="faq-number">8</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/114389">EQUIPOS Y MEDICINAS S.A.C.</a> <span class="badge">233</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-9">
+                      <div class="faq-icon"><div class="faq-number">9</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/113459">CARDIO PERFUSION E.I.R.LTDA</a> <span class="badge">211</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-10">
+                      <div class="faq-icon"><div class="faq-number">10</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108449">LABORATORIOS AC FARMA S.A.</a> <span class="badge">211</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-11">
+                      <div class="faq-icon"><div class="faq-number">11</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/117073">CORPORACION HELEO SOCIEDAD ANONIMA CERRADA</a> <span class="badge">204</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-12">
+                      <div class="faq-icon"><div class="faq-number">12</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/111636">ATILIO PALMIERI S.R.L.</a> <span class="badge">197</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-13">
+                      <div class="faq-icon"><div class="faq-number">13</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/109116">B.BRAUN MEDICAL PERU S.A.</a> <span class="badge">176</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-14">
+                      <div class="faq-icon"><div class="faq-number">14</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/112499">UNILENE S.A.C.</a> <span class="badge">165</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-15">
+                      <div class="faq-icon"><div class="faq-number">15</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/proveedor/108948">ACEROS CORPORATIVOS S.A. CERRADA</a> <span class="badge">165</span></h4>
+                      </div>
+                    </li>
+                    
+                  </ol>
+                </div>
+                </div>
+              
+                <div class="tab-pane  " id="2009-empresas">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                  </ol>
+                </div>
+                </div>
+              
+                <div class="tab-pane  " id="2011-empresas">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                  </ol>
+                </div>
+                </div>
+              
+                <div class="tab-pane  " id="2010-empresas">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                  </ol>
+                </div>
+                </div>
+              
+                <div class="tab-pane  " id="2013-empresas">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                  </ol>
+                </div>
+                </div>
+              
+                <div class="tab-pane  " id="2012-empresas">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                  </ol>
+                </div>
+                </div>
+                            
             </div>
           </div>
         </div>
@@ -162,22 +1076,854 @@
             </ul>
             <br>
             <div class="tab-content">              
-              {% for t in topentidades %}
-              <div class="tab-pane {% if t == 2015 %} active {% endif %}" id="{{ t }}-entidades">
+              
+              <div class="tab-pane " id="2011-entidades">
                 <div class="faq-container">
                   <ol class="faq-list">               
-                    {% for e in topentidades[t] %}
-                    <li class="faq-{{ loop.index }}">
-                      <div class="faq-icon"><div class="faq-number">{{ loop.index }}</div></div>
+                    
+                    <li class="faq-1">
+                      <div class="faq-icon"><div class="faq-number">1</div></div>
                       <div class="faq-text">
-                        <h4><a href="{{ url_for('entidad', id=e.id) }}">{{ e.nombre }}</a> <span class="badge">{{ e.cant }}</span></h4>
+                        <h4><a href="/entidad/107">Seguro Social de Salud (ESSALUD)</a> <span class="badge">9709</span></h4>
                       </div>
                     </li>
-                    {% endfor %}
+                    
+                    <li class="faq-2">
+                      <div class="faq-icon"><div class="faq-number">2</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/13036">Petróleos del Perú (PETROPERU)</a> <span class="badge">3875</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-3">
+                      <div class="faq-icon"><div class="faq-number">3</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10041">Ejército del Perú (EP)</a> <span class="badge">2310</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-4">
+                      <div class="faq-icon"><div class="faq-number">4</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/113">Programa Nacional de Asistencia Alimentaria (PRONAA)</a> <span class="badge">2084</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-5">
+                      <div class="faq-icon"><div class="faq-number">5</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/11794">Marina de Guerra del Perú (MGP)</a> <span class="badge">1979</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-6">
+                      <div class="faq-icon"><div class="faq-number">6</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10131">Gobierno Regional de Arequipa (GRA)</a> <span class="badge">1033</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-7">
+                      <div class="faq-icon"><div class="faq-number">7</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/12670">Fuerza Aerea Del Perú (FAP)</a> <span class="badge">1012</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-8">
+                      <div class="faq-icon"><div class="faq-number">8</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10051">Poder Judicial (PJ)</a> <span class="badge">1011</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-9">
+                      <div class="faq-icon"><div class="faq-number">9</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10208">Corte Superior del Lima Norte (D.J. LIMA NORTE)</a> <span class="badge">1011</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-10">
+                      <div class="faq-icon"><div class="faq-number">10</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10003">Comisión de Promoción del Perú para la Exportación y el Turismo (PROMPERÚ)</a> <span class="badge">975</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-11">
+                      <div class="faq-icon"><div class="faq-number">11</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10142">Gobierno Regional de Huancavelica (GR-Huancavelica)</a> <span class="badge">870</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-12">
+                      <div class="faq-icon"><div class="faq-number">12</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10139">Gobierno Regional Cusco (GRCusco)</a> <span class="badge">841</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-13">
+                      <div class="faq-icon"><div class="faq-number">13</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/14198">Dirección Regional de Trabajo y Promoción del Empleo-Cusco (DRTPE-Cusco)</a> <span class="badge">841</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-14">
+                      <div class="faq-icon"><div class="faq-number">14</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/872">Gobierno Municipalidad del Cusco (MPC)</a> <span class="badge">726</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-15">
+                      <div class="faq-icon"><div class="faq-number">15</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/143">Ministerio de Salud (MINSA)</a> <span class="badge">670</span></h4>
+                      </div>
+                    </li>
+                    
                   </ol>
                 </div>
                 </div>
-              {% endfor %}              
+              
+              <div class="tab-pane  active " id="2015-entidades">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                    <li class="faq-1">
+                      <div class="faq-icon"><div class="faq-number">1</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/107">Seguro Social de Salud (ESSALUD)</a> <span class="badge">1073</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-2">
+                      <div class="faq-icon"><div class="faq-number">2</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/13036">Petróleos del Perú (PETROPERU)</a> <span class="badge">825</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-3">
+                      <div class="faq-icon"><div class="faq-number">3</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10041">Ejército del Perú (EP)</a> <span class="badge">547</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-4">
+                      <div class="faq-icon"><div class="faq-number">4</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/11794">Marina de Guerra del Perú (MGP)</a> <span class="badge">485</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-5">
+                      <div class="faq-icon"><div class="faq-number">5</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/14192">Dirección de Abastecimiento de Recursos Estratégicos en Salud (DARES)</a> <span class="badge">367</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-6">
+                      <div class="faq-icon"><div class="faq-number">6</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/180">Gobierno Regional del Callao (GR-Callao)</a> <span class="badge">221</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-7">
+                      <div class="faq-icon"><div class="faq-number">7</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10003">Comisión de Promoción del Perú para la Exportación y el Turismo (PROMPERÚ)</a> <span class="badge">214</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-8">
+                      <div class="faq-icon"><div class="faq-number">8</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/12670">Fuerza Aerea Del Perú (FAP)</a> <span class="badge">176</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-9">
+                      <div class="faq-icon"><div class="faq-number">9</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/14093">SECRETARÍA NACIONAL DE LA JUVENTUD (SENAJU)</a> <span class="badge">170</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-10">
+                      <div class="faq-icon"><div class="faq-number">10</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10142">Gobierno Regional de Huancavelica (GR-Huancavelica)</a> <span class="badge">141</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-11">
+                      <div class="faq-icon"><div class="faq-number">11</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10131">Gobierno Regional de Arequipa (GRA)</a> <span class="badge">133</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-12">
+                      <div class="faq-icon"><div class="faq-number">12</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/83">Superintendencia Nacional de Aduanas y de Administración Tributaria (SUNAT)</a> <span class="badge">128</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-13">
+                      <div class="faq-icon"><div class="faq-number">13</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10046">Servicio de Agua Potable y Alcantarillado de Lima (SEDAPAL)</a> <span class="badge">122</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-14">
+                      <div class="faq-icon"><div class="faq-number">14</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/14240">Proyecto Especial Binacional Lago Titicaca (PELT)</a> <span class="badge">113</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-15">
+                      <div class="faq-icon"><div class="faq-number">15</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/143">Ministerio de Salud (MINSA)</a> <span class="badge">103</span></h4>
+                      </div>
+                    </li>
+                    
+                  </ol>
+                </div>
+                </div>
+              
+              <div class="tab-pane " id="2012-entidades">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                    <li class="faq-1">
+                      <div class="faq-icon"><div class="faq-number">1</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/107">Seguro Social de Salud (ESSALUD)</a> <span class="badge">8456</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-2">
+                      <div class="faq-icon"><div class="faq-number">2</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/13036">Petróleos del Perú (PETROPERU)</a> <span class="badge">4067</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-3">
+                      <div class="faq-icon"><div class="faq-number">3</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/113">Programa Nacional de Asistencia Alimentaria (PRONAA)</a> <span class="badge">3065</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-4">
+                      <div class="faq-icon"><div class="faq-number">4</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10041">Ejército del Perú (EP)</a> <span class="badge">2678</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-5">
+                      <div class="faq-icon"><div class="faq-number">5</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/11794">Marina de Guerra del Perú (MGP)</a> <span class="badge">2474</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-6">
+                      <div class="faq-icon"><div class="faq-number">6</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/12670">Fuerza Aerea Del Perú (FAP)</a> <span class="badge">1424</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-7">
+                      <div class="faq-icon"><div class="faq-number">7</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10003">Comisión de Promoción del Perú para la Exportación y el Turismo (PROMPERÚ)</a> <span class="badge">1336</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-8">
+                      <div class="faq-icon"><div class="faq-number">8</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/11016">Municipalidad Distrital de Echarati (MDE)</a> <span class="badge">1286</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-9">
+                      <div class="faq-icon"><div class="faq-number">9</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10131">Gobierno Regional de Arequipa (GRA)</a> <span class="badge">1123</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-10">
+                      <div class="faq-icon"><div class="faq-number">10</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10142">Gobierno Regional de Huancavelica (GR-Huancavelica)</a> <span class="badge">1101</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-11">
+                      <div class="faq-icon"><div class="faq-number">11</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10139">Gobierno Regional Cusco (GRCusco)</a> <span class="badge">1052</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-12">
+                      <div class="faq-icon"><div class="faq-number">12</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/14198">Dirección Regional de Trabajo y Promoción del Empleo-Cusco (DRTPE-Cusco)</a> <span class="badge">1052</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-13">
+                      <div class="faq-icon"><div class="faq-number">13</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10051">Poder Judicial (PJ)</a> <span class="badge">977</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-14">
+                      <div class="faq-icon"><div class="faq-number">14</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10208">Corte Superior del Lima Norte (D.J. LIMA NORTE)</a> <span class="badge">965</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-15">
+                      <div class="faq-icon"><div class="faq-number">15</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10135">Gobierno Regional de Ayacucho (GR-Ayacucho)</a> <span class="badge">903</span></h4>
+                      </div>
+                    </li>
+                    
+                  </ol>
+                </div>
+                </div>
+              
+              <div class="tab-pane " id="2013-entidades">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                    <li class="faq-1">
+                      <div class="faq-icon"><div class="faq-number">1</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/107">Seguro Social de Salud (ESSALUD)</a> <span class="badge">9105</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-2">
+                      <div class="faq-icon"><div class="faq-number">2</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/13036">Petróleos del Perú (PETROPERU)</a> <span class="badge">4955</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-3">
+                      <div class="faq-icon"><div class="faq-number">3</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10041">Ejército del Perú (EP)</a> <span class="badge">2678</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-4">
+                      <div class="faq-icon"><div class="faq-number">4</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/11794">Marina de Guerra del Perú (MGP)</a> <span class="badge">2117</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-5">
+                      <div class="faq-icon"><div class="faq-number">5</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/11016">Municipalidad Distrital de Echarati (MDE)</a> <span class="badge">1909</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-6">
+                      <div class="faq-icon"><div class="faq-number">6</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10003">Comisión de Promoción del Perú para la Exportación y el Turismo (PROMPERÚ)</a> <span class="badge">1540</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-7">
+                      <div class="faq-icon"><div class="faq-number">7</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10139">Gobierno Regional Cusco (GRCusco)</a> <span class="badge">1297</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-8">
+                      <div class="faq-icon"><div class="faq-number">8</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/14198">Dirección Regional de Trabajo y Promoción del Empleo-Cusco (DRTPE-Cusco)</a> <span class="badge">1297</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-9">
+                      <div class="faq-icon"><div class="faq-number">9</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/13860">Programa de Desarrollo Productivo Agrario Rural (AGRO RURAL)</a> <span class="badge">1192</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-10">
+                      <div class="faq-icon"><div class="faq-number">10</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/12670">Fuerza Aerea Del Perú (FAP)</a> <span class="badge">1075</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-11">
+                      <div class="faq-icon"><div class="faq-number">11</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10135">Gobierno Regional de Ayacucho (GR-Ayacucho)</a> <span class="badge">954</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-12">
+                      <div class="faq-icon"><div class="faq-number">12</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/11020">Municipalidad Distrital de Quellouno (MD - QUELLOUNO)</a> <span class="badge">905</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-13">
+                      <div class="faq-icon"><div class="faq-number">13</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10163">Gobierno Regional de Puno (GR-Puno)</a> <span class="badge">795</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-14">
+                      <div class="faq-icon"><div class="faq-number">14</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10131">Gobierno Regional de Arequipa (GRA)</a> <span class="badge">792</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-15">
+                      <div class="faq-icon"><div class="faq-number">15</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10142">Gobierno Regional de Huancavelica (GR-Huancavelica)</a> <span class="badge">748</span></h4>
+                      </div>
+                    </li>
+                    
+                  </ol>
+                </div>
+                </div>
+              
+              <div class="tab-pane " id="2014-entidades">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                    <li class="faq-1">
+                      <div class="faq-icon"><div class="faq-number">1</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/107">Seguro Social de Salud (ESSALUD)</a> <span class="badge">8534</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-2">
+                      <div class="faq-icon"><div class="faq-number">2</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10041">Ejército del Perú (EP)</a> <span class="badge">2648</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-3">
+                      <div class="faq-icon"><div class="faq-number">3</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/13036">Petróleos del Perú (PETROPERU)</a> <span class="badge">2625</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-4">
+                      <div class="faq-icon"><div class="faq-number">4</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10003">Comisión de Promoción del Perú para la Exportación y el Turismo (PROMPERÚ)</a> <span class="badge">2359</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-5">
+                      <div class="faq-icon"><div class="faq-number">5</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/11794">Marina de Guerra del Perú (MGP)</a> <span class="badge">2145</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-6">
+                      <div class="faq-icon"><div class="faq-number">6</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/13860">Programa de Desarrollo Productivo Agrario Rural (AGRO RURAL)</a> <span class="badge">2031</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-7">
+                      <div class="faq-icon"><div class="faq-number">7</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/91">Servicio Nacional de Sanidad Agraria del Perú (SENASA)</a> <span class="badge">1711</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-8">
+                      <div class="faq-icon"><div class="faq-number">8</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/13185">Policia Nacional del Perú (PNP)</a> <span class="badge">1631</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-9">
+                      <div class="faq-icon"><div class="faq-number">9</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/11016">Municipalidad Distrital de Echarati (MDE)</a> <span class="badge">1339</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-10">
+                      <div class="faq-icon"><div class="faq-number">10</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/12670">Fuerza Aerea Del Perú (FAP)</a> <span class="badge">1253</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-11">
+                      <div class="faq-icon"><div class="faq-number">11</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/14093">SECRETARÍA NACIONAL DE LA JUVENTUD (SENAJU)</a> <span class="badge">1122</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-12">
+                      <div class="faq-icon"><div class="faq-number">12</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10942">Municipalidad Distrital de Ventanilla (MDV)</a> <span class="badge">979</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-13">
+                      <div class="faq-icon"><div class="faq-number">13</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10046">Servicio de Agua Potable y Alcantarillado de Lima (SEDAPAL)</a> <span class="badge">842</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-14">
+                      <div class="faq-icon"><div class="faq-number">14</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10142">Gobierno Regional de Huancavelica (GR-Huancavelica)</a> <span class="badge">835</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-15">
+                      <div class="faq-icon"><div class="faq-number">15</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/14234">DIRECCIÓN REGIONAL DE ENERGÍA Y MINAS MOQUEGUA (DREMM)</a> <span class="badge">751</span></h4>
+                      </div>
+                    </li>
+                    
+                  </ol>
+                </div>
+                </div>
+              
+              <div class="tab-pane " id="2009-entidades">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                    <li class="faq-1">
+                      <div class="faq-icon"><div class="faq-number">1</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/107">Seguro Social de Salud (ESSALUD)</a> <span class="badge">12361</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-2">
+                      <div class="faq-icon"><div class="faq-number">2</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/11794">Marina de Guerra del Perú (MGP)</a> <span class="badge">4207</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-3">
+                      <div class="faq-icon"><div class="faq-number">3</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/13036">Petróleos del Perú (PETROPERU)</a> <span class="badge">3706</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-4">
+                      <div class="faq-icon"><div class="faq-number">4</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10041">Ejército del Perú (EP)</a> <span class="badge">2536</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-5">
+                      <div class="faq-icon"><div class="faq-number">5</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10044">Ministerio Público Fiscalía de la Nación (MPFN)</a> <span class="badge">2237</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-6">
+                      <div class="faq-icon"><div class="faq-number">6</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/12670">Fuerza Aerea Del Perú (FAP)</a> <span class="badge">2073</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-7">
+                      <div class="faq-icon"><div class="faq-number">7</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/113">Programa Nacional de Asistencia Alimentaria (PRONAA)</a> <span class="badge">1858</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-8">
+                      <div class="faq-icon"><div class="faq-number">8</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10035">Universidad Nacional Federico Villarreal (UNFV)</a> <span class="badge">1851</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-9">
+                      <div class="faq-icon"><div class="faq-number">9</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/13718">Hospital Nacional Docente Madre Niño San Bartolomé (HONADOMANI SB)</a> <span class="badge">1197</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-10">
+                      <div class="faq-icon"><div class="faq-number">10</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10048">Universidad Nacional de Ingeniería (UNI)</a> <span class="badge">1194</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-11">
+                      <div class="faq-icon"><div class="faq-number">11</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10051">Poder Judicial (PJ)</a> <span class="badge">1140</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-12">
+                      <div class="faq-icon"><div class="faq-number">12</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10208">Corte Superior del Lima Norte (D.J. LIMA NORTE)</a> <span class="badge">1140</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-13">
+                      <div class="faq-icon"><div class="faq-number">13</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/13032">Empresa Regional de Servicio Público de Electricidad del Oriente S.A. (ELECTRO ORIENTE)</a> <span class="badge">1110</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-14">
+                      <div class="faq-icon"><div class="faq-number">14</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10131">Gobierno Regional de Arequipa (GRA)</a> <span class="badge">1082</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-15">
+                      <div class="faq-icon"><div class="faq-number">15</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/13180">Instituto Nacional de Salud del Niño (INSN)</a> <span class="badge">1035</span></h4>
+                      </div>
+                    </li>
+                    
+                  </ol>
+                </div>
+                </div>
+              
+              <div class="tab-pane " id="2015-entidades">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                  </ol>
+                </div>
+                </div>
+              
+              <div class="tab-pane " id="2014-entidades">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                  </ol>
+                </div>
+                </div>
+              
+              <div class="tab-pane " id="2010-entidades">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                    <li class="faq-1">
+                      <div class="faq-icon"><div class="faq-number">1</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/107">Seguro Social de Salud (ESSALUD)</a> <span class="badge">11145</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-2">
+                      <div class="faq-icon"><div class="faq-number">2</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/13036">Petróleos del Perú (PETROPERU)</a> <span class="badge">4102</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-3">
+                      <div class="faq-icon"><div class="faq-number">3</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/113">Programa Nacional de Asistencia Alimentaria (PRONAA)</a> <span class="badge">3559</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-4">
+                      <div class="faq-icon"><div class="faq-number">4</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10041">Ejército del Perú (EP)</a> <span class="badge">2984</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-5">
+                      <div class="faq-icon"><div class="faq-number">5</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/11794">Marina de Guerra del Perú (MGP)</a> <span class="badge">2808</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-6">
+                      <div class="faq-icon"><div class="faq-number">6</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/12670">Fuerza Aerea Del Perú (FAP)</a> <span class="badge">2251</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-7">
+                      <div class="faq-icon"><div class="faq-number">7</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10131">Gobierno Regional de Arequipa (GRA)</a> <span class="badge">1171</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-8">
+                      <div class="faq-icon"><div class="faq-number">8</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10051">Poder Judicial (PJ)</a> <span class="badge">928</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-9">
+                      <div class="faq-icon"><div class="faq-number">9</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10208">Corte Superior del Lima Norte (D.J. LIMA NORTE)</a> <span class="badge">928</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-10">
+                      <div class="faq-icon"><div class="faq-number">10</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/14097">SUB REGION PACIFICO (SRP)</a> <span class="badge">876</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-11">
+                      <div class="faq-icon"><div class="faq-number">11</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10044">Ministerio Público Fiscalía de la Nación (MPFN)</a> <span class="badge">872</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-12">
+                      <div class="faq-icon"><div class="faq-number">12</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10139">Gobierno Regional Cusco (GRCusco)</a> <span class="badge">854</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-13">
+                      <div class="faq-icon"><div class="faq-number">13</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/14198">Dirección Regional de Trabajo y Promoción del Empleo-Cusco (DRTPE-Cusco)</a> <span class="badge">854</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-14">
+                      <div class="faq-icon"><div class="faq-number">14</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/143">Ministerio de Salud (MINSA)</a> <span class="badge">853</span></h4>
+                      </div>
+                    </li>
+                    
+                    <li class="faq-15">
+                      <div class="faq-icon"><div class="faq-number">15</div></div>
+                      <div class="faq-text">
+                        <h4><a href="/entidad/10003">Comisión de Promoción del Perú para la Exportación y el Turismo (PROMPERÚ)</a> <span class="badge">804</span></h4>
+                      </div>
+                    </li>
+                    
+                  </ol>
+                </div>
+                </div>
+              
+              <div class="tab-pane " id="2009-entidades">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                  </ol>
+                </div>
+                </div>
+              
+              <div class="tab-pane " id="2011-entidades">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                  </ol>
+                </div>
+                </div>
+              
+              <div class="tab-pane " id="2010-entidades">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                  </ol>
+                </div>
+                </div>
+              
+              <div class="tab-pane " id="2013-entidades">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                  </ol>
+                </div>
+                </div>
+              
+              <div class="tab-pane " id="2012-entidades">
+                <div class="faq-container">
+                  <ol class="faq-list">               
+                    
+                  </ol>
+                </div>
+                </div>
+                            
             </div>
           </div>
         </div>
@@ -194,15 +1940,45 @@
 <!-- /main-inner --> 
 </div>
 <!-- /main -->
-{% include "footer.html" %}
+      <div class="extra">
+        <div class="extra-inner">
+          <div class="container">
+            <div class="row">
+              <div class="span12" style="text-align:center;">
+              <p>Desarrollado por:</p>
+                <p><a href="http://www.proetica.org.pe" target="_blank"><img src="/static/images/proetica.png" /></a>   <a href="http://www.odpe.org" target="_blank"><img src="/static/images/odpe.png" /></a></p>
+              </div>
+              <!-- /span3 -->
+            </div>
+            <!-- /row --> 
+          </div>
+          <!-- /container --> 
+        </div>
+        <!-- /extra-inner --> 
+      </div>
+      <!-- /extra -->
+      <div class="footer">
+        <div class="footer-inner">
+          <div class="container">
+            <div class="row">
+              <div class="span12"> &copy; 2015 Veedor - Proveedores del estado peruano | Desarrollado por <a href="http://www.odpe.org">ODPE</a>. </div>
+              <!-- /span12 --> 
+            </div>
+            <!-- /row --> 
+          </div>
+          <!-- /container --> 
+        </div>
+        <!-- /footer-inner --> 
+      </div>
+      <!-- /footer --> 
 <!-- Le javascript
   ================================================== --> 
   <!-- Placed at the end of the document so the pages load faster --> 
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <script src="{{ url_for('static', filename='js/jquery-1.7.2.min.js') }}"></script>
+  <script src="/static/js/jquery-1.7.2.min.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script> 
-  <script src="{{ url_for('static', filename='js/faq.js') }}"></script>
+  <script src="/static/js/bootstrap.js"></script> 
+  <script src="/static/js/faq.js"></script>
   <script src="http://code.highcharts.com/highcharts.js"></script>
   <script type="text/javascript">
     $(document).ready(function() { 
@@ -210,10 +1986,28 @@
       anios = [];
       totales = [];
 
-      {% for t in total %}
-      anios.push({{ t.anio }});
-      totales.push({{ t.total }});
-      {% endfor %}
+      
+      anios.push(2009.0);
+      totales.push(19913063524.51);
+      
+      anios.push(2010.0);
+      totales.push(28548104576.78);
+      
+      anios.push(2011.0);
+      totales.push(18977675737.45);
+      
+      anios.push(2012.0);
+      totales.push(36835196896.02);
+      
+      anios.push(2013.0);
+      totales.push(33706587331.35);
+      
+      anios.push(2014.0);
+      totales.push(43406656924.91);
+      
+      anios.push(2015.0);
+      totales.push(3810149711.89);
+      
 
       $('#container').highcharts({
         title: {
@@ -246,9 +2040,21 @@
 
       rank_prov = [];
 
-      {% for p in proveedores %}
-      rank_prov.push({{ p.cantidad }})
-      {% endfor %}
+      
+      rank_prov.push(159034)
+      
+      rank_prov.push(121209)
+      
+      rank_prov.push(103677)
+      
+      rank_prov.push(147746)
+      
+      rank_prov.push(133151)
+      
+      rank_prov.push(146635)
+      
+      rank_prov.push(16991)
+      
 
       $('#rank_prov').highcharts({
         chart: {
