@@ -60,84 +60,8 @@ def acerca():
 @app.cache.cached(timeout=300)  # cache this view for 5 minutes
 def index():
 
-
-    top = {'2015':'','2014':'','2013':'',
-            '2012':'','2011':'','2010':'','2009':''}
-    top[2015] = topEmpresas(2015)
-    top[2014] = topEmpresas(2014)
-    top[2013] = topEmpresas(2013)
-    top[2012] = topEmpresas(2012)
-    top[2011] = topEmpresas(2011)
-    top[2010] = topEmpresas(2010)
-    top[2009] = topEmpresas(2009)
-
-    topentidades = {'2015':'','2014':'','2013':'',
-            '2012':'','2011':'','2010':'','2009':''}
-
-    topentidades[2015] = topEntidades(2015)
-    topentidades[2014] = topEntidades(2014)
-    topentidades[2013] = topEntidades(2013)
-    topentidades[2012] = topEntidades(2012)
-    topentidades[2011] = topEntidades(2011)
-    topentidades[2010] = topEntidades(2010)
-    topentidades[2009] = topEntidades(2009)
-
-    contratos = g.db.query(models.Contrataciones).count()
-
-    empresas = g.db.query(models.Empresa).count()
-
-    entidades = g.db.query(models.EntidadGobierno).count()
-
-    cont_irre = g.db.query(
-                models.Contrataciones
-            ).filter(
-                or_(models.Contrataciones.etiqueta_fecha == 'irregulares',
-                    models.Contrataciones.etiqueta_fecha == 'cercanas')
-            ).count()
-
-    total = g.db.query(
-                extract('year', models.Contrataciones.fecha_bue_pro).label("anio"),
-                func.sum(models.Contrataciones.monto).label("total")
-            ).filter(
-                    models.Contrataciones.tipo_moneda == 'S/.'
-            ).group_by('anio').order_by('anio').all()
-
-
-    total = g.db.query(
-                extract('year', models.Contrataciones.fecha_bue_pro).label("anio"),
-                func.sum(models.Contrataciones.monto).label("total")
-            ).filter(
-                    models.Contrataciones.tipo_moneda == 'S/.'
-            ).group_by('anio').order_by('anio').all()
-
-    proveedores = g.db.query(
-                extract('year', models.Contrataciones.fecha_bue_pro).label("anio"),
-                func.count(models.Contrataciones.id).label("cantidad")
-            ).order_by(asc('anio')).group_by('anio').all()
-
-    total_soles = g.db.query(
-                func.sum(models.Contrataciones.monto).label("total")
-            ).filter(
-                and_(
-                    extract('year', models.Contrataciones.fecha_bue_pro) == 2015,
-                    models.Contrataciones.tipo_moneda == 'S/.'
-                    )
-            ).first()
-
-
-    irregulares = (cont_irre * 100 ) / contratos
-
     return render_template(
-        'index.html',
-        top=top,
-        contratos=contratos,
-        empresas=empresas,
-        entidades=entidades,
-        proveedores=proveedores,
-        irregulares=irregulares,
-        total=total,
-        topentidades=topentidades,
-        totalsoles=total_soles
+        'index.html'
     )
 
 def topEmpresas(anio):
